@@ -1,0 +1,48 @@
+
+
+
+
+
+<div class="text-center mt-4">
+    <h1 class="h2">Welcome back, Narinder</h1>
+    <p class="lead">
+        Sign in to your account to continue
+    </p>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="m-sm-4">
+            <div class="text-center">
+                <i class="fa fa-user fa-4x" aria-hidden="true"></i>
+            </div>
+            <form [formGroup]="signin" (ngSubmit)="signinUser()">
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input class="form-control form-control-lg" formControlName="email" type="email" name="email"
+                        placeholder="Enter your email">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input class="form-control form-control-lg" formControlName="password" type="password" name="password"
+                        placeholder="Enter your password">
+                    <small>
+                        <a routerLink="/resetpassword">Forgot password?</a>
+                    </small>
+                </div>
+                <div>
+                    <div class="form-check align-items-center">
+                        <input id="customControlInline" type="checkbox" class="form-check-input"
+                            value="remember-me" name="remember-me" checked="">
+                        <label class="form-check-label text-small"
+                            for="customControlInline">Remember me next time</label>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <!-- <a class="btn btn-lg btn-primary">Sign in</a> -->
+                    <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
