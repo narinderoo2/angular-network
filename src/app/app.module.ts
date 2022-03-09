@@ -7,8 +7,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarComponent } from './shared/componet/sidebar/sidebar.component';
 import { HeaderComponent } from './template/header/header.component';
-import { DashboardComponent } from './module/dashboard/dashboard/dashboard.component';
 import { BlanktemplateComponent } from './template/blanktemplate/blanktemplate.component';
+
+
 
 @NgModule({
   declarations: [
@@ -20,9 +21,10 @@ import { BlanktemplateComponent } from './template/blanktemplate/blanktemplate.c
   imports: [
     BrowserModule,
     AppRoutingModule,
-    // ReactiveFormsModule,
-    // FormsModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule
+    // NgApexchartsModule,
     
   ],
   providers: [],

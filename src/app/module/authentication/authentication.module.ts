@@ -5,6 +5,8 @@ import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { SigninComponent } from './signin/signin.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// import { NgApexchartsModule } from 'ng-apexcharts';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 @NgModule({
@@ -14,9 +16,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,NgApexchartsModule,
     AuthenticationRoutingModule,
-    ReactiveFormsModule,
-    FormsModule
-  ]
+      
+
+  ],
+  exports:[ResetpasswordComponent]
 })
 export class AuthenticationModule { }
