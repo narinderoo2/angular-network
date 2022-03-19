@@ -8,13 +8,15 @@ import {
   ApexChart,
   ApexFill,
   ChartComponent,
-  ApexStroke
+  ApexStroke,
+  ApexAxisChartSeries
 } from "ng-apexcharts";
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
   labels: string[];
+  updateSeries: any;
   plotOptions: ApexPlotOptions;
   fill: ApexFill;
   stroke: ApexStroke;
@@ -37,7 +39,8 @@ export class ResetpasswordComponent implements OnInit {
   countDown: Subscription;
   currTime: Subscription;
   resetPassword: FormGroup
-  chatLoader: boolean=false;
+  optForm: FormGroup
+  chatLoader: boolean = false;
 
 
   verify: string = 'verify';
@@ -50,23 +53,105 @@ export class ResetpasswordComponent implements OnInit {
     this.resetPassword = this.fb.group({
       email: ['', [Validators.required]]
     })
+
+
+    this.optForm = this.fb.group({
+      email:[''],
+      otp: ['', [Validators.required, Validators.minLength(5)]]
+    })
+
+
+
   }
 
   ngOnInit(): void {
-    this.verify = ''
+    this.verify = 'otpVerify'
     this.timerStart(0)
     this.apexCounterChart()
-
+    this.startTimer()
   }
 
+
+  timeLeft: number = 60;
+  interval;
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+        this.chartOptions.series = [this.timeLeft * 1.7]
+      } else {
+        this.timeLeft = 60;
+      }
+    }, 1000)
+  }
+
+  pauseTimer() {
+    clearInterval(this.interval);
+  }
+
+  apexCounterChart() {
+    this.chatLoader = true;
+    this.chartOptions = {
+      series: [this.timeLeft * 1.7],
+      chart: {
+        height: 150,
+        type: "radialBar",
+        offsetY: -10
+      },
+      plotOptions: {
+        radialBar: {
+          startAngle: -135,
+          endAngle: 135,
+          dataLabels: {
+            name: {
+              fontSize: "16px",
+              color: undefined,
+              offsetY: 120
+            },
+            value: {
+              offsetY: 56,
+              fontSize: "22px",
+              color: undefined,
+
+              formatter: function (val) {
+                return  Math.round(val / 1.7) + "sec";
+              }
+            }
+          }
+        }
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shade: "dark",
+          shadeIntensity: 0.15,
+          inverseColors: false,
+          opacityFrom: 1,
+          opacityTo: 1,
+          stops: [0, 30, 60]
+        }
+      },
+      stroke: {
+        dashArray: 2
+      },
+      labels: [""]
+    };
+  }
+  optSend:boolean = false
   resetPasswordUser() {
     console.log(this.resetPassword.value);
     this.verify = 'otpVerify'
 
   }
 
+  optFormUser(){
+
+  }
+
   otpChecked: any;
   otpBtn: boolean = false
+  
 
   optCheck(value) {
     if (this.otpChecked.length == '5') {
@@ -96,8 +181,25 @@ export class ResetpasswordComponent implements OnInit {
   }
 
 
+  sendOtpCount:number = 0
   otpVerifyUser() {
+    // this.verify = 'passVerify'
+    this.optSend = true
+
+    setTimeout(() => {
+      this.optSend = false
+      if(this.sendOtpCount  == 3){
     this.verify = 'passVerify'
+
+      }
+      this.sendOtpCount++
+      
+
+    }, 10000);
+  }
+
+  resendOTP(){
+    
   }
 
 
@@ -109,6 +211,7 @@ export class ResetpasswordComponent implements OnInit {
     this.currTime = timer(1000, 1000).subscribe(() => (this.obsTimer = this.obsTimer - 1000))
     this.sourceSubscribe = timer(data, 60000).subscribe((val) => {
       this.obsTimer = this.counterReset;
+
     });
 
   }
@@ -120,56 +223,18 @@ export class ResetpasswordComponent implements OnInit {
 
     this.currTime ? this.currTime.unsubscribe() : '';
   }
- 
 
-apexCounterChart(){
-  this.chatLoader=true;
-  this.chartOptions = {
-    series: [67],
-    chart: {
-      height: 350,
-      type: "radialBar",
-      offsetY: -10
-    },
-    plotOptions: {
-      radialBar: {
-        startAngle: -135,
-        endAngle: 135,
-        dataLabels: {
-          name: {
-            fontSize: "16px",
-            color: undefined,
-            offsetY: 120
-          },
-          value: {
-            offsetY: 76,
-            fontSize: "22px",
-            color: undefined,
-            formatter: function(val) {
-              return val + "%";
-            }
-          }
-        }
-      }
-    },
-    fill: {
-      type: "gradient",
-      gradient: {
-        shade: "dark",
-        shadeIntensity: 0.15,
-        inverseColors: false,
-        opacityFrom: 1,
-        opacityTo: 1,
-        stops: [0, 50, 65, 91]
-      }
-    },
-    stroke: {
-      dashArray: 4
-    },
-    labels: ["Median Ratio"]
-  };
 
-}
+
+
+  hostChartView: any = []
+  time: number = 0;
+  display;
+  counter = timer(0, 1000);
+  public clock;
+
+
+  makeData() { }
 
 
 

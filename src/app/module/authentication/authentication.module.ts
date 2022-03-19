@@ -7,6 +7,7 @@ import { ResetpasswordComponent } from './resetpassword/resetpassword.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { SharedModule } from 'src/app/sharedModule/shared.module';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
   imports: [
     CommonModule,
     FormsModule,
+    SharedModule,
     ReactiveFormsModule,NgApexchartsModule,
     AuthenticationRoutingModule,
       
