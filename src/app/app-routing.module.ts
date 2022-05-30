@@ -1,21 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SigninComponent } from './module/authentication/signin/signin.component';
 import { BlanktemplateComponent } from './template/blanktemplate/blanktemplate.component';
 import { HeaderComponent } from './template/header/header.component';
 
 
+
+
+
+
+
+
+
 const routes: Routes = [
-  // {path:'',component:HeaderComponent},
+  // {path:'',component:TestComponent},
   {
-    path: '', component: BlanktemplateComponent,
+    path: 'dashboard', component: BlanktemplateComponent,
     loadChildren: () => import('./module/authentication/authentication.module').then(m => m.AuthenticationModule)
   },
-  
+  // dashboard
   {
-    path: 'dashboard', component: HeaderComponent,
+    path: '', component: HeaderComponent,
     loadChildren: () => import('./module/dashboard/dashboard.module').then(m => m.DashboardModule)
   },
+
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+
+  //  {path: 'graphDetails', component: GraphDetailComponent},
+  { path: '**', redirectTo: 'dashboard' },
   
 
 
@@ -23,6 +34,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+ 
+
 })
 export class AppRoutingModule { }

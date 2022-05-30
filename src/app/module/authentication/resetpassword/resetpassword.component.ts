@@ -23,6 +23,7 @@ export type ChartOptions = {
 };
 
 
+import { Routes, RouterModule, Router } from "@angular/router";
 
 
 
@@ -43,11 +44,12 @@ export class ResetpasswordComponent implements OnInit {
   chatLoader: boolean = false;
 
 
-  verify: string = 'verify';
+  verify: string = 'emailVerify';
 
   couter: any;
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router:Router
   ) {
 
     this.resetPassword = this.fb.group({
@@ -65,7 +67,9 @@ export class ResetpasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.verify = 'otpVerify'
+    // console.log(this.router);
+    
+    // this.verify = 'otpVerify'
     this.timerStart(0)
     this.apexCounterChart()
     this.startTimer()
