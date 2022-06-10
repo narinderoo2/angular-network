@@ -10,6 +10,7 @@ import { BlanktemplateComponent } from './template/blanktemplate/blanktemplate.c
 import { TestComponent } from './module/test/test.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DpDatePickerModule } from 'ng2-date-picker';
+import { RegionmanagementComponent } from './module/setup/regionmanagement/regionmanagement.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { DpDatePickerModule } from 'ng2-date-picker';
     SidebarComponent,
     BlanktemplateComponent,
     TestComponent,
+    RegionmanagementComponent,
   ],
 
   imports: [

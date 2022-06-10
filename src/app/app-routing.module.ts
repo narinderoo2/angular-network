@@ -4,18 +4,14 @@ import { BlanktemplateComponent } from './template/blanktemplate/blanktemplate.c
 import { HeaderComponent } from './template/header/header.component';
 
 
-
-
-
-
-
-
-
 const routes: Routes = [
-  // {path:'',component:TestComponent},
   {
     path: 'dashboard', component: BlanktemplateComponent,
     loadChildren: () => import('./module/authentication/authentication.module').then(m => m.AuthenticationModule)
+  },
+  {
+    path: 'setup', component: HeaderComponent,
+    loadChildren: () => import('./module/setup/setup.module').then(m => m.SetupModule)
   },
   // dashboard
   {

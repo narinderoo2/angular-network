@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidebarComponent } from 'src/app/shared/componet/sidebar/sidebar.component';
-import { NumberDirective } from '../shared/directive/number.directive';
+import { DigitOnlyDirective } from '../shared/directive/digit-only.directive';
 
 
 
 @NgModule({
-  declarations: [NumberDirective ],
+  declarations: [DigitOnlyDirective ],
   imports: [
     CommonModule
   ],
-  exports:[NumberDirective]
+  exports:[DigitOnlyDirective]
 })
 export class SharedModule { }

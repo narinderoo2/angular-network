@@ -16,8 +16,7 @@
                             </a>
 
                             <ul class="sidebar-nav">
-                             
-                                <li class="sidebar-item">
+                                <li class="sidebar-item"  [routerLinkActive]="['active']">
                                     <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed"
                                         aria-expanded="false">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -32,11 +31,7 @@
                                     <ul id="pages" class="sidebar-dropdown list-unstyled collapse"
                                         data-bs-parent="#sidebar">
                                         <li class="sidebar-item"><a class="sidebar-link"
-                                                href="javascript:void(0);">User Management</a></li>
-
-
-
-
+                                            routerLink="/setup/user-listing">User Management</a></li>
                                         <li class="sidebar-item"><a class="sidebar-link"
                                                 href="pages-settings.html">Settings</a></li>
                                         <li class="sidebar-item"><a class="sidebar-link"
