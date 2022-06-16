@@ -8,9 +8,9 @@ loginUser.emailClheck = (req,res)=>{
     let query = `call forgetPassword("${data.email}")`;
     connection.query(query, (err, result) => {
 if(err){
-res.end('resultCode'='0','result'=err)
+res.end({'resultCode':'0','result':err})
 }else{
-    res.end('resultCode'='1','result'=result)
+    res.end({'resultCode':'1','result':result})
 
 }
     })

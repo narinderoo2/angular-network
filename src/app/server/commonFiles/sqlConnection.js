@@ -13,7 +13,7 @@ const connectionCreate = function connect() {
     user: "root",
     password: "root",
     connectionLimit: 5, //mysql connection pool length
-    database: "node"
+    database: "network"
 
   }
 

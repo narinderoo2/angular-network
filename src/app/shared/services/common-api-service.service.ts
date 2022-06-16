@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,map} from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -13,4 +14,48 @@ export class CommonApiServiceService {
   public getRequest(API_URL: string): Observable<any> {
     return this.http.get(API_URL);
   }
+
+
+  public postRequest(API_URL: any, queryparam: any): Observable<any> {
+    return this.http
+      .post(API_URL, queryparam)
+      .pipe(map((response: Response) => response));
+  }
+
+  createFormData(item) {
+    let form_data = new FormData();
+    for (var key in item) {
+      let value = '';
+
+      console.log(key,item,'key');
+      
+      if (item[key] || item[key] == 0) {
+        value = item[key];
+      }
+      form_data.append(key, value);
+    }
+    return form_data;
+  }
+
+  callAlert(
+    title = '',
+    msg = 'Unable to fetch the data, Please contact system administrator or try again later!',
+    icon: 'success' | 'error' | 'warning' | 'info' | 'question' = 'error',
+    timer: number = 10000
+  ) {
+    Swal.fire({
+      title: title,
+      icon: icon,
+      html: msg,
+      timer: timer,
+      showCloseButton: true,
+      showCancelButton: false,
+      focusConfirm: false,
+      showConfirmButton: false,
+      confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
+      confirmButtonAriaLabel: '',
+      cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+    });
+  }
+
 }

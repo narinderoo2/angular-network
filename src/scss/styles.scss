@@ -2,12 +2,91 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
 @import 'include/_table';
+@import 'include/_form';
+
 @import 'include/ng_Select';
 
 .profileDrop .ng-dropdown-panel{
   border: none;
   width: 200px;
 }
+
+
+.table-responsive.Recentevents input[type="color"]  {
+  width: 1.9rem;
+  color: var(--text-color) !important;
+  background-color: var(--bordercolor);
+  outline: 0;
+  box-shadow: none;
+  cursor: pointer;
+  height: 30px;
+  padding: 2px;
+}
+
+
+.table-striped>tbody>tr:nth-of-type(odd)>*,
+.custom-table-hover .table-striped>tbody>tr:nth-of-type(odd)>*,
+.host-table>tbody>tr:nth-of-type(odd)>* {
+  color: var(--text-color);
+  }
+
+  .custom-bg {
+    background: var(--table-Bg-Color);
+    padding: 10px 16px;
+    box-shadow: 0px -20px 100px #0000001a;
+  }
+
+
+  
+.custom-table .table-striped thead tr th:first-of-type,
+.custom-table .table-striped tbody tr:nth-child(even) th {
+  border-radius: 10px 0px 0px 10px;
+}
+.custom-table .table-striped thead tr th:last-of-type,
+.custom-table .table-striped tbody tr:nth-child(even) td:last-of-type {
+  border-radius: 0px 10px 10px 0px;
+}
+.custom-table .table td,
+.custom-table .table th {
+  border: none;
+  color: var(--text-color);
+}
+.custom-table .table-striped tbody tr td{
+  z-index: 1;
+}
+.table-icons span:first-child {
+  margin-right: 0.5em;
+}
+.table-icons div a {
+  color: var(--bs-blue);
+}
+.table-icons a {
+  font-size: 15px;
+}
+.table td {
+  font-size: 12px;
+}
+
+
+
+.Recentevents select option{
+  color: var(--text-color);
+  font-size: 12px;
+}
+.Recentevents select option:hover{
+  color: var(--text-color);
+  background-color: var(--lightblue);
+}
+
+.Recentevents input::placeholder {
+  color: rgba(var(--breadcrumb-a), var(--breadcrumb-a-o-s));
+}
+
+
+
+
+
+
 
 :root {
   --bs-blue: #3f80ea;
@@ -14419,120 +14498,6 @@ a.badge-soft-dark:focus {
   width: 15px
 }
 
-.btn-danger,
-.btn-danger.disabled,
-.btn-danger.focus,
-.btn-danger.hover:not(:disabled):not(.disabled),
-.btn-danger:disabled,
-.btn-danger:focus,
-.btn-danger:hover:not(:disabled):not(.disabled),
-.btn-danger:not(:disabled):not(.disabled).active,
-.btn-danger:not(:disabled):not(.disabled):active,
-.btn-dark,
-.btn-dark.disabled,
-.btn-dark.focus,
-.btn-dark.hover:not(:disabled):not(.disabled),
-.btn-dark:disabled,
-.btn-dark:focus,
-.btn-dark:hover:not(:disabled):not(.disabled),
-.btn-dark:not(:disabled):not(.disabled).active,
-.btn-dark:not(:disabled):not(.disabled):active,
-.btn-info,
-.btn-info.disabled,
-.btn-info.focus,
-.btn-info.hover:not(:disabled):not(.disabled),
-.btn-info:disabled,
-.btn-info:focus,
-.btn-info:hover:not(:disabled):not(.disabled),
-.btn-info:not(:disabled):not(.disabled).active,
-.btn-info:not(:disabled):not(.disabled):active,
-.btn-light,
-.btn-light.disabled,
-.btn-light.focus,
-.btn-light.hover:not(:disabled):not(.disabled),
-.btn-light:disabled,
-.btn-light:focus,
-.btn-light:hover:not(:disabled):not(.disabled),
-.btn-light:not(:disabled):not(.disabled).active,
-.btn-light:not(:disabled):not(.disabled):active,
-.btn-outline-danger.hover:not(:disabled):not(.disabled),
-.btn-outline-danger:hover:not(:disabled):not(.disabled),
-.btn-outline-danger:not(:disabled):not(.disabled).active,
-.btn-outline-danger:not(:disabled):not(.disabled):active,
-.btn-outline-dark.hover:not(:disabled):not(.disabled),
-.btn-outline-dark:hover:not(:disabled):not(.disabled),
-.btn-outline-dark:not(:disabled):not(.disabled).active,
-.btn-outline-dark:not(:disabled):not(.disabled):active,
-.btn-outline-info.hover:not(:disabled):not(.disabled),
-.btn-outline-info:hover:not(:disabled):not(.disabled),
-.btn-outline-info:not(:disabled):not(.disabled).active,
-.btn-outline-info:not(:disabled):not(.disabled):active,
-.btn-outline-light.hover:not(:disabled):not(.disabled),
-.btn-outline-light:hover:not(:disabled):not(.disabled),
-.btn-outline-light:not(:disabled):not(.disabled).active,
-.btn-outline-light:not(:disabled):not(.disabled):active,
-.btn-outline-primary.hover:not(:disabled):not(.disabled),
-.btn-outline-primary:hover:not(:disabled):not(.disabled),
-.btn-outline-primary:not(:disabled):not(.disabled).active,
-.btn-outline-primary:not(:disabled):not(.disabled):active,
-.btn-outline-secondary.hover:not(:disabled):not(.disabled),
-.btn-outline-secondary:hover:not(:disabled):not(.disabled),
-.btn-outline-secondary:not(:disabled):not(.disabled).active,
-.btn-outline-secondary:not(:disabled):not(.disabled):active,
-.btn-outline-success.hover:not(:disabled):not(.disabled),
-.btn-outline-success:hover:not(:disabled):not(.disabled),
-.btn-outline-success:not(:disabled):not(.disabled).active,
-.btn-outline-success:not(:disabled):not(.disabled):active,
-.btn-outline-warning.hover:not(:disabled):not(.disabled),
-.btn-outline-warning:hover:not(:disabled):not(.disabled),
-.btn-outline-warning:not(:disabled):not(.disabled).active,
-.btn-outline-warning:not(:disabled):not(.disabled):active,
-.btn-primary,
-.btn-primary.disabled,
-.btn-primary.focus,
-.btn-primary.hover:not(:disabled):not(.disabled),
-.btn-primary:disabled,
-.btn-primary:focus,
-.btn-primary:hover:not(:disabled):not(.disabled),
-.btn-primary:not(:disabled):not(.disabled).active,
-.btn-primary:not(:disabled):not(.disabled):active,
-.btn-secondary,
-.btn-secondary.disabled,
-.btn-secondary.focus,
-.btn-secondary.hover:not(:disabled):not(.disabled),
-.btn-secondary:disabled,
-.btn-secondary:focus,
-.btn-secondary:hover:not(:disabled):not(.disabled),
-.btn-secondary:not(:disabled):not(.disabled).active,
-.btn-secondary:not(:disabled):not(.disabled):active,
-.btn-success,
-.btn-success.disabled,
-.btn-success.focus,
-.btn-success.hover:not(:disabled):not(.disabled),
-.btn-success:disabled,
-.btn-success:focus,
-.btn-success:hover:not(:disabled):not(.disabled),
-.btn-success:not(:disabled):not(.disabled).active,
-.btn-success:not(:disabled):not(.disabled):active,
-.btn-warning,
-.btn-warning.disabled,
-.btn-warning.focus,
-.btn-warning.hover:not(:disabled):not(.disabled),
-.btn-warning:disabled,
-.btn-warning:focus,
-.btn-warning:hover:not(:disabled):not(.disabled),
-.btn-warning:not(:disabled):not(.disabled).active,
-.btn-warning:not(:disabled):not(.disabled):active,
-.show>.btn-danger.dropdown-toggle,
-.show>.btn-dark.dropdown-toggle,
-.show>.btn-info.dropdown-toggle,
-.show>.btn-light.dropdown-toggle,
-.show>.btn-primary.dropdown-toggle,
-.show>.btn-secondary.dropdown-toggle,
-.show>.btn-success.dropdown-toggle,
-.show>.btn-warning.dropdown-toggle {
-  color: #fff
-}
 
 .btn-facebook {
   background-color: #3b5998;
@@ -16940,137 +16905,8 @@ body[data-sidebar-behavior=compact][data-sidebar-position=right] .sidebar.collap
   width: 20px
 }
 
-.table tbody,
-.table td,
-.table tfoot,
-.table th,
-.table thead,
-.table tr {
-  border-color: #dee6ed
-}
 
-.table>:not(:first-child) {
-  border-top-width: 1px
-}
 
-.card>.dataTables_wrapper .table.dataTable,
-.card>.table,
-.card>.table-responsive-lg .table,
-.card>.table-responsive-md .table,
-.card>.table-responsive-sm .table,
-.card>.table-responsive-xl .table,
-.card>.table-responsive .table {
-  border-bottom: 0;
-  border-left: 0;
-  border-right: 0;
-  margin-bottom: 0
-}
-
-.card>.dataTables_wrapper .table.dataTable td:first-child,
-.card>.dataTables_wrapper .table.dataTable th:first-child,
-.card>.table-responsive-lg .table td:first-child,
-.card>.table-responsive-lg .table th:first-child,
-.card>.table-responsive-md .table td:first-child,
-.card>.table-responsive-md .table th:first-child,
-.card>.table-responsive-sm .table td:first-child,
-.card>.table-responsive-sm .table th:first-child,
-.card>.table-responsive-xl .table td:first-child,
-.card>.table-responsive-xl .table th:first-child,
-.card>.table-responsive .table td:first-child,
-.card>.table-responsive .table th:first-child,
-.card>.table td:first-child,
-.card>.table th:first-child {
-  border-left: 0;
-  padding-left: 1.25rem
-}
-
-.card>.dataTables_wrapper .table.dataTable td:last-child,
-.card>.dataTables_wrapper .table.dataTable th:last-child,
-.card>.table-responsive-lg .table td:last-child,
-.card>.table-responsive-lg .table th:last-child,
-.card>.table-responsive-md .table td:last-child,
-.card>.table-responsive-md .table th:last-child,
-.card>.table-responsive-sm .table td:last-child,
-.card>.table-responsive-sm .table th:last-child,
-.card>.table-responsive-xl .table td:last-child,
-.card>.table-responsive-xl .table th:last-child,
-.card>.table-responsive .table td:last-child,
-.card>.table-responsive .table th:last-child,
-.card>.table td:last-child,
-.card>.table th:last-child {
-  border-right: 0;
-  padding-right: 1.25rem
-}
-
-.card>.dataTables_wrapper .table.dataTable tr:first-child td,
-.card>.dataTables_wrapper .table.dataTable tr:first-child th,
-.card>.table-responsive-lg .table tr:first-child td,
-.card>.table-responsive-lg .table tr:first-child th,
-.card>.table-responsive-md .table tr:first-child td,
-.card>.table-responsive-md .table tr:first-child th,
-.card>.table-responsive-sm .table tr:first-child td,
-.card>.table-responsive-sm .table tr:first-child th,
-.card>.table-responsive-xl .table tr:first-child td,
-.card>.table-responsive-xl .table tr:first-child th,
-.card>.table-responsive .table tr:first-child td,
-.card>.table-responsive .table tr:first-child th,
-.card>.table tr:first-child td,
-.card>.table tr:first-child th {
-  border-top: 0
-}
-
-.card>.dataTables_wrapper .table.dataTable tr:last-child td,
-.card>.table-responsive-lg .table tr:last-child td,
-.card>.table-responsive-md .table tr:last-child td,
-.card>.table-responsive-sm .table tr:last-child td,
-.card>.table-responsive-xl .table tr:last-child td,
-.card>.table-responsive .table tr:last-child td,
-.card>.table tr:last-child td {
-  border-bottom: 0
-}
-
-.card .card-header+.table {
-  border-top: 0
-}
-
-.table-action a {
-  color: #6c757d
-}
-
-.table-action a:hover {
-  color: #212529
-}
-
-.table-action .feather {
-  height: 18px;
-  width: 18px
-}
-
-.table>tbody>tr>td {
-  vertical-align: middle
-}
-
-.card>.dataTables_wrapper .table.dataTable {
-  margin-bottom: 0 !important;
-  margin-top: 0 !important
-}
-
-.card>.dataTables_wrapper .dataTables_info {
-  padding: 1rem 1.25rem
-}
-
-.card>.dataTables_wrapper .dataTables_paginate {
-  padding: .6rem 1.25rem
-}
-
-.dt-bootstrap4 {
-  width: calc(100% - 2px)
-}
-
-table.dataTable tbody>tr.selected,
-table.dataTable tbody>tr>.selected {
-  --bs-table-accent-bg: $primary
-}
 
 .tab {
   margin-bottom: 2rem
@@ -21671,159 +21507,6 @@ body.tempusdominus-bootstrap-datetimepicker-widget-day-click {
   cursor: pointer
 }
 
-table.dataTable tbody td.selected,
-table.dataTable tbody th.selected,
-table.dataTable tbody tr.selected {
-  color: #fff
-}
-
-table.dataTable tbody td.selected a,
-table.dataTable tbody th.selected a,
-table.dataTable tbody tr.selected a {
-  color: #a2d4ed
-}
-
-table.dataTable tbody>tr.selected,
-table.dataTable tbody>tr>.selected {
-  background-color: #3f80ea
-}
-
-table.dataTable.display tbody>tr.odd.selected,
-table.dataTable.display tbody>tr.odd>.selected,
-table.dataTable.stripe tbody>tr.odd.selected,
-table.dataTable.stripe tbody>tr.odd>.selected {
-  background-color: #3e7de5
-}
-
-table.dataTable.display tbody>tr.selected:hover,
-table.dataTable.display tbody>tr>.selected:hover,
-table.dataTable.hover tbody>tr.selected:hover,
-table.dataTable.hover tbody>tr>.selected:hover {
-  background-color: #3d7be2
-}
-
-table.dataTable.display tbody>tr.selected>.sorting_1,
-table.dataTable.display tbody>tr.selected>.sorting_2,
-table.dataTable.display tbody>tr.selected>.sorting_3,
-table.dataTable.display tbody>tr>.selected,
-table.dataTable.order-column tbody>tr.selected>.sorting_1,
-table.dataTable.order-column tbody>tr.selected>.sorting_2,
-table.dataTable.order-column tbody>tr.selected>.sorting_3,
-table.dataTable.order-column tbody>tr>.selected {
-  background-color: #3e7de5
-}
-
-table.dataTable.display tbody>tr.odd.selected>.sorting_1,
-table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_1 {
-  background-color: #3c79dd
-}
-
-table.dataTable.display tbody>tr.odd.selected>.sorting_2,
-table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_2 {
-  background-color: #3c7adf
-}
-
-table.dataTable.display tbody>tr.odd.selected>.sorting_3,
-table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_3 {
-  background-color: #3d7be1
-}
-
-table.dataTable.display tbody>tr.even.selected>.sorting_1,
-table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_1 {
-  background-color: #3e7de5
-}
-
-table.dataTable.display tbody>tr.even.selected>.sorting_2,
-table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_2 {
-  background-color: #3e7ee7
-}
-
-table.dataTable.display tbody>tr.even.selected>.sorting_3,
-table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_3 {
-  background-color: #3f7fe9
-}
-
-table.dataTable.display tbody>tr.odd>.selected,
-table.dataTable.order-column.stripe tbody>tr.odd>.selected {
-  background-color: #3c79dd
-}
-
-table.dataTable.display tbody>tr.even>.selected,
-table.dataTable.order-column.stripe tbody>tr.even>.selected {
-  background-color: #3e7de5
-}
-
-table.dataTable.display tbody>tr.selected:hover>.sorting_1,
-table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_1 {
-  background-color: #3a76d7
-}
-
-table.dataTable.display tbody>tr.selected:hover>.sorting_2,
-table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_2 {
-  background-color: #3a76d8
-}
-
-table.dataTable.display tbody>tr.selected:hover>.sorting_3,
-table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_3 {
-  background-color: #3b78db
-}
-
-table.dataTable.display tbody>tr:hover>.selected,
-table.dataTable.display tbody>tr>.selected:hover,
-table.dataTable.order-column.hover tbody>tr:hover>.selected,
-table.dataTable.order-column.hover tbody>tr>.selected:hover {
-  background-color: #3a76d7
-}
-
-table.dataTable tbody td.select-checkbox,
-table.dataTable tbody th.select-checkbox {
-  position: relative
-}
-
-table.dataTable tbody td.select-checkbox:after,
-table.dataTable tbody td.select-checkbox:before,
-table.dataTable tbody th.select-checkbox:after,
-table.dataTable tbody th.select-checkbox:before {
-  box-sizing: border-box;
-  display: block;
-  height: 12px;
-  left: 50%;
-  position: absolute;
-  top: 1.2em;
-  width: 12px
-}
-
-table.dataTable tbody td.select-checkbox:before,
-table.dataTable tbody th.select-checkbox:before {
-  border: 1px solid #000;
-  border-radius: 3px;
-  content: " ";
-  margin-left: -6px;
-  margin-top: -6px
-}
-
-table.dataTable tr.selected td.select-checkbox:after,
-table.dataTable tr.selected th.select-checkbox:after {
-  content: "✔";
-  margin-left: -4px;
-  margin-top: -11px;
-  text-align: center;
-  text-shadow: 1px 1px #b0bed9, -1px -1px #b0bed9, 1px -1px #b0bed9, -1px 1px #b0bed9
-}
-
-div.dataTables_wrapper span.select-info,
-div.dataTables_wrapper span.select-item {
-  margin-left: .5em
-}
-
-@media screen and (max-width:640px) {
-
-  div.dataTables_wrapper span.select-info,
-  div.dataTables_wrapper span.select-item {
-    display: block;
-    margin-left: 0
-  }
-}
 
 .daterangepicker {
   background-color: #fff;

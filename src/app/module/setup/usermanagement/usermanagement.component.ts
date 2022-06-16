@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ErrorsMessagesService } from 'src/app/shared/services/errors-messages.service';
 import { CustomValidaionService } from 'src/app/shared/services/custom-validaion.service';
+import { CommonServiceService } from 'src/app/shared/services/common-service.service';
 
 @Component({
   selector: 'app-usermanagement',
@@ -24,6 +25,7 @@ export class UsermanagementComponent implements OnInit {
   userListSubscribtion$: Subscription;
   timeZoneSubscription$: Subscription;
   countryCodeSubscription$: Subscription;
+  creataDataSubscrption$: Subscription;
 
 
   pageRecordsTotal: number = 0;
@@ -51,6 +53,7 @@ export class UsermanagementComponent implements OnInit {
 
   constructor(private commonHelperservice: CommonhelperService,
     private commonService: CommonApiServiceService,
+    private commonserviceService: CommonServiceService,
     private endpoints: EndPointService,
     private modalService: NgbModal,
     private _form: FormBuilder,
@@ -98,21 +101,20 @@ export class UsermanagementComponent implements OnInit {
     this.errorMessages = this.ems.userManagementErrorMessages;
 
     this.timeZoneSubscription$ = this.commonService.getRequest('assets/data/timeZone.json').subscribe((res) => {
-      console.log(res);
       this.timeZone = res
       
     })
     this.countryCodeSubscription$ = this.commonService.getRequest('assets/data/countrycode.json').subscribe((res) => {
-      console.log(res);
       this.countryList = res.map((item) => [
         item[0].replace(/ *\([^)]*\) */g, ''),
         item[1],
         item[2],
       ]);
-      // this.timeZone = res
       
     })
-this.userForm.reset()
+// this.userForm.reset()
+this.resetForm()
+this.getUserList()
   }
 
 
@@ -154,6 +156,8 @@ this.userForm.reset()
           this.search,
           this.ordering
         );
+        console.log(this.endpoints.USER_LISTING);
+        
         this.userListSubscribtion$ = this.commonService
           .getRequest(this.endpoints.USER_LISTING + '?' + params)
           .pipe(debounceTime(500))
@@ -213,8 +217,8 @@ this.userForm.reset()
         { orderable: true, data: 'phone_number' },
         { orderable: false, data: '' },
         { orderable: false, data: 'last_login' },
-        { orderable: false, data: 'is_active' },
-        { orderable: false, data: '' },
+        // { orderable: false, data: 'is_active' },
+        // { orderable: false, data: '' },
       ],
     };
   }
@@ -237,19 +241,91 @@ this.userForm.reset()
     });
   }
 
-  createNewUser(formData){
-    console.log(formData);
-    
+  resetForm(){
+    // if(this.isEditUser){
+      this.commonserviceService.resetForm(this.userForm)
+      console.log(this.userForm.value);
+      
+    // }
   }
 
-  countrylNUmber:string =''
-  countryCode(event){
-    console.log(event);
-    console.log(this.countrylNUmber,'====');
 
-    // let elements = document.getElementById('#dialCodeData')
-    var elements = document.getElementsByClassName('dialCodeData');
-    console.log(elements,'-------=====================');
+
+
+ 
+  
+
+
+  createNewUser(){
+    let data = this.userForm.value
+    console.log(data);
+    
+    this.userLoaderData = true;
+    if (this.userForm.invalid) {
+      this.commonserviceService.validateAllFields(this.userForm);
+      this.userLoaderData = false;
+      return;
+    }
+
+
+    //create a new form data
+    let formData = {
+      firstName:data.first_name,
+      lastName:data.last_name,
+      email:data.email,
+      phoneNumber:data.phone_number,
+      countryCode:data.country_code,
+      role:data.role,
+      timeZone:data.timeZone,
+      userPassword:data.userPassword,
+      confirmPassword:data.confirmPassword
+      
+    };
+
+    this.creataDataSubscrption$ = this.commonService
+      .postRequest( this.endpoints.USER_CREATE, formData)
+      .subscribe({
+        next: 
+        (response) => {
+          this.userLoaderData = false;
+
+          if (response.resultCode == '1') {
+            this.modalReference ? this.modalReference.close() : '';
+            this.commonService.callAlert(
+              '',
+              response.resultDescription,
+              'success'
+            );
+
+
+          } else {
+            this.commonService.callAlert(
+              '',
+              response.errorMessage,
+              'error'
+            );
+          }
+         
+        },
+       error: (error) => {
+          this.commonService.callAlert();
+          // this.disbleDoubleClick = true;
+          // this.playbookLoaderData = false;
+        }}
+      );
+
+
+
+
+  }
+
+  countryCode(event){
+
+    setTimeout(() => {
+      var e: any = document.getElementById('dialCodeData')
+      this.countryCodeData = e.getElementsByClassName('getAtr')[0].getAttribute('dailCode');
+    }, 500);
+   
     
     
 

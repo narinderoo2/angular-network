@@ -1,17 +1,15 @@
-
-
 <section>
 
   <div class="row">
     <div class="col-md-12">
-      <ul class="nav nav-pills dashboard-tabs">
-      
-        <li class="nav-item-table"  title="Create User">
-          <a class="nav-link-icon green-color" (click)="openPopUp(userListPopup,'create')" >   <i class="fa fa-plus"
+      <ul class="nav nav-pills">
+
+        <li class="nav-item-table  m-2" title="Create User">
+          <a class="nav-link-icon green-color" (click)="openPopUp(userListPopup,'create')"> <i class="fa fa-plus"
               aria-hidden="true"></i></a>
         </li>
-        <li class="nav-item-table" title="Delete User">
-          <a class="nav-link-icon red-color" >
+        <li class="nav-item-table m-2" title="Delete User">
+          <a class="nav-link-icon red-color">
             <i class="fa fa-trash" aria-hidden="true"></i>
           </a>
         </li>
@@ -28,64 +26,89 @@
           </div>
         </li> -->
 
-        
+
       </ul>
     </div>
   </div>
-  <div class="card flex-fill">
-    <div id="datatables-dashboard-projects_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-      <div class="row">
-        <div class="col-sm-12">
-  
-  
-  
-          <table id="datatables-dashboard-projects" class="table table-striped my-0 dataTable no-footer"
-            aria-describedby="datatables-dashboard-projects_info" 
-            
-            datatable [dtOptions]="dtOptions" width="100%"
-            cellspacing="0" [ngClass]="{ datatable_noRecord: userDataTable?.length != 0 }"
-            >
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th >Start Date</th>
-                <th >End Date</th>
-                <th >Status</th>
-                <th>Assignee</th>
-                <th >Assignee</th>
-                <th >Assignee</th>
-              </tr>
-            </thead>                                
-            <tbody>
-              <tr class="odd">
-                <td class="sorting_1">Project Apollo</td>
-                <td class="d-none d-xl-table-cell">01/01/2021</td>
-                <td class="d-none d-xl-table-cell">31/06/2021</td>
-                <td><span class="badge bg-success">Done</span></td>
-                <td class="d-none d-md-table-cell">Carl Jenkins</td>
-              </tr>
-              <tr class="even">
-                <td class="sorting_1">Project Fireball</td>
-                <td class="d-none d-xl-table-cell">01/01/2021</td>
-                <td class="d-none d-xl-table-cell">31/06/2021</td>
-                <td><span class="badge bg-danger">Cancelled</span></td>
-                <td class="d-none d-md-table-cell">Bertha Martin</td>
-              </tr>
-              <tr class="odd">
-                <td class="sorting_1">Project Hades</td>
-                <td class="d-none d-xl-table-cell">01/01/2021</td>
-                <td class="d-none d-xl-table-cell">31/06/2021</td>
-                <td><span class="badge bg-success">Done</span></td>
-                <td class="d-none d-md-table-cell">Stacie Hall</td>
-              </tr>
-  
-            </tbody>
-          </table>
+
+
+
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <div >
+        <div class="custom-table custom-table-height custom-bg custom-table-hover">
+          <div class="table-responsive Recentevents">
+            <table class="table table-bordered table-striped datatables" datatable [dtOptions]="dtOptions" width="100%"
+              cellspacing="0" [ngClass]="{ datatable_noRecord: userDataTable?.length != 0 }">
+              <thead>
+                <tr>
+                  <th class="first-check" width=30px>
+                    <input class="form-check-input" id="selectAll" type="checkbox"
+                     >
+                    <!--  (click)="selectAllCheckbox()" -->
+                  </th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Create At</th>
+                  <!-- <th >Status</th>
+                  <th >Action</th> -->
+                  <th class="noExport text-center">Status</th>
+                  <th class="text-center noExport">Action</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="userDataTable.length > 0">
+                <tr *ngFor="let row of userDataTable">
+                  <th class="first-check px-2 py-1">
+                    <input class="form-check-input m-0" id="i" name="checkbox" type="checkbox">
+                    <!-- (change)="checkIfallselectedOrNot($event)" -->
+                  </th>
+                  <td>{{row.firstName}}</td>
+                  <td>{{row.email}}</td>
+                  <td class="zoomin">{{row.role}}</td>
+                  <td>{{row.create_at}}</td>
+
+                  <!-- <td>{{ showGroupdDetail(row.groups,1) }}</td>
+                  <td class=" rounded-0">{{row.last_login | DateTimeZone : "UTC" }} </td> -->
+                  <th class="rounded-0">
+                    <!-- <td class="d-none d-md-table-cell">{{row.status}}</td> -->
+
+                    <div class="form-check form-switch  d-flex justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                        [checked]="row.is_active==1 ? true:false" />
+                    </div>
+                  
+                  </th>
+                  <!-- <th class="p-0 text-center rounded-0">
+                    <a href="javascript:void(0);" ngbPopover="Edit" placement="auto" popoverClass="tooltipHover"
+                      triggers="mouseenter:mouseleave" container="body"
+                      (click)="permission.edit && editUser(userListPopup, row)" class="btn-sm me-2"
+                      [ngClass]="(row.email == loginUserId || !permission.edit) ? 'editDisable' : 'edit'"><i
+                        class="fas fa-edit"></i>
+
+                    </a>
+                    <a href="javascript:void(0);" ngbPopover="Delete" placement="auto" popoverClass="tooltipHover"
+                      triggers="mouseenter:mouseleave" container="body"
+                      (click)="row.email !== loginUserId && openPopupDelete(deleteUserModal,row)" class="btn-sm"
+                      [ngClass]="(row.email == loginUserId || !permission.delete) ? 'deleteDisable' : 'delete'"><i
+                        class="fa fa-trash"></i>
+                    </a>
+                  </th> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      
     </div>
+    <div class="col-md-6"></div>
   </div>
+
+
+
+
 </section>
 
 
@@ -95,14 +118,14 @@
     <div class="modal-header ">
       <h5 class="modal-title">Create User</h5>
 
-      <button class="button" type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <button type="button" style="border:none;background-color:white;" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-lg">
       <div class="modal-body p-3">
 
-        <form class="row g-3 form1" [formGroup]="userForm" (ngSubmit)="createNewUser(userForm.value)" >
+        <form class="row g-3 form1" [formGroup]="userForm" (ngSubmit)="createNewUser()">
           <div class="col-md-6" [class.has-danger]="
                 !userForm.get('first_name').valid &&
                 (userForm.get('first_name').dirty ||
@@ -130,7 +153,7 @@
               ">
             <label class="form-label">Last Name </label>
             <input type="text" class="form-control" formControlName="last_name"
-              oninput="this.value = this.value.replace(/[^A-Za-z ]|^ /g,'')" maxlength="150"/>
+              oninput="this.value = this.value.replace(/[^A-Za-z ]|^ /g,'')" maxlength="150" />
             <div *ngFor="let validation of errorMessages.last_name">
               <div class="form-control-feedback" *ngIf="
                     userForm.get('last_name').hasError(validation.type) &&
@@ -168,26 +191,27 @@
             <label for="phone" class="form-label"> Contact Number </label>
             <div class="row">
               <div class="d-flex">
-                <ng-select *ngIf="userForm.get('phone_number').value" formControlName="country_code" appearance="outline" [clearable]="false"
-                  class="dropDown d-inline-block m-0 profileDrop" [searchable]="true" placeholder="" (change)="countryCode($event)"
-                  id="countryArr">
-                  <ng-option *ngFor="let row of countryList dialCodeData" [value]="row[1]" [attr.dailCode]="row[2]">
-                    <div class="iti__flag-box getAtr " [attr.dailCode]="row[2]" >
-                      <div class="iti__flag iti__{{row[1]}}"></div>  <span class="country-name-drop ">{{row[0]}} (+{{row[2]}})</span>
+                <ng-select *ngIf="userForm.get('phone_number').value" formControlName="country_code"
+                  appearance="outline" [clearable]="false" class="dropDown d-inline-block m-0 profileDrop"
+                  [searchable]="true" placeholder="" (change)="countryCode($event)" id="dialCodeData">
+                  <ng-option *ngFor="let row of countryList" class="" [value]="row[1]" [attr.dailCode]="row[2]">
+                    <div class="iti__flag-box getAtr " [attr.dailCode]="row[2]">
+                      <div class="iti__flag iti__{{row[1]}} ]"></div> <span class="country-name-drop ">{{row[0]}}
+                        (+{{row[2]}})</span>
                     </div>
                   </ng-option>
                 </ng-select>
                 <div class="input-group">
-                  <div *ngIf="userForm.get('phone_number').value" class="input-group-text  country-code d-inline-block text-black " style="background-color: var(--select-Bg-Color);
+                  <div *ngIf="userForm.get('phone_number').value"
+                    class="input-group-text  country-code d-inline-block text-black " style="background-color: var(--select-Bg-Color);
                   border: none;"> +{{countryCodeData}} </div>
-                  <input type="number" appDigitOnly class="form-control d-inline-block" style="width: 207px;  border-radius: 0 5px 5px 0"
-                  
-                 formControlName="phone_number"
-                autocomplete="new-password" >
+                  <input type="number" appDigitOnly class="form-control d-inline-block"
+                    style="width: 207px;  border-radius: 0 5px 5px 0" formControlName="phone_number"
+                    autocomplete="new-password">
 
                 </div>
               </div>
-</div>
+            </div>
 
             <div *ngFor="let validation of errorMessages.phone_number">
               <div class="form-control-feedback" *ngIf="
@@ -208,8 +232,7 @@
               Role<span class="red">*</span></label>
             <select class="form-control" formControlName="role">
               <option disabled selected value="null">Select</option>
-              <option  *ngFor="let roles of roleDropDown"
-                value="{{ roles.id }}">
+              <option *ngFor="let roles of roleDropDown" value="{{ roles.id }}">
                 {{ roles.role }}
               </option>
             </select>
@@ -227,20 +250,21 @@
                 !userForm.get('userPassword').valid &&
                 (userForm.get('userPassword').dirty ||
                   userForm.get('userPassword').touched)
-              " >
+              ">
             <label class="form-label">
               Password <span class="red">*</span></label>
 
             <div class="input-group">
-              <input [type]=" passwordShow ? 'text':'password'" class="form-control" formControlName="userPassword" maxlength="15"
-                autocomplete="new-password" />
+              <input [type]=" passwordShow ? 'text':'password'" class="form-control" formControlName="userPassword"
+                maxlength="15" autocomplete="new-password" />
               <span class="input-group-text passwordShowHide">
                 <i class="fa fa-eye-slash" *ngIf="!passwordShow" (click)="passwordShow=true"></i>
                 <i class="fa fa-eye" *ngIf="passwordShow" (click)="passwordShow=false"></i></span>
             </div>
 
             <ng-container *ngFor="let validation of errorMessages.userPassword">
-              <div class="form-control-feedback" *ngIf="userForm.get('userPassword').hasError(validation.type) &&                    (userForm.get('userPassword').dirty || userForm.get('userPassword').touched)" >
+              <div class="form-control-feedback"
+                *ngIf="userForm.get('userPassword').hasError(validation.type) &&                    (userForm.get('userPassword').dirty || userForm.get('userPassword').touched)">
                 - {{ validation.message }}
               </div>
               <div class="form-control-feedback feedback-success"
@@ -260,11 +284,12 @@
             </label>
 
             <div class="input-group">
-              <input  [type]=" passwordShowTwo ? 'text':'password'" class="form-control" formControlName="confirmPassword" maxlength="15" />
+              <input [type]=" passwordShowTwo ? 'text':'password'" class="form-control"
+                formControlName="confirmPassword" maxlength="15" />
               <span class="input-group-text passwordShowHide">
                 <i class="fa fa-eye-slash" *ngIf="!passwordShowTwo" (click)="passwordShowTwo=true"></i>
-                <i class="fa fa-eye" *ngIf="passwordShowTwo" (click)="passwordShowTwo=false"></i> 
-              
+                <i class="fa fa-eye" *ngIf="passwordShowTwo" (click)="passwordShowTwo=false"></i>
+
               </span>
             </div>
 
@@ -285,10 +310,8 @@
             </label>
 
             <div class="input-group">
-              <ng-select formControlName="timeZoneDropDown" appearance="outline" [clearable]="false" style="width:100%"
-                >
-                <ng-option 
-                  *ngFor="let zon of timeZone; let i = index" [value]="i">{{
+              <ng-select formControlName="timeZoneDropDown" appearance="outline" [clearable]="false" style="width:100%">
+                <ng-option *ngFor="let zon of timeZone; let i = index" [value]="i">{{
                   zon.text }}</ng-option>
               </ng-select>
 
@@ -296,11 +319,10 @@
           </div>
 
           <div class="col-12 d-flex justify-content-end mt-4">
-            <button type="button" [disabled]="!userForm.dirty"
-              class="btn button-transparent me-2">
+            <button type="button" [disabled]="!userForm.dirty" class="btn button-transparent me-2">
               Reset
             </button>
-            <button type="submit" [disabled]="!userForm.valid " class="btn btn-primary me-2">
+            <button type="submit" [disabled]="!userForm.valid" class="btn btn-primary me-2">
               Submit
             </button>
           </div>
@@ -343,5 +365,3 @@
     </div>
   </div>
 </div> -->
-
-
