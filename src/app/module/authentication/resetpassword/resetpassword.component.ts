@@ -69,7 +69,7 @@ export class ResetpasswordComponent implements OnInit {
   ngOnInit(): void {
     // console.log(this.router);
     
-    // this.verify = 'otpVerify'
+    this.verify = 'otpVerify'
     this.timerStart(0)
     this.apexCounterChart()
     this.startTimer()

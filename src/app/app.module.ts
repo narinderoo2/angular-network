@@ -11,6 +11,7 @@ import { TestComponent } from './module/test/test.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DpDatePickerModule } from 'ng2-date-picker';
 import { RegionmanagementComponent } from './module/setup/regionmanagement/regionmanagement.component';
+import { RegexWithvalidationDirective } from './shared/directive/regex-withvalidation.directive';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { RegionmanagementComponent } from './module/setup/regionmanagement/regio
     BlanktemplateComponent,
     TestComponent,
     RegionmanagementComponent,
+    RegexWithvalidationDirective,
   ],
 
   imports: [

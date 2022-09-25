@@ -8,26 +8,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SigninComponent implements OnInit {
 
-  public signin:FormGroup
+  signInForm: FormGroup ;
 
-  constructor(
-    private fb:FormBuilder
-
-  ) { 
-    this.signin = this.fb.group({
-      email:['',[Validators.required]],
-      password:['',[Validators.required]]
+  constructor(private _form:FormBuilder) {
+    this.signInForm = this._form.group({
+      email:['',[Validators.required,Validators.email]],
+      password:['',[Validators.required,Validators.minLength(3),Validators.maxLength(15)]]
     })
-  }
+   }
 
   ngOnInit(): void {
-  }
-
-  signinUser(){
-    console.log('===');
-    
-    console.log(this.signin.value);
-    
   }
 
 }
