@@ -1,6 +1,7 @@
 
-import { Directive, forwardRef } from '@angular/core';
-import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
+import { Directive, forwardRef, Input } from '@angular/core';
+import { AbstractControl, NG_VALIDATORS } from '@angular/forms';
+import { regexValidation } from 'src/app/shared/constant/regexValidation'
 
 @Directive({
   selector: '[appRegexWithvalidation]',
@@ -9,21 +10,21 @@ import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
   ]
 })
 export class RegexWithvalidationDirective {
-  private _PHONENUMBER_REGEXP = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
-  constructor() {
-  }
+  @Input() valueValidation: string;
+  private regexvalidation = regexValidation;
 
   validate(formController: AbstractControl) {
     return Object.assign(
-      this._phonenumberValidator(formController)
+      this.reactivateFormCheck(formController)
     )
   }
 
-  private _isEmptyInputValue(value: any): boolean {
-    return value == null || value.length === 0;
-  }
 
-  private _phonenumberValidator(formController: AbstractControl) {
-    return this._PHONENUMBER_REGEXP.test(formController.value) ? {} : { phonenumber: true };
+  private reactivateFormCheck(formController: AbstractControl) {
+    if (!formController.value) {
+      return {}
+    }
+
+    return this.regexvalidation.regexUse[this.valueValidation].test(formController.value) ? {} : { pattern: true };
   }
 }

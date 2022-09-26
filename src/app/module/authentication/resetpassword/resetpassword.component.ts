@@ -24,6 +24,7 @@ export type ChartOptions = {
 
 
 import { Routes, RouterModule, Router } from "@angular/router";
+import { ErrorsMessagesService } from 'src/app/shared/services/errors-messages.service';
 
 
 
@@ -39,17 +40,43 @@ export class ResetpasswordComponent implements OnInit {
 
   countDown: Subscription;
   currTime: Subscription;
+  sourceSubscribe: Subscription;
+
   resetPassword: FormGroup
   optForm: FormGroup
-  chatLoader: boolean = false;
+
+  errorMessages: any;
+  couter: any;
+  interval: any;
+  otpChecked: any;
+
+  otpBtn: boolean = false
+  chartShow: boolean = false;
+  optSend: boolean = false
 
 
   verify: string = 'emailVerify';
 
-  couter: any;
+
+
+
+  obsTimer: number = 0;
+  counterReset = 60000;
+  timeLeft: number = 60;
+  sendOtpCount: number = 0
+
+
+
+  hostChartView: any = []
+  time: number = 0;
+  display;
+  counter = timer(0, 1000);
+  public clock;
+
+
   constructor(
     private fb: FormBuilder,
-    private router:Router
+    private _ems: ErrorsMessagesService
   ) {
 
     this.resetPassword = this.fb.group({
@@ -58,7 +85,7 @@ export class ResetpasswordComponent implements OnInit {
 
 
     this.optForm = this.fb.group({
-      email:[''],
+      email: [''],
       otp: ['', [Validators.required, Validators.minLength(5)]]
     })
 
@@ -67,17 +94,18 @@ export class ResetpasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.errorMessages = this._ems.forgetPassowrd;
+
     // console.log(this.router);
-    
+
     this.verify = 'otpVerify'
     this.timerStart(0)
-    this.apexCounterChart()
-    this.startTimer()
+    // this.startTimer()
   }
 
 
-  timeLeft: number = 60;
-  interval;
+
 
   startTimer() {
     this.interval = setInterval(() => {
@@ -85,7 +113,11 @@ export class ResetpasswordComponent implements OnInit {
         this.timeLeft--;
         this.chartOptions.series = [this.timeLeft * 1.7]
       } else {
+        this.pauseTimer()
         this.timeLeft = 60;
+        this.chartShow = false;
+        this.sendOtpCount++
+
       }
     }, 1000)
   }
@@ -94,8 +126,29 @@ export class ResetpasswordComponent implements OnInit {
     clearInterval(this.interval);
   }
 
+
+  
+  otpVerifyUser() {
+    if (!this.optForm.valid) {
+      return
+    }
+    this.apexCounterChart()
+    this.startTimer()
+
+    this.optSend = true
+
+    // setTimeout(() => {
+    //   this.optSend = false
+      if (this.sendOtpCount == 3) {
+        this.verify = 'passVerify'
+      }
+    //   this.sendOtpCount++
+    // }, 10000);
+  }
+
+
   apexCounterChart() {
-    this.chatLoader = true;
+    this.chartShow = true;
     this.chartOptions = {
       series: [this.timeLeft * 1.7],
       chart: {
@@ -119,7 +172,7 @@ export class ResetpasswordComponent implements OnInit {
               color: undefined,
 
               formatter: function (val) {
-                return  Math.round(val / 1.7) + "sec";
+                return Math.round(val / 1.7) + "sec";
               }
             }
           }
@@ -142,20 +195,20 @@ export class ResetpasswordComponent implements OnInit {
       labels: [""]
     };
   }
-  optSend:boolean = false
+
+
   resetPasswordUser() {
     console.log(this.resetPassword.value);
     this.verify = 'otpVerify'
 
   }
 
-  optFormUser(){
+  optFormUser() {
 
   }
 
-  otpChecked: any;
-  otpBtn: boolean = false
-  
+
+
 
   optCheck(value) {
     if (this.otpChecked.length == '5') {
@@ -185,31 +238,23 @@ export class ResetpasswordComponent implements OnInit {
   }
 
 
-  sendOtpCount:number = 0
-  otpVerifyUser() {
-    // this.verify = 'passVerify'
-    this.optSend = true
 
-    setTimeout(() => {
-      this.optSend = false
-      if(this.sendOtpCount  == 3){
-    this.verify = 'passVerify'
-
-      }
-      this.sendOtpCount++
-      
-
-    }, 10000);
-  }
-
-  resendOTP(){
+  resendOTP() {
+    console.log('otp');
+    if(!this.optSend){
+      return
+    }
     
+
+    this.pauseTimer()
+    this.timeLeft = 60;
+    this.chartShow = false;
+    // this.sendOtpCount++
+    
+
   }
 
 
-  obsTimer: number = 0;
-  sourceSubscribe: Subscription;
-  counterReset = 60000;
   timerStart(data) {
 
     this.currTime = timer(1000, 1000).subscribe(() => (this.obsTimer = this.obsTimer - 1000))
@@ -230,12 +275,6 @@ export class ResetpasswordComponent implements OnInit {
 
 
 
-
-  hostChartView: any = []
-  time: number = 0;
-  display;
-  counter = timer(0, 1000);
-  public clock;
 
 
   makeData() { }

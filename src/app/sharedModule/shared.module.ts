@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DigitOnlyDirective } from '../shared/directive/digit-only.directive';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [DigitOnlyDirective ],
+  declarations: [ ],
   imports: [
-    CommonModule
+    CommonModule,FormsModule, ReactiveFormsModule
   ],
-  exports:[DigitOnlyDirective]
+  exports:[FormsModule, ReactiveFormsModule]
 })
 export class SharedModule { }
