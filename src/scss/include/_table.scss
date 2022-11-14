@@ -127,6 +127,7 @@ table.dataTable th.dt-left,
     font-weight: normal;
     white-space: nowrap;
     text-align: left;
+    position: relative;
   }
   div.dataTables_wrapper div.dataTables_filter input {
     margin-left: 0.5em;
@@ -611,10 +612,13 @@ table.dataTable td {
   float: left;    margin-bottom: 7px;
 }
 .dataTables_wrapper .dataTables_length select {
-    border-collapse: separate;
-  padding: 4px 4px;
-  background-color: var(--bordercolor)!important;
-  border: none!important;
+   
+  border-collapse: separate;
+  padding: 2px 1px;
+  background-color: var(--bordercolor) !important;
+  border: none !important;
+  border-radius: 9px;
+
 }
 .dataTables_wrapper .dataTables_filter {
   float: right;
@@ -625,6 +629,7 @@ table.dataTable td {
   border-collapse: separate;
   padding: 5px;
   margin-left: 3px;
+  border-radius: 9px;
 }
 .dataTables_wrapper .dataTables_info {
   clear: both;
@@ -835,6 +840,28 @@ table.dataTable td {
 div.dataTables_wrapper div.dataTables_info, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
   color: var(--text-color);
 }
+
+
+
+
+div.dataTables_wrapper div.dataTables_filter label .fa-search {
+  color: var(--text-color);
+  position: absolute;
+  top: 0.5rem;
+  left: 0.7rem;
+  font-size: 0.65rem;
+}
+div.dataTables_wrapper div.dataTables_filter input {
+  margin-left: 0.5em;
+  display: inline-block;
+  max-width: 12rem;
+  font-weight: normal;
+  // padding-left: 1.2rem;
+  width: auto;
+  padding-left: 23px !important;
+  padding-top: 3px !important;
+}
+
 @media screen and (max-width: 767px) {
   .dataTables_wrapper .dataTables_info,
   .dataTables_wrapper .dataTables_paginate {

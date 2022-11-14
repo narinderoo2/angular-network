@@ -11,6 +11,7 @@ import { TestComponent } from './module/test/test.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DpDatePickerModule } from 'ng2-date-picker';
 import { RegionmanagementComponent } from './module/setup/regionmanagement/regionmanagement.component';
+import { ThemService } from './shared/services/them.service';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { RegionmanagementComponent } from './module/setup/regionmanagement/regio
     // NgApexchartsModule,
     
   ],
-  providers: [],
+  providers: [ThemService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

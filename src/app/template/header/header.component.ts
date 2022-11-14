@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ThemService } from 'src/app/shared/services/them.service';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class HeaderComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
+    private themeService: ThemService,
     ) {
 
   }
@@ -22,11 +24,11 @@ export class HeaderComponent implements OnInit {
   // edit 
   edit: boolean = false
   editcondition: boolean = false
+  istoggle: boolean = false
 
 
   ngOnInit(): void {
-
-   
+    this.themeService.toggleLight();
 
 
 
@@ -299,5 +301,12 @@ this.listingFilter={
 console.log(this.listingFilter,'ROLE_ID,Selected_modulem: "1,2,3"RoleName: "adiuyiu"');
 this.setValueOption()
     
+  }
+
+
+
+
+  istoggleButton(){
+    this.istoggle = !this.istoggle
   }
 }

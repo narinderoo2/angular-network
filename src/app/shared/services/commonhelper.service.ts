@@ -36,14 +36,21 @@ export class CommonhelperService {
         searchDelay: 2000,
         //paging:false,
         fixedColumns: fixedColumns,
+
+
+
+
+
+
         language: {
-          searchPlaceholder: ' Search',
+          searchPlaceholder: 'Search',    /*' Search*/
           lengthMenu: '_MENU_',
-          zeroRecords: 'No matching records found',
+          zeroRecords: '<span> No record Available<span>',
+          // zeroRecords: '<img src="../../assets/images/No-data-found.svg"/><h6>No Data Available</h6>',
           info: 'Showing _START_ to _END_ of _TOTAL_ entries',
           infoEmpty: '',
           infoFiltered: '(filtered from _MAX_ total entries)',
-          search: '',
+          search: '<i class="fas fa-search"></i>',
           paginate: {
             first: 'First',
             next: 'Next',
@@ -51,6 +58,9 @@ export class CommonhelperService {
             last: 'Last',
           },
         },
+
+
+
       };
     }
 

@@ -7,7 +7,7 @@ import { HeaderComponent } from './template/header/header.component';
 const routes: Routes = [
   {
     // path: 'dashboard', component: BlanktemplateComponent,
-    path: '', component: BlanktemplateComponent,
+    path: 'login', component: BlanktemplateComponent,
     loadChildren: () => import('./module/authentication/authentication.module').then(m => m.AuthenticationModule)
   },
   {

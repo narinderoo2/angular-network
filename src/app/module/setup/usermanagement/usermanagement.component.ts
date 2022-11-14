@@ -29,7 +29,6 @@ export class UsermanagementComponent implements OnInit {
 
 
   pageRecordsTotal: number = 0;
-  ordering: string = '-id';
   page: number = 1;
   size: number = 5;
   search: string = '';
@@ -39,16 +38,31 @@ export class UsermanagementComponent implements OnInit {
   errorMessages: any;
   timeZone: any;
   countryList: any;
+  userDataTable: any = []
+  URLSearchParams: any;
+  public modalReference: any;
+
 
   isEditUser:boolean = false
   passwordShow:boolean = false
   passwordShowTwo:boolean = false
+  userLoaderData: boolean = false
+
+  countryCodeData: string = '91';
+  ordering: string = '-id';
+
 
   roleDropDown:any=[
     {role:"Orgnization Admin",id:1},
     {role:"User",id:2},
     {role:"Viewer",id:3}
   ]
+
+
+
+  
+
+
 
 
   constructor(private commonHelperservice: CommonhelperService,
@@ -98,6 +112,27 @@ export class UsermanagementComponent implements OnInit {
 }
 
   ngOnInit(): void {
+
+
+
+
+
+    this.userDataTable = [{ checked: false,
+
+      firstName:'rt',
+      email:"rt@gmail.com",
+      role:1,
+      create_at:'26-08-2022',
+      is_active:true
+},{ checked: false,
+
+firstName:'rt',
+email:"rt@gmail.com",
+role:1,
+create_at:'26-08-2022',
+is_active:true
+}]
+
     this.errorMessages = this.ems.userManagementErrorMessages;
 
     this.timeZoneSubscription$ = this.commonService.getRequest('assets/data/timeZone.json').subscribe((res) => {
@@ -128,13 +163,11 @@ this.getUserList()
     }
   }
 
-  userLoaderData: boolean = false
-  userDataTable: any = []
-  URLSearchParams: any;
+
 
   getUserList() {
     this.userLoaderData = true;
-    this.userDataTable = [];
+    // this.userDataTable = [];
 
     this.reDraw();
     this.dtOptions = {
@@ -157,7 +190,7 @@ this.getUserList()
           this.ordering
         );
         console.log(this.endpoints.USER_LISTING);
-        
+        return
         this.userListSubscribtion$ = this.commonService
           .getRequest(this.endpoints.USER_LISTING + '?' + params)
           .pipe(debounceTime(500))
@@ -170,12 +203,15 @@ this.getUserList()
                 if (resp) {
                   //.resultCode === '1'
 
-                  this.userDataTable = resp.results.map((data) => {
-                    return {
-                      ...data,
-                      checked: false,
-                    };
-                  });
+
+                  // this.userDataTable = resp.results.map((data) => {
+                  //   return {
+
+                      
+                  //     ...data,
+                  //     checked: false,
+                  //   };
+                  // });
 
                   if (resp.count) {
                     this.pageRecordsTotal = resp.count;
@@ -223,10 +259,6 @@ this.getUserList()
     };
   }
 
-
-  countryCodeData: string = '91';
-
-  public modalReference: any;
   openPopUp(content, tag) {
 
     setTimeout(() => {

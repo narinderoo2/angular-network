@@ -4,3 +4,19 @@ input{
     font-weight: 600;
     content: '\f078';
   }
+
+  select, input{
+    background-color: var(--bordercolor);
+      opacity: 1;
+      border: none;
+      color: var(--text-color);
+      border: none;
+      box-shadow: 0px 12px 36px #0000001a;
+  
+      // font-family: FontAwesome;
+      width: 100%;
+  }
+  input{
+    font-size: 12px !important;
+    padding: 6px 6px !important;
+  }
