@@ -1,1 +1,69 @@
-<p>regionmanagement works!</p>
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+      role="tab" aria-controls="nav-home" aria-selected="true" (click)="changeTab('Country')">Country</button>
+    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+      role="tab" aria-controls="nav-profile" aria-selected="false" (click)="changeTab('State')">State</button>
+    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+      role="tab" aria-controls="nav-contact" aria-selected="false" (click)="changeTab('City')">City</button>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="custom-table custom-table-height custom-bg custom-table-hover">
+
+          <div class="table-responsive Recentevents" *ngIf="getTableData" >
+            <table class="table table-bordered table-striped datatables" datatable [dtOptions]="dtOptions" width="100%"
+              cellspacing="0" [ngClass]="{ datatable_noRecord: rowDataTable?.length != 0 }">
+              <thead>
+                <tr>
+                  
+                  <th *ngFor="let column of countryRow">{{column.headerName}}</th>
+                  
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let row of rowDataTable">
+
+                  <td>{{row.id}}</td>
+                  <td>{{row.created_by}}</td>
+                  <td class="zoomin">{{row.name}}</td>
+                  <td>{{row.description}}</td>
+
+                  <th>hhhhhhh</th>
+                  <!-- <th class="p-0 text-center rounded-0">
+                    <a href="javascript:void(0);" ngbPopover="Edit" placement="auto" popoverClass="tooltipHover"
+                      triggers="mouseenter:mouseleave" container="body"
+                      (click)="permission.edit && editUser(userListPopup, row)" class="btn-sm me-2"
+                      [ngClass]="(row.email == loginUserId || !permission.edit) ? 'editDisable' : 'edit'"><i
+                        class="fas fa-edit"></i>
+
+                    </a>
+                    <a href="javascript:void(0);" ngbPopover="Delete" placement="auto" popoverClass="tooltipHover"
+                      triggers="mouseenter:mouseleave" container="body"
+                      (click)="row.email !== loginUserId && openPopupDelete(deleteUserModal,row)" class="btn-sm"
+                      [ngClass]="(row.email == loginUserId || !permission.delete) ? 'deleteDisable' : 'delete'"><i
+                        class="fa fa-trash"></i>
+                    </a>
+                  </th> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+          
+
+
+        </div>
+      </div>
+      <div class="col-md-6"></div>
+    </div>
+
+
+  </div>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+</div>

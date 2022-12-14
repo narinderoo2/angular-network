@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DpDatePickerModule } from 'ng2-date-picker';
 import { RegionmanagementComponent } from './module/setup/regionmanagement/regionmanagement.component';
 import { ThemService } from './shared/services/them.service';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -27,6 +28,9 @@ import { ThemService } from './shared/services/them.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
+
+    DataTablesModule,
+
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,

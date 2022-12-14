@@ -1,68 +1,43 @@
-<p>test works!</p>
-
-
-
-
-
-
-
-
-
-
-<input type="file" (change)="fileDAtda($event)" multiple>
-<p *ngFor="let a of fileArray">{{a.name}}</p>
-<button type="submit" (click)="DataSend()">submit</button>
-
-
-
-<a href="../../../assets/uploads/{{imageName}}" download="{{imageName}}">dounload</a>
-
-
-
-<!-- 
-
-<div [formGroup]="filterForm">
-    From: <input type="text" 
-           #dateFromDp="dpDayPicker"
-           [dpDayPicker]="dayPickerConfig"
-           [theme]="'dp-material'"
-           formControlName="dateFrom"
-           [mode]="'daytime'"
-           (onChange)="dateTimeSelected($event)"
-           />
-
-    To: <input type="text" 
-           #dateToDp="dpDayPicker"
-           [dpDayPicker]="dayPickerConfig"
-           [displayDate]="displayDate"
-           [theme]="'dp-material'"
-           formControlName="dateTo"
-           [mode]="'daytime'"
-            />
-</div> -->
-
-<br>
-<div>
-    <!-- <dp-date-picker  #datePicker [config]="dayPickerConfig" formControlName="dateFrom" closeOnSelect="'true'" theme="dp-material" [mode]="'daytime'" >
-    </dp-date-picker> -->
-</div>
-<br>
-<br>
-<br>
-<div>
-
-    <!-- To: <input type="text" 
-           #dateToDp="dpDayPicker"
-           [dpDayPicker]="dayPickerConfig"
-           [displayDate]="displayDate"
-           [theme]="'dp-material'"
-           formControlName="dateTo"
-           [mode]="'month'"
-            /> -->
-
-
-    <!-- <dp-date-picker  #datePicker [config]="dayPickerConfig" formControlName="dateTo" closeOnSelect="'true'" theme="dp-material" [mode]="'daytime'">
-    </dp-date-picker> -->
-
-</div>  
+<div class="list-group" id="capture1">
+    <a href="#" class="list-group-item list-group-item-action">A simple default list group item</a>
   
+    <a href="#" class="list-group-item list-group-item-action list-group-item-primary">A simple primary list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">A simple secondary list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-success">A simple success list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-danger">A simple danger list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-warning">A simple warning list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-info">A simple info list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-light">A simple light list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-dark">A simple dark list group item</a>
+  </div>
+
+
+<div id="capture2">
+    <div class="card" style="width: 18rem;">
+        <img src="../../assets/images/login_page.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <p class="card-text">1Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+    
+    
+      <div class="card" style="width: 18rem;">
+        <img src="../../assets/images/login_page.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <p class="card-text">2Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+    
+      <div class="card" style="width: 18rem;">
+        <img src="../../assets/images/login_page.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <p class="card-text">3Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+      <!-- <div class="card" style="width: 18rem;">
+        <img src="../../assets/images/login_page.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <p class="card-text">4Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div> -->
+</div>

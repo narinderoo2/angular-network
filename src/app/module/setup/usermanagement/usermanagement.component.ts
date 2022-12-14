@@ -47,6 +47,7 @@ export class UsermanagementComponent implements OnInit {
   passwordShow:boolean = false
   passwordShowTwo:boolean = false
   userLoaderData: boolean = false
+  dataHsi: boolean = false
 
   countryCodeData: string = '91';
   ordering: string = '-id';
