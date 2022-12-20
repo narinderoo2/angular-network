@@ -65,6 +65,21 @@ export class ErrorsMessagesService {
       { type: 'required', message: 'New password & confirm password does not match'},
     ],
   };
+  public regionManagement: any = {
+    country:[{type:'required',message:'Please enter country'},
+            {type:'pattern',message:'Please enter valid country'}],
+    description: [ { type: 'required', message: 'Please enter description' },
+      { type: 'pattern', message: 'Please enter valid description' }],
+    state: [ { type: 'required', message: 'Please enter state' },
+      { type: 'pattern', message: 'Please enter valid state' }],
+    city: [ { type: 'required', message: 'Please enter city' },
+      { type: 'pattern', message: 'Please enter valid city' }],
+    latitude: [{ type: 'pattern', message: 'Please enter valid latitude 90 to -90' }],
+    longitude : [ { type: 'pattern', message: 'Please enter valid longitude 180 to -180' }],
+      
+      
+
+  };
 
 
 

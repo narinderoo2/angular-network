@@ -1,8 +1,8 @@
 
 input{
-    font-family: "Font Awesome 5 Free","Poppins", sans-serif;
-    font-weight: 600;
-    content: '\f078';
+    // font-family: "Font Awesome 5 Free","Poppins", sans-serif;
+    // font-weight: 600;
+    // content: '\f078';
   }
 
   select, input{
@@ -18,5 +18,40 @@ input{
   }
   input{
     font-size: 12px !important;
-    padding: 6px 6px !important;
+    // padding: 6px 6px !important;
   }
+
+.form-control-feedback{
+  color: red;
+  font-size: 11px;
+}
+
+.form-label{
+  font-size: 13px;
+}
+
+.ng-dropdown-panel.ng-select-bottom{
+  font-size: 12px;
+}
+.ng-select .ng-select-container .ng-value-container .ng-placeholder{
+  font-size: 12px;
+}
+
+
+.form-control:focus{
+  box-shadow: none !important;
+}
+
+.ng-select.ng-select-opened > .ng-select-container{
+  background-color: white !important;
+}
+
+// .ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items div .ng-option{
+//   background-color: white !important ;
+//  }
+//  .scrollable-content .ng-option{
+//   background-color: white !important ;
+//  }
+
+//  .ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items div .ng-option,
+//   .ng-select-opened, .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value 

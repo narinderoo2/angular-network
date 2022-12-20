@@ -6,8 +6,9 @@ export const regexValidation = {
         'oid':/^([1-9][0-9]{0,3}|0)(\.([1-9][0-9]{0,3}|0)){5,13}$/,
         'whiteSpace':/^\S*$/,
         'portValidation':/^[0-9-,]+$/,
-
         'onlyNumber':/^\d+$/,
+        'alphanumericDashUnderScore':/^[A-Za-z_-][A-Za-z0-9_-]*$/,
+        'la':/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/
     
     }
 }

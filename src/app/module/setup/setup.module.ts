@@ -7,10 +7,12 @@ import { UsermanagementComponent } from './usermanagement/usermanagement.compone
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from 'src/app/sharedModule/shared.module';
+import { DirectiveModule } from 'src/app/sharedModule/directive.module';
+import { RegionmanagementComponent } from './regionmanagement/regionmanagement.component';
 
 
 @NgModule({
-  declarations: [UsermanagementComponent],
+  declarations: [UsermanagementComponent,RegionmanagementComponent],
   imports: [
     CommonModule,
     SetupRoutingModule,
@@ -19,7 +21,9 @@ import { SharedModule } from 'src/app/sharedModule/shared.module';
     ReactiveFormsModule,
     NgSelectModule,
     SharedModule,
+    DirectiveModule
     
-  ]
+  ],
+  exports:[]
 })
 export class SetupModule { }

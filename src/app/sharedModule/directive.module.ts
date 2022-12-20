@@ -6,9 +6,7 @@ import { RegexWithvalidationDirective } from '../shared/directive/regex-withvali
 
 @NgModule({
   declarations: [RegexWithvalidationDirective],
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   exports:[RegexWithvalidationDirective]
 })
 export class DirectiveModule { }

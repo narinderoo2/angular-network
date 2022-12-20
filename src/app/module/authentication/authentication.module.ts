@@ -17,7 +17,7 @@ import { SharedModule } from 'src/app/sharedModule/shared.module';
   imports: [
     CommonModule,
     NgApexchartsModule,
-    AuthenticationRoutingModule,DirectiveModule,SharedModule
+    AuthenticationRoutingModule,SharedModule,DirectiveModule
       
 
   ],

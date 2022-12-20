@@ -11,6 +11,8 @@ export class EndPointService {
   public USER_LISTING: string='';
   public USER_CREATE: string='';
   public GET_REGION: string='';
+  public GET_REGION_STATE: string='';
+  public GET_REGION_CITY: string='';
   constructor() { 
 
     this.getDomain()
@@ -24,6 +26,8 @@ export class EndPointService {
     this.USER_LISTING= this.IP_PORT + 'setup/user-listing/';
     this.USER_CREATE= this.IP_PORT + 'setup/create-user/';
     this.GET_REGION= this.IP_PORT + 'region/country-pagination/';
+    this.GET_REGION_STATE= this.IP_PORT + 'region/state-pagination/';
+    this.GET_REGION_CITY= this.IP_PORT + 'region/city-pagination/';
   }
 
 }

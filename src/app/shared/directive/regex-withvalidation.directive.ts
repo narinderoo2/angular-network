@@ -10,11 +10,14 @@ import { regexValidation } from 'src/app/shared/constant/regexValidation'
   ]
 })
 export class RegexWithvalidationDirective {
-  @Input() valueValidation: string;
+  @Input() valueValidation?: any;
   private regexvalidation = regexValidation;
 
   validate(formController: AbstractControl) {
+    console.log(formController,this.valueValidation);
     return Object.assign(
+      
+      
       this.reactivateFormCheck(formController)
     )
   }
@@ -25,6 +28,8 @@ export class RegexWithvalidationDirective {
       return {}
     }
 
+    console.log(formController.value);
+    
     return this.regexvalidation.regexUse[this.valueValidation].test(formController.value) ? {} : { pattern: true };
   }
 }
