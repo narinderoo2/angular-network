@@ -12,6 +12,7 @@
 @import 'include/_form';
 @import 'include/_header';
 @import 'include/ng_Select';
+@import 'include/_icon';
 
 .ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items div .ng-option{
   background-color: white !important ;
@@ -30,13 +31,7 @@ p {
   color: #999;
 }
 
-a,
-a:hover,
-a:focus {
-  color: inherit;
-  text-decoration: none;
-  transition: all 0.3s;
-}
+
 
 .navbar {
   padding: 15px 10px;
@@ -91,7 +86,7 @@ Table top icon
   top: 0;
   left: 0;
   height: 100vh;
-  z-index: 999;
+  // z-index: 999;
   background: #7386D5;
   color: #fff;
   transition: all 0.3s;

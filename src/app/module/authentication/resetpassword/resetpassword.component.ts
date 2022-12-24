@@ -198,7 +198,6 @@ export class ResetpasswordComponent implements OnInit {
 
 
   resetPasswordUser() {
-    console.log(this.resetPassword.value);
     this.verify = 'otpVerify'
 
   }
@@ -215,7 +214,6 @@ export class ResetpasswordComponent implements OnInit {
       let regex = "^[0-9]*$"
       let a = this.otpChecked.match(regex)
       if (a != null) {
-        console.log(this.otpChecked);
         this.otpBtn = true
 
       } else {
@@ -240,7 +238,6 @@ export class ResetpasswordComponent implements OnInit {
 
 
   resendOTP() {
-    console.log('otp');
     if(!this.optSend){
       return
     }

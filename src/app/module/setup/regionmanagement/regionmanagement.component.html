@@ -5,7 +5,7 @@
   <a class="btn btn-success pluseIcon me-2" aria-label="Delete" (click)="openPopUp(userListPopup,null)">
     <i class="fa fa-plus" aria-hidden="true"></i>
   </a>
-  <a class="btn btn-danger pluseIcon" aria-label="Delete">
+  <a class="btn btn-danger pluseIcon" aria-label="Delete" (click)="openPopupDelete('deleteUserModal')">
     <i class="fa fa-trash" aria-hidden="true"></i>
   </a>
 
@@ -46,15 +46,16 @@
                   <td *ngFor="let rowColumn of countryRow">
                     {{row[rowColumn.data]}}
 
-                    <a *ngIf="rowColumn.data=='action'" href="javascript:void(0);" ngbPopover="Edit" placement="auto" popoverClass="tooltipHover"
+                    <a *ngIf="rowColumn.data=='action'" href="javascript:void(0);" ngbPopover="Edit"
+                     placement="auto" popoverClass="tooltipHover"
                     triggers="mouseenter:mouseleave" container="body"
-                    (click)="editUser('userListPopup')" class="btn-sm me-2">
+                    (click)="openPopUp(userListPopup,row)" class="btn-sm me-2 editIcon">
                     <i class="fas fa-edit"></i>
 
                   </a>
                   <a *ngIf="rowColumn.data=='action'" href="javascript:void(0);" ngbPopover="Delete" placement="auto" popoverClass="tooltipHover"
                     triggers="mouseenter:mouseleave" container="body"
-                    (click)="openPopupDelete('deleteUserModal')" class="btn-sm" ><i
+                    (click)="openPopupDelete('deleteUserModal')" class="btn-sm deleteIcon" ><i
                       class="fa fa-trash"></i>
                   </a> 
                   </td>
@@ -121,8 +122,7 @@
             (dynamicForm.get(formType.formControl).dirty || dynamicForm.get(formType.formControl).touched)">
               <label class="form-label">{{formType.label}}<span class="red">*</span>
               </label>
-
-              <ng-select [items]="cities" [virtualScroll]="true" bindLabel="name" bindValue="id"
+              <ng-select [items]="formType.dropDownListing" [virtualScroll]="true" bindLabel="name" bindValue="id"
               placeholder="{{formType.placeholder}}" formControlName="{{formType.formControl}}">
               </ng-select>
 
@@ -156,3 +156,9 @@
     </div>
   </div>
 </ng-template>
+
+
+<app-deletepopup *ngIf="deletepopUp" [deleteData]="deletePopData" (deleteOutput)="outPutDelete($event)"></app-deletepopup>
+
+
+<app-globelspinner *ngIf="spinnerWorking" ></app-globelspinner>

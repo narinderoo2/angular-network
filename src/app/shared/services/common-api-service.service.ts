@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable,map} from 'rxjs';
+import { Observable,map, catchError} from 'rxjs';
 import Swal from 'sweetalert2';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,21 +18,26 @@ export class CommonApiServiceService {
 
 
   public postRequest(API_URL: any, queryparam: any): Observable<any> {
-    return this.http
-      .post(API_URL, queryparam)
-      .pipe(map((response: Response) => response));
+    return this.http.post(API_URL, queryparam).pipe(catchError(err => throwError(err)));
   }
 
+
+
   createFormData(item) {
+    console.log(item);
+    
     let form_data = new FormData();
     for (var key in item) {
       let value = '';
 
-      console.log(key,item,'key');
+      // console.log(key,item,'key');
       
       if (item[key] || item[key] == 0) {
         value = item[key];
       }
+
+      console.log(key,value,'----');
+      
       form_data.append(key, value);
     }
     return form_data;

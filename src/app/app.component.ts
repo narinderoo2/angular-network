@@ -51,7 +51,6 @@ export class AppComponent implements OnInit {
       let moveX = 0
       for (let [i] of Object.entries(title)) {
 
-        console.log(count);
         count = count + 1
         if (count > 2) {
           count = 0

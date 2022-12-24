@@ -14,7 +14,6 @@ export class RegexWithvalidationDirective {
   private regexvalidation = regexValidation;
 
   validate(formController: AbstractControl) {
-    console.log(formController,this.valueValidation);
     return Object.assign(
       
       
@@ -26,10 +25,7 @@ export class RegexWithvalidationDirective {
   private reactivateFormCheck(formController: AbstractControl) {
     if (!formController.value) {
       return {}
-    }
-
-    console.log(formController.value);
-    
+    }    
     return this.regexvalidation.regexUse[this.valueValidation].test(formController.value) ? {} : { pattern: true };
   }
 }

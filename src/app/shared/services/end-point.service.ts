@@ -13,6 +13,10 @@ export class EndPointService {
   public GET_REGION: string='';
   public GET_REGION_STATE: string='';
   public GET_REGION_CITY: string='';
+  public CREATE_COUNTRY: string='';
+  public CREATE_STATE: string='';
+  public GET_STATE: string='';
+  public CREATE_CITY: string='';
   constructor() { 
 
     this.getDomain()
@@ -28,6 +32,10 @@ export class EndPointService {
     this.GET_REGION= this.IP_PORT + 'region/country-pagination/';
     this.GET_REGION_STATE= this.IP_PORT + 'region/state-pagination/';
     this.GET_REGION_CITY= this.IP_PORT + 'region/city-pagination/';
+    this.CREATE_COUNTRY= this.IP_PORT + 'region/country/';
+    this.CREATE_STATE= this.IP_PORT + 'region/state/';
+    this.CREATE_CITY= this.IP_PORT + 'region/city/';
+    // this.GET_STATE= this.IP_PORT + 'region/state/';
   }
 
 }
