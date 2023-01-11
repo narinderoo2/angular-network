@@ -1,0 +1,82 @@
+
+
+
+.dropDown:not(.ng-select-opened):not(.ng-select-filtered) .country-name-drop{
+    display: none;
+  }
+  .ng-select .ng-select-container .ng-value-container .ng-placeholder {
+    color: var(--text-color);
+  }
+
+
+
+  .contact-edit.ng-select .ng-select-container{
+    background-color: transparent;
+    border-color: transparent;
+  }
+  .contact-edit.ng-select .ng-select-container {
+    border-right: none!important;
+  }
+  .contact-edit.ng-select .ng-select-container .ng-arrow-wrapper{
+    display: none;
+  }
+
+
+  
+
+.pro-fields  span{
+    .ng-select.ng-select-single {    margin-right: 2px;  }
+  
+      .ng-select.ng-select-single.transparent .ng-select-container{
+        border: none; background: none;
+      }
+      .ng-select.ng-select-single .ng-select-container{
+  
+      height: 29px;
+       min-height: 30.5px;
+       border-radius: 5px 0 0 5px;
+        border-right: 1px solid var(--bordercolor);
+     }
+  
+  
+  }
+
+
+
+  .ng-select.ng-select-opened>.ng-select-container {
+    background: var(--background-color);
+    border-color: var(--bordercolor);
+  }
+
+  .ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items div .ng-option,
+.ng-select-opened,
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+  background-color: var(--bordercolor)!important;
+  color: var(--text-color)!important;
+
+}
+.ng-select.ng-select-single .ng-select-container {
+  height: 32px!important;
+}
+.ng-select .ng-select-container{
+  min-height: 32px !important;
+}
+.ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items div .ng-option.ng-option-marked{
+  background-color: var(--background-color)!important;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected .ng-option-label, .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked .ng-option-label {
+  font-weight: normal;
+  background: var(--background-color);
+  border-radius: 0.5rem;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value{
+  padding: 0 0 0 0.4rem !important;
+  border-radius: 10px;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-icon.right{
+  padding: 0.1rem 0.6rem !important;
+  margin-left: 0.4rem!important;
+}
+.ng-select{
+font-size: 0.874rem;
+}

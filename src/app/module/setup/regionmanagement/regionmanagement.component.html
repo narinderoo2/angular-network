@@ -1,0 +1,166 @@
+<nav>
+
+  <!-- <i class="fa fa-plus-circle" aria-hidden="true"></i> -->
+
+  <a class="btn btn-success pluseIcon me-2" aria-label="Delete" (click)="openPopUp(userListPopup,null)">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+  </a>
+  <a class="btn btn-danger pluseIcon" aria-label="Delete" (click)="openPopupDelete(null,null,'all')">
+    <i class="fa fa-trash" aria-hidden="true"></i>
+  </a>
+
+
+
+  <div class="nav nav-tabs justify-content-end" id="nav-tab" role="tablist">
+    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+      role="tab" aria-controls="nav-home" aria-selected="true"
+      (click)="changeTab('Country',{'id':'nav-home-tab','aria':'nav-home'})">Country</button>
+    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+      role="tab" aria-controls="nav-profile" aria-selected="false"
+      (click)="changeTab('State',{'id':'nav-profile-tab','aria':'nav-profile'})">State</button>
+    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+      role="tab" aria-controls="nav-contact" aria-selected="false"
+      (click)="changeTab('City',{'id':'nav-contact-tab','aria':'nav-contact'})">City</button>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="tabChangeValue.aria" role="tabpanel" aria-labelledby="tabChangeValue.id">
+    <div class="row my-4">
+      <div class="col-md-12">
+        <div class="custom-table custom-table-height custom-bg custom-table-hover">
+
+          <div class="table-responsive Recentevents">
+            <table *ngIf="getTableData" class="table table-bordered table-striped datatables" datatable
+              [dtOptions]="dtOptions" width="100%" cellspacing="0"
+              [ngClass]="{ datatable_noRecord: rowDataTable?.length != 0 }">
+              <thead>
+                <tr>
+
+                  <th *ngFor="let column of countryRow">{{column.headerName}}</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of rowDataTable">
+
+                  <td *ngFor="let rowColumn of countryRow">
+                    {{row[rowColumn.data]}}
+
+                    <a *ngIf="rowColumn.edit" href="javascript:void(0);" ngbPopover="Edit"
+                     placement="auto" popoverClass="tooltipHover"
+                    triggers="mouseenter:mouseleave" container="body"
+                    (click)="openPopUp(userListPopup,row)" class="btn-sm me-2 editIcon">
+                    <i class="fas fa-edit"></i>
+
+                  </a>
+                  <a *ngIf="rowColumn.delete" href="javascript:void(0);" ngbPopover="Delete" placement="auto" popoverClass="tooltipHover"
+                    triggers="mouseenter:mouseleave" container="body"
+                    (click)="openPopupDelete(row,rowColumn,'single')" class="btn-sm "
+                    [ngClass]="row[rowColumn.validation] ? 'deleteDisable' : 'deleteIcon'" ><i
+                      class="fa fa-trash"></i>
+                  </a> 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="col-md-6"></div>
+    </div>
+
+
+  </div>
+  <!-- <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div> -->
+</div>
+
+
+
+
+
+
+<!-- Create User  -->
+<ng-template #userListPopup let-c="close" let-d="dismiss">
+  <div class="main-form" *ngIf="formOpen">
+    <div class="modal-header ">
+      <h5 class="modal-title">{{editFormPatchValue ? 'Update':'Create'}} {{tabName}}</h5>
+
+      <button type="button" style="border:none;background-color:white;" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-lg">
+      <div class="modal-body p-3">
+        <form class="row g-3 form1" [formGroup]="dynamicForm" (ngSubmit)="createForm()">
+          <div *ngFor="let formType of formDetails" class="col-md-6">
+
+            <div *ngIf="formType.type == 'input'" [class.has-danger]=" !dynamicForm.get(formType.formControl).valid &&
+            (dynamicForm.get(formType.formControl).dirty || dynamicForm.get(formType.formControl).touched)">
+              <label class="form-label">{{formType.label}}<span class="red">*</span>
+              </label>
+              <input type="text" class="form-control" formControlName="{{formType.formControl}}" appRegexWithvalidation
+                valueValidation="{{formType.regex}}" placeholder="{{formType.placeholder}}" />
+
+              <div *ngFor="let validation of errorMessages[formType.formControl]">
+                <div class="form-control-feedback" *ngIf="
+          dynamicForm.get(formType.formControl).hasError(validation.type) &&
+                (dynamicForm.get(formType.formControl).dirty ||
+                dynamicForm.get(formType.formControl).touched)
+              ">
+                  {{ validation.message }}
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="formType.type == 'dropdown'" [class.has-danger]=" !dynamicForm.get(formType.formControl).valid &&
+            (dynamicForm.get(formType.formControl).dirty || dynamicForm.get(formType.formControl).touched)">
+              <label class="form-label">{{formType.label}}<span class="red">*</span>
+              </label>
+
+              <!-- {{formType |json}} -->
+              <ng-select [items]="formType.dropDownListing" [virtualScroll]="true" bindLabel="name" bindValue="id"
+              placeholder="{{formType.placeholder}}" formControlName="{{formType.formControl}}">
+              </ng-select>
+
+
+
+              <div *ngFor="let validation of errorMessages[formType.formControl]">
+                <div class="form-control-feedback" *ngIf="
+          dynamicForm.get(formType.formControl).hasError(validation.type) &&
+                (dynamicForm.get(formType.formControl).dirty ||
+                dynamicForm.get(formType.formControl).touched)
+              ">
+                  {{ validation.message }}
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+
+          <div class="col-12 d-flex justify-content-end mt-4">
+            <button type="button" [disabled]="!dynamicForm.dirty" class="btn button-transparent me-2" (click)="resetForm()">
+              Reset
+            </button>
+            <button type="submit" [disabled]="!dynamicForm.valid" class="btn btn-primary me-2">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<app-deletepopup *ngIf="deletepopUp" [deleteData]="deletePopData" (deleteOutput)="outPutDelete($event)"></app-deletepopup>
+
+
+<app-globelspinner *ngIf="spinnerWorking" ></app-globelspinner>

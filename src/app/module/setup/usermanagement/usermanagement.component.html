@@ -1,0 +1,382 @@
+<section>
+
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav nav-pills">
+
+        <li class="nav-item-table  m-2" title="Create User">
+          <a class="nav-link-icon green-color" (click)="openPopUp(userListPopup,'create')"> <i class="fa fa-plus"
+              aria-hidden="true"></i></a>
+        </li>
+        <li class="nav-item-table m-2" title="Delete User">
+          <a class="nav-link-icon red-color">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </a>
+        </li>
+
+        <!-- <li class="nav-item" *ngIf="permission.edit">
+          <div class="dropdown nav-link">
+            <ul>
+              <li class="dropbtn">Status <i aria-hidden="true" class="fa fa-angle-down"></i></li>
+            </ul>
+            <div class="dropdown-content">
+              <a href="javascript:void(0);">Activate</a>
+              <a href="javascript:void(0);">Deactivate</a>
+            </div>
+          </div>
+        </li> -->
+
+
+      </ul>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="row">
+    <div class="col-md-12">
+        <div class="custom-table custom-table-height custom-bg custom-table-hover">
+          <div class="table-responsive Recentevents" >
+
+            <table  class="table table-bordered table-striped datatables" datatable
+              [dtOptions]="dtOptions" width="100%" cellspacing="0"
+              [ngClass]="{ datatable_noRecord: userDataTable?.length != 0 }">
+
+
+            <!-- <table class="table table-bordered table-striped datatables" datatable [dtOptions]="dtOptions" width="100%"
+              cellspacing="0" [ngClass]="{ datatable_noRecord: userDataTable?.length != 0 }"> -->
+              <thead>
+                <tr>
+                  <th class="first-check" width=30px>
+                    <input class="form-check-input" id="selectAll" type="checkbox"
+                     >
+                    <!--  (click)="selectAllCheckbox()" -->
+                  </th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Create At</th>
+                  <!-- <th >Status</th>
+                  <th >Action</th> -->
+                  <th class="noExport text-center">Status</th>
+                  <th class="text-center noExport">Action</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="userDataTable.length > 0">
+                <tr *ngFor="let row of userDataTable">
+
+                  <!-- address: ""
+email: "nn1@gmail.com"
+first_name: "nnnnnnne"
+flag: "in"
+last_name:"n"
+phone_number: "2222"
+user_timezone: "Asia/Kolkata"
+username: "nnnnnnnen" -->
+
+                  <th class="first-check px-2 py-1">
+                    <input class="form-check-input m-0" id="i" name="checkbox" type="checkbox">
+                    <!-- (change)="checkIfallselectedOrNot($event)" -->
+                  </th>
+                  <td>{{row.first_name}}</td>
+                  <td>{{row.email}}</td>
+                  <td class="zoomin">role</td>
+                  <td>{{row.create_at}}</td>
+
+                  <!-- <td>{{ showGroupdDetail(row.groups,1) }}</td>
+                  <td class=" rounded-0">{{row.last_login | DateTimeZone : "UTC" }} </td> -->
+                  <th class="rounded-0">
+                    <!-- <td class="d-none d-md-table-cell">{{row.status}}</td> -->
+
+                    <div class="form-check form-switch  d-flex justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                        [checked]="row.is_active==1 ? true:false" />
+                    </div>
+                  
+                  </th>
+                  <th>hhhhhhh</th>
+                  <!-- <th class="p-0 text-center rounded-0">
+                    <a href="javascript:void(0);" ngbPopover="Edit" placement="auto" popoverClass="tooltipHover"
+                      triggers="mouseenter:mouseleave" container="body"
+                      (click)="permission.edit && editUser(userListPopup, row)" class="btn-sm me-2"
+                      [ngClass]="(row.email == loginUserId || !permission.edit) ? 'editDisable' : 'edit'"><i
+                        class="fas fa-edit"></i>
+
+                    </a>
+                    <a href="javascript:void(0);" ngbPopover="Delete" placement="auto" popoverClass="tooltipHover"
+                      triggers="mouseenter:mouseleave" container="body"
+                      (click)="row.email !== loginUserId && openPopupDelete(deleteUserModal,row)" class="btn-sm"
+                      [ngClass]="(row.email == loginUserId || !permission.delete) ? 'deleteDisable' : 'delete'"><i
+                        class="fa fa-trash"></i>
+                    </a>
+                  </th> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-6"></div>
+  </div>
+
+
+
+
+</section>
+
+
+<!-- Create User  -->
+<ng-template #userListPopup let-c="close" let-d="dismiss">
+  <div class="main-form">
+    <div class="modal-header ">
+      <h5 class="modal-title">Create User</h5>
+
+      <button type="button" style="border:none;background-color:white;" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-lg">
+      <div class="modal-body p-3">
+
+        <form class="row g-3 form1" [formGroup]="userForm" (ngSubmit)="createNewUser()">
+          <div class="col-md-6" [class.has-danger]="
+                !userForm.get('first_name').valid &&
+                (userForm.get('first_name').dirty ||
+                  userForm.get('first_name').touched)
+              ">
+            <label class="form-label">First Name<span class="red">*</span>
+            </label>
+            <input type="text" class="form-control" formControlName="first_name"
+              oninput="this.value = this.value.replace(/[^A-Za-z ]|^ /g,'')" maxlength="15" />
+            <div *ngFor="let validation of errorMessages.first_name">
+              <div class="form-control-feedback" *ngIf="
+                    userForm.get('first_name').hasError(validation.type) &&
+                    (userForm.get('first_name').dirty ||
+                      userForm.get('first_name').touched)
+                  ">
+                {{ validation.message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" [class.has-danger]="
+                !userForm.get('last_name').valid &&
+                (userForm.get('last_name').dirty ||
+                  userForm.get('last_name').touched)
+              ">
+            <label class="form-label">Last Name </label>
+            <input type="text" class="form-control" formControlName="last_name"
+              oninput="this.value = this.value.replace(/[^A-Za-z ]|^ /g,'')" maxlength="150" />
+            <div *ngFor="let validation of errorMessages.last_name">
+              <div class="form-control-feedback" *ngIf="
+                    userForm.get('last_name').hasError(validation.type) &&
+                    (userForm.get('last_name').dirty ||
+                      userForm.get('last_name').touched)
+                  ">
+                {{ validation.message }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6" [class.has-danger]="
+                !userForm.get('email').valid &&
+                (userForm.get('email').dirty || userForm.get('email').touched)
+              ">
+            <label class="form-label">
+              Username/Email<span class="red">*</span></label>
+            <input [attr.disabled]="isEditUser ? '' : null" type="text" class="form-control" formControlName="email" />
+            <div *ngFor="let validation of errorMessages.email">
+              <div class="form-control-feedback" *ngIf="
+                    userForm.get('email').hasError(validation.type) &&
+                    (userForm.get('email').dirty || userForm.get('email').touched)
+                  ">
+                {{ validation.message }}
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-6" [class.has-danger]="
+                !userForm.get('phone_number').valid &&
+                (userForm.get('phone_number').dirty ||
+                  userForm.get('phone_number').touched)">
+
+
+            <label for="phone" class="form-label"> Contact Number </label>
+            <div class="row">
+              <div class="d-flex">
+                <ng-select *ngIf="userForm.get('phone_number').value" formControlName="country_code"
+                  appearance="outline" [clearable]="false" class="dropDown d-inline-block m-0 profileDrop"
+                  [searchable]="true" placeholder="" (change)="countryCode($event)" id="dialCodeData">
+                  <ng-option *ngFor="let row of countryList" class="" [value]="row[1]" [attr.dailCode]="row[2]">
+                    <div class="iti__flag-box getAtr " [attr.dailCode]="row[2]">
+                      <div class="iti__flag iti__{{row[1]}} ]"></div> <span class="country-name-drop ">{{row[0]}}
+                        (+{{row[2]}})</span>
+                    </div>
+                  </ng-option>
+                </ng-select>
+                <div class="input-group">
+                  <div *ngIf="userForm.get('phone_number').value"
+                    class="input-group-text  country-code d-inline-block text-black " style="background-color: var(--select-Bg-Color);
+                  border: none;"> +{{countryCodeData}} </div>
+                  <input type="number" appDigitOnly class="form-control d-inline-block"
+                    style="width: 207px;  border-radius: 0 5px 5px 0" formControlName="phone_number"
+                    autocomplete="new-password">
+
+                </div>
+              </div>
+            </div>
+
+            <div *ngFor="let validation of errorMessages.phone_number">
+              <div class="form-control-feedback" *ngIf="
+                    userForm.get('phone_number').hasError(validation.type) &&
+                    (userForm.get('phone_number').dirty ||
+                      userForm.get('phone_number').touched)
+                  ">
+                {{ validation.message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" [class.has-danger]="
+                !userForm.get('role').valid &&
+                (userForm.get('role').dirty || userForm.get('role').touched)
+              ">
+            <label for="role" class="form-label">
+              Role<span class="red">*</span></label>
+            <select class="form-control" formControlName="role">
+              <option disabled selected value="null">Select</option>
+              <option *ngFor="let roles of roleDropDown" value="{{ roles.id }}">
+                {{ roles.role }}
+              </option>
+            </select>
+            <div *ngFor="let validation of errorMessages.role">
+              <div class="form-control-feedback" *ngIf="
+                    userForm.get('role').hasError(validation.type) &&
+                    (userForm.get('role').dirty || userForm.get('role').touched)
+                  ">
+                {{ validation.message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" [class.has-danger]="
+                !userForm.get('userPassword').valid &&
+                (userForm.get('userPassword').dirty ||
+                  userForm.get('userPassword').touched)
+              ">
+            <label class="form-label">
+              Password <span class="red">*</span></label>
+
+            <div class="input-group">
+              <input [type]=" passwordShow ? 'text':'password'" class="form-control" formControlName="userPassword"
+                maxlength="15" autocomplete="new-password" />
+              <span class="input-group-text passwordShowHide">
+                <i class="fa fa-eye-slash" *ngIf="!passwordShow" (click)="passwordShow=true"></i>
+                <i class="fa fa-eye" *ngIf="passwordShow" (click)="passwordShow=false"></i></span>
+            </div>
+
+            <ng-container *ngFor="let validation of errorMessages.userPassword">
+              <div class="form-control-feedback"
+                *ngIf="userForm.get('userPassword').hasError(validation.type) &&                    (userForm.get('userPassword').dirty || userForm.get('userPassword').touched)">
+                - {{ validation.message }}
+              </div>
+              <div class="form-control-feedback feedback-success"
+                *ngIf="!userForm.get('userPassword').hasError(validation.type) && !userForm.get('userPassword').valid ">
+                <i class="fa fa-check"></i> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="col-md-6" [class.has-danger]="
+                !userForm.get('confirmPassword').valid &&
+                (userForm.get('confirmPassword').dirty ||
+                  userForm.get('confirmPassword').touched)
+              " *ngIf="!isEditUser">
+            <label class="form-label">
+              Confirm Password<span class="red">*</span>
+            </label>
+
+            <div class="input-group">
+              <input [type]=" passwordShowTwo ? 'text':'password'" class="form-control"
+                formControlName="confirmPassword" maxlength="15" />
+              <span class="input-group-text passwordShowHide">
+                <i class="fa fa-eye-slash" *ngIf="!passwordShowTwo" (click)="passwordShowTwo=true"></i>
+                <i class="fa fa-eye" *ngIf="passwordShowTwo" (click)="passwordShowTwo=false"></i>
+
+              </span>
+            </div>
+
+            <div *ngFor="let validation of errorMessages.confirmPassword">
+              <div class="form-control-feedback"
+                *ngIf="userForm.get('confirmPassword').hasError(validation.type) && (userForm.get('confirmPassword').dirty || userForm.get('confirmPassword').touched)">
+                {{validation.message}}
+              </div>
+            </div>
+
+
+
+
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">
+              Time Zone
+            </label>
+
+            <div class="input-group">
+              <ng-select formControlName="timeZoneDropDown" appearance="outline" [clearable]="false" style="width:100%">
+                <ng-option *ngFor="let zon of timeZone; let i = index" [value]="i">{{
+                  zon.text }}</ng-option>
+              </ng-select>
+
+            </div>
+          </div>
+
+          <div class="col-12 d-flex justify-content-end mt-4">
+            <button type="button" [disabled]="!userForm.dirty" class="btn button-transparent me-2">
+              Reset
+            </button>
+            <button type="submit" [disabled]="!userForm.valid" class="btn btn-primary me-2">
+              Submit
+            </button>
+          </div>
+        </form>
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+
+
+
+
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div> -->

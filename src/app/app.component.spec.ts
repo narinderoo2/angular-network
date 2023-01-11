@@ -3,6 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+
+  // Arrange
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -15,8 +17,12 @@ describe('AppComponent', () => {
   });
 
   it('should create the app', () => {
+
+    // Act
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
+
+    // Assert (check in )
     expect(app).toBeTruthy();
   });
 

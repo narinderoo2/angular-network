@@ -1,0 +1,38 @@
+<ng-template #deletePopUp let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5>Are you sure you want to delete {{deleteData.name}}? If yes, give reason:</h5>
+      <button type="button" class="close btn-close-modal" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-lg">
+      <div class="modal-body p-3 delete-popup">
+        <div class="col-md-11 mx-auto has-danger px-4">
+          <h5 class="text-left col-md-12">
+  
+          </h5>
+          <div>
+            <label for="domain_url" class="form-label">
+              Reason<span class="red">*</span></label>
+            <textarea  class="form-control" rows="4" cols="71" 
+ maxlength="200" (input)="deleteTrim($event)">{{deleteDescription}} </textarea>
+          </div>
+          <div class="form-control-feedback" *ngIf="
+              ((deleteDescription.length > 0 && deleteDescription.length < 3) ||
+               deleteDescription.length >= 200)">
+            Reason should be of minimum 3 and Max 200 characters.
+          </div>
+          <div class="col-12 d-flex justify-content-end mt-4">
+            <button type="submit" [disabled]="(deleteDescription.length == 0 || deleteDescription.length< 3||
+            deleteDescription.length>200) "
+              class="btn btn-primary" (click)="deleteUrl(deleteDescription)">
+              Yes, Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <app-globelspinner *ngIf="spinnerWorking" ></app-globelspinner>  
+  

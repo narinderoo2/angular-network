@@ -1,0 +1,128 @@
+<!-- 
+<section class="container-fluid background-Color">
+
+
+    <div class="container-fluid h-custom">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-9 col-lg-6 col-xl-6 my-lg-5 py-lg-5">
+          <img src="../../../../assets/images/login_page.jpg" class="img-fluid singinImage" alt="Sample image">
+        </div>
+        <div class="col-md-8 col-lg-6 col-xl-5 offset-xl-1 my-lg-5 py-lg-5">
+          <form [formGroup]="signInForm">
+            <div class="form-outline mb-4">
+              <input type="email" id="form3Example3" class="form-control form-control-lg"
+                placeholder="Enter a valid email address" formControlName="email">
+              <label class="form-label" for="form3Example3" style="margin-left: 0px;">Email address</label>
+            </div>
+              <div class="form-outline mb-3">
+              <input type="password" id="form3Example4" class="form-control form-control-lg" 
+              placeholder="Enter password" formControlName="password">
+              <label class="form-label" for="form3Example4" style="margin-left: 0px;">Password</label>
+            </div>
+  
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="form-check mb-0">
+                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3">
+                <label class="form-check-label" for="form2Example3">
+                  Remember me
+                </label>
+              </div>
+              <a routerLink="/resetpassword">Forgot password?</a>
+            </div>
+    
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <button type="button" class="btn btn-primary btn-lg"
+                style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+            </div>
+    
+          </form>
+
+          
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+
+
+  <!-- <section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-8 col-lg-7 col-xl-6">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+            class="img-fluid" alt="Phone image">
+        </div>
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+          <form>
+            <div class="form-outline mb-4">
+              <input type="email" id="form1Example13" class="form-control form-control-lg" />
+              <label class="form-label" for="form1Example13">Email address</label>
+            </div>
+  
+            <div class="form-outline mb-4">
+              <input type="password" id="form1Example23" class="form-control form-control-lg" />
+              <label class="form-label" for="form1Example23">Password</label>
+            </div>
+  
+            <div class="d-flex justify-content-around align-items-center mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
+                <label class="form-check-label" for="form1Example3"> Remember me </label>
+              </div>
+              <a href="#!">Forgot password?</a>
+            </div>
+  
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+  
+            <div class="divider d-flex align-items-center my-4">
+              <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+            </div>
+  
+            <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="#!"
+              role="button">
+              <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
+            </a>
+            <a class="btn btn-primary btn-lg btn-block" style="background-color: #55acee" href="#!"
+              role="button">
+              <i class="fab fa-twitter me-2"></i>Continue with Twitter</a>
+  
+          </form>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+
+  <img class="wave" src="../../../../assets/images/signin/wave.png">
+	<div class="container">
+		<div class="img">
+			<img src="../../../../assets/images/signin/bg.svg">
+		</div>
+		<div class="login-content">
+        <form [formGroup]="signInForm">
+				<img src="../../../../assets/images/signin/avatar.svg">
+				<h2 class="title">Welcome</h2>
+          <div class="input-div one">
+            <div class="i">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="div">
+                <h5 *ngIf="!signInForm.get('email').value">Email address</h5>
+                <input type="text" class="input" formControlName="email">
+            </div>
+         </div>
+          <div class="input-div pass">
+            <div class="i"> 
+               <i class="fas fa-lock"></i>
+            </div>
+            <div class="div">
+               <h5 *ngIf="!signInForm.get('password').value" >Password</h5>
+               <input type="password" class="input" formControlName="password">
+           </div>
+        </div>
+          <a routerLink="resetpassword">Forgot Password?</a>
+          <input type="submit" class="btn" value="Login">
+  
+        </form>
+        </div>
+    </div>

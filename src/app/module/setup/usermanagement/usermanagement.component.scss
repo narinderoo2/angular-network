@@ -1,0 +1,24 @@
+
+@import '../../../../../src/scss/include/country';
+
+
+.button {
+  background: none !important;
+  border: none !important;
+}
+
+.passwordShowHideWrap input {
+  border-right: none;
+}
+
+.input-group-text.passwordShowHide {
+  cursor: pointer;
+  background: #fff;
+  color: #AFB8C3;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

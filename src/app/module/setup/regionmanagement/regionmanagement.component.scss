@@ -1,0 +1,9 @@
+.datatables.datatable_noRecord .dataTables_empty {
+  display: none;
+}
+
+.datatables:not(.datatable_noRecord) +  .dataTables_info{
+
+  display: none;
+}
+
