@@ -46,23 +46,25 @@ export class ErrorsMessagesService {
 
   public forgetPassowrd: any = {
     otp:[{type:'required',message:'Please enter otp'},
-  {type:'pattern',message:'Please enter valid otp'}],
-    role: [
-      { type: 'required', message: 'Please enter role' }],
-
-    userPassword: [
-      { type: 'lowerCase', message: 'Atleast one lowercase(a-z)' },
-      { type: 'digit', message: 'Atleast one digit(0-9)' },
-      { type: 'upperCase', message: 'Atleast one uppercase(A-Z)' },
-      { type: 'specialCharacter', message: 'Atleast one symbol(!#$%*+/@)'},
-      { type: 'range', message: ' Must 8-15 characters long ' }],
+        {type:'pattern',message:'Please enter valid otp'}],
+    role: [{ type: 'required', message: 'Please enter role' }],
+    password: [
+    { type: 'lowerCase', message: 'Atleast one lowercase(a-z)' },
+    { type: 'digit', message: 'Atleast one digit(0-9)' },
+    { type: 'upperCase', message: 'Atleast one uppercase(A-Z)' },
+    { type: 'specialCharacter', message: 'Atleast one symbol(!#$%*+/@)'},
+    { type: 'range', message: ' Must 8-15 characters long ' }],
    
     email: [
       { type: 'required', message: 'Please enter your email adrress' },
       { type: 'email', message: 'Please enter a valid email address' },
     ],
-    passowrdConfirmError: [
-      { type: 'required', message: 'New password & confirm password does not match'},
+    confirmPassword: [
+      { type: 'required', message: 'Please enter confirm password' },
+      {
+        type: 'confirmedValidator',
+        message: 'Password and confirm password must be match.',
+      },
     ],
   };
   public regionManagement: any = {

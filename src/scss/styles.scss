@@ -1,17 +1,17 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
-@import 'ag-grid-community/styles/ag-grid.css';
-@import 'ag-grid-community/styles/ag-theme-alpine.css';
+// @import 'ag-grid-community/styles/ag-grid.css';
+// @import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 @import 'include/_var';
 
 @import 'include/_color';
-@import 'include/htmltag';
+@import 'include/_htmltag';
 @import 'include/_mixins';
 
 @import 'include/_table';
 @import 'include/_form';
 @import 'include/_header';
-@import 'include/ng_Select';
+@import 'include/_ng_Select';
 @import 'include/_icon';
 
 .ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items div .ng-option{
@@ -102,8 +102,9 @@ Table top icon
 }
 
 #sidebar ul.components {
-  padding: 20px 0;
+  // padding: 20px 0;
   border-bottom: 1px solid #47748b;
+  font-size: 14px;
 }
 
 #sidebar ul p {
@@ -115,6 +116,7 @@ Table top icon
   padding: 10px;
   font-size: 1.1em;
   display: block;
+  // color: #fff;
 }
 
 #sidebar ul li a:hover {

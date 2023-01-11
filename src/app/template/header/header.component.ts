@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { ThemService } from 'src/app/shared/services/them.service';
 
 @Component({
@@ -9,7 +8,7 @@ import { ThemService } from 'src/app/shared/services/them.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private fb: FormBuilder,
+  constructor(
     private themeService: ThemService,
     ) {
 

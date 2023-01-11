@@ -17,6 +17,9 @@ export class EndPointService {
   public CREATE_STATE: string='';
   public GET_STATE: string='';
   public CREATE_CITY: string='';
+  public GET_USER_PAGINATION: string='';
+  public LOGIN_EMAIL_CHECK: string='';
+  public LOGIN_OTP_VERIFY: string='';
   constructor() { 
 
     this.getDomain()
@@ -27,15 +30,18 @@ export class EndPointService {
 
   getDomain(){
     this.IP_PORT = this.DOMAIN + this.PORT
-    this.USER_LISTING= this.IP_PORT + 'setup/user-listing/';
-    this.USER_CREATE= this.IP_PORT + 'setup/create-user/';
+    this.USER_LISTING= this.IP_PORT + 'account/user-listing/';
+    this.USER_CREATE= this.IP_PORT + 'account/user-create/';
+    this.GET_USER_PAGINATION= this.IP_PORT + 'account/user-pagination/';
+
     this.GET_REGION= this.IP_PORT + 'region/country-pagination/';
     this.GET_REGION_STATE= this.IP_PORT + 'region/state-pagination/';
     this.GET_REGION_CITY= this.IP_PORT + 'region/city-pagination/';
     this.CREATE_COUNTRY= this.IP_PORT + 'region/country/';
     this.CREATE_STATE= this.IP_PORT + 'region/state/';
     this.CREATE_CITY= this.IP_PORT + 'region/city/';
-    // this.GET_STATE= this.IP_PORT + 'region/state/';
+    this.LOGIN_EMAIL_CHECK= this.IP_PORT + 'account/email-check/';
+    this.LOGIN_OTP_VERIFY= this.IP_PORT + 'account/forget-password/';
   }
 
 }

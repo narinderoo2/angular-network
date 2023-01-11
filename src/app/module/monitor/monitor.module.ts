@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { MonitorRoutingModule } from './monitor-routing.module';
 import { NetworkteplogyComponent } from './networkteplogy/networkteplogy.component';
+import { GisComponent } from './gis/gis.component';
 
 
 @NgModule({
-  declarations: [NetworkteplogyComponent],
+  declarations: [NetworkteplogyComponent, GisComponent],
   imports: [
     CommonModule,
     MonitorRoutingModule

@@ -1,5 +1,3 @@
-
-<!-- Deletion  -->
 <ng-template #deletePopUp let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h5>Are you sure you want to delete {{deleteData.name}}? If yes, give reason:</h5>
@@ -16,11 +14,10 @@
           <div>
             <label for="domain_url" class="form-label">
               Reason<span class="red">*</span></label>
-            <textarea  class="form-control" rows="4" cols="71"
- maxlength="200">{{deleteDescription}} </textarea>
- <!--             (input)="deleteDescription = $event.target.value.trim();" -->
+            <textarea  class="form-control" rows="4" cols="71" 
+ maxlength="200" (input)="deleteTrim($event)">{{deleteDescription}} </textarea>
           </div>
-          <div class="text-danger" *ngIf="
+          <div class="form-control-feedback" *ngIf="
               ((deleteDescription.length > 0 && deleteDescription.length < 3) ||
                deleteDescription.length >= 200)">
             Reason should be of minimum 3 and Max 200 characters.
@@ -36,6 +33,6 @@
       </div>
     </div>
   </ng-template>
-  <!-- <app-global-spinner *ngIf="dataLoader"></app-global-spinner> -->
-  
+
+  <app-globelspinner *ngIf="spinnerWorking" ></app-globelspinner>  
   

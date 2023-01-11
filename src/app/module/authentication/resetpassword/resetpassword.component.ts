@@ -1,6 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription, timer } from 'rxjs';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { debounceTime, Subscription, timer } from 'rxjs';
+import { ErrorsMessagesService } from 'src/app/shared/services/errors-messages.service';
+import { CommonApiServiceService } from 'src/app/shared/services/common-api-service.service';
+import { EndPointService } from 'src/app/shared/services/end-point.service';
+import { CommonServiceService } from 'src/app/shared/services/common-service.service';
+import { CustomValidaionService } from 'src/app/shared/services/custom-validaion.service';
 
 import {
   ApexNonAxisChartSeries,
@@ -11,6 +16,7 @@ import {
   ApexStroke,
   ApexAxisChartSeries
 } from "ng-apexcharts";
+import { CommonConstants } from 'src/app/shared/constant/common.constant';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -22,12 +28,6 @@ export type ChartOptions = {
   stroke: ApexStroke;
 };
 
-
-import { Routes, RouterModule, Router } from "@angular/router";
-import { ErrorsMessagesService } from 'src/app/shared/services/errors-messages.service';
-
-
-
 @Component({
   selector: 'app-resetpassword',
   templateUrl: './resetpassword.component.html',
@@ -35,122 +35,285 @@ import { ErrorsMessagesService } from 'src/app/shared/services/errors-messages.s
 })
 export class ResetpasswordComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
+  @ViewChild('aForm') aForm: ElementRef;
 
   public chartOptions: Partial<ChartOptions>;
 
   countDown: Subscription;
   currTime: Subscription;
   sourceSubscribe: Subscription;
+  createSubscribtion$: Subscription;
+  formChangeSubscribtion$: Subscription;
 
   resetPassword: FormGroup
   optForm: FormGroup
+  forgetPassword: FormGroup
 
   errorMessages: any;
-  couter: any;
   interval: any;
-  otpChecked: any;
+  hostChartView: any = []
+  otpFormValue: any = []
 
-  otpBtn: boolean = false
-  chartShow: boolean = false;
-  optSend: boolean = false
-
+  timeLeft: number = 120;
+  sendOtpCount: number = 0
 
   verify: string = 'emailVerify';
 
-
-
-
-  obsTimer: number = 0;
-  counterReset = 60000;
-  timeLeft: number = 60;
-  sendOtpCount: number = 0
-
-
-
-  hostChartView: any = []
-  time: number = 0;
-  display;
-  counter = timer(0, 1000);
-  public clock;
+  chartShow: boolean = false;
+  optSend: boolean = false
+  spinnerWorking: boolean = false
+  otpResetInput: boolean = false;
+  isChangeDetect: boolean = false
+  commonconstants = CommonConstants;
 
 
   constructor(
     private fb: FormBuilder,
-    private _ems: ErrorsMessagesService
+    private _ems: ErrorsMessagesService,
+    private commonService: CommonApiServiceService,
+    private endpoint: EndPointService,
+    private commonservice: CommonServiceService,
   ) {
 
     this.resetPassword = this.fb.group({
-      email: ['', [Validators.required]]
+      email: ['', [Validators.required, Validators.email, Validators.pattern(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]]
     })
 
 
     this.optForm = this.fb.group({
-      email: [''],
+      email: ['', [Validators.required, Validators.email]],
       otp: ['', [Validators.required, Validators.minLength(5)]]
     })
-
-
-
+    this.forgetPassword = this.fb.group(
+      {
+        password: ['', [Validators.required, CustomValidaionService.passwordCheck]],
+        confirmPassword: ['', [Validators.required]]
+      },
+      {
+        validator: CustomValidaionService.confirmedValidator(
+          'password',
+          'confirmPassword'
+        ),
+      }
+    )
   }
 
   ngOnInit(): void {
-
     this.errorMessages = this._ems.forgetPassowrd;
+    // this.verify = 'passVerify'
+  }
 
-    // console.log(this.router);
+  // Verify email 
+  resetPasswordUser() {
+    if (this.resetPassword.invalid) {
+      return
+    }
+    this.spinnerWorking = true
+    let formData = this.commonService.createFormData({
+      email: this.resetPassword.value.email
+    })
+    this.createSubscribtion$ = this.commonService
+      .postRequest(this.endpoint.LOGIN_EMAIL_CHECK, formData)
+      .pipe(debounceTime(500))
+      .subscribe({
+        next:
+          (resp) => {
+            if (resp && resp.resultCode == '1') {
+              this.verify = 'otpVerify'
+              this.commonService.callAlert('', resp.errorMessage, 'success')
+              this.startTimer()
+              this.apexCounterChart()
+              this.optForm.patchValue({
+                email: this.resetPassword.value.email
+              })
+            } else {
+              this.commonService.callAlert('', resp.errorMessage, 'error')
+            }
+            this.spinnerWorking = false
 
-    this.verify = 'otpVerify'
-    this.timerStart(0)
-    // this.startTimer()
+          },
+        error: (error) => {
+          this.spinnerWorking = false
+          this.commonService.callAlert()
+
+        }
+      })
+
+
+  }
+
+  // Verify OTP
+  otpVerifyUser() {
+    if (!this.optForm.valid) {
+      return
+    }
+    this.spinnerWorking = true
+    let formData = this.commonService.createFormData(this.optForm.value)
+    this.createSubscribtion$ = this.commonService
+      .postRequest(this.endpoint.LOGIN_OTP_VERIFY, formData)
+      .pipe(debounceTime(500))
+      .subscribe({
+        next:
+          (resp) => {
+            if (resp && resp.resultCode == '1') {
+              this.verify = 'passVerify'
+              // this.forgetPassword.patchValue({
+              //   email: this.resetPassword.value.email
+              // })
+              this.onChangeDetect(this.forgetPassword)
+              this.commonService.callAlert('', resp.errorMessage, 'success')
+            } else {
+              this.otpReset()
+              this.commonService.callAlert('', resp.errorMessage, 'error')
+            }
+            this.spinnerWorking = false
+
+          },
+        error: (error) => {
+          this.spinnerWorking = false
+          this.commonService.callAlert()
+
+        }
+      })
+
+  }
+
+  // Verify Confiorm Password 
+  confiormPassword() {
+    if (!this.forgetPassword.valid || !this.optForm.valid) {
+      return
+    }
+    this.spinnerWorking = true
+    let formData = this.commonService.createFormData({
+      otp:this.optForm.value.otp,
+      email:this.optForm.value.email,
+      password:this.forgetPassword.value.password,
+      confirmPassword:this.forgetPassword.value.confirmPassword
+
+    })
+    this.createSubscribtion$ = this.commonService
+      .commonRequest('Patch',this.endpoint.LOGIN_OTP_VERIFY, formData)
+      .pipe(debounceTime(500))
+      .subscribe({
+        next:
+          (resp) => {
+            if (resp && resp.resultCode == '1') {
+              this.commonService.callAlert('', resp.errorMessage, 'success')
+              return this.commonservice.routerNavigate('/login')
+            } else {
+              this.resetForm()
+              this.commonService.callAlert('', resp.errorMessage, 'error')
+            }
+            this.spinnerWorking = false
+          },
+        error: (error) => {
+          this.spinnerWorking = false
+          this.commonService.callAlert()
+
+        }
+      })
+
   }
 
 
 
 
+
+
+
+
+
+
+
+
+
+  // Timer start on apex chart
   startTimer() {
     this.interval = setInterval(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
-        this.chartOptions.series = [this.timeLeft * 1.7]
+        this.chartOptions.series = [this.timeLeft * 100 / 120]
       } else {
         this.pauseTimer()
-        this.timeLeft = 60;
+        this.timeLeft = 120;
         this.chartShow = false;
         this.sendOtpCount++
+        this.optSend = true
+        this.otpReset()
+
 
       }
     }, 1000)
   }
 
+  //  Timer interval stop
   pauseTimer() {
     clearInterval(this.interval);
   }
 
+  //  otp multiple input field reset 
+  otpReset() {
+    this.otpResetInput = true;
+    setTimeout(() => {
+      this.otpResetInput = false;
+      this.optForm.patchValue({
+        otp: ''
+      })
+      this.otpFormValue = []
+    }, 10);
+  }
 
-  
-  otpVerifyUser() {
-    if (!this.optForm.valid) {
-      return
-    }
-    this.apexCounterChart()
-    this.startTimer()
+  // Password reset
+  resetForm() {
+    this.forgetPassword.patchValue({
+      password: null,
+      confirmPassword: null
+    })
+    this.isChangeDetect = false;
+  }
 
-    this.optSend = true
-
-    // setTimeout(() => {
-    //   this.optSend = false
-      if (this.sendOtpCount == 3) {
-        this.verify = 'passVerify'
+  // Form value detect
+  onChangeDetect(form: any) {
+    this.formChangeSubscribtion$ = form.valueChanges.subscribe((val) => {
+      if (val) {
+        this.isChangeDetect = true
       }
-    //   this.sendOtpCount++
-    // }, 10000);
+    })
   }
 
 
+  // OTP send on same email
+  resendOTP() {
+    if (!this.optSend) {
+      return
+    }
+    if (this.sendOtpCount == 3) {
+      return this.commonservice.routerNavigate('/login')
+    }
+    this.resetPasswordUser()
+  }
+
+
+  // Multi input field data push in array and splice
+  changeValueOTP(event, index) {
+    let data = event.target.value
+    if (data) {
+      this.setFocus(index + 1)
+      this.otpFormValue.splice(index, 0, data)
+    } else {
+      this.otpFormValue.splice(index, 1)
+    }
+
+    this.optForm.patchValue({
+      otp: this.otpFormValue.join('')
+    })
+  }
+
+  // Apex chart show for otp 2 min timer
   apexCounterChart() {
     this.chartShow = true;
     this.chartOptions = {
-      series: [this.timeLeft * 1.7],
+      series: [this.timeLeft * 100 / 120],
       chart: {
         height: 150,
         type: "radialBar",
@@ -172,7 +335,8 @@ export class ResetpasswordComponent implements OnInit {
               color: undefined,
 
               formatter: function (val) {
-                return Math.round(val / 1.7) + "sec";
+
+                return Math.round(val * 120 / 100) + "sec";
               }
             }
           }
@@ -197,87 +361,17 @@ export class ResetpasswordComponent implements OnInit {
   }
 
 
-  resetPasswordUser() {
-    this.verify = 'otpVerify'
-
-  }
-
-  optFormUser() {
-
-  }
-
-
-
-
-  optCheck(value) {
-    if (this.otpChecked.length == '5') {
-      let regex = "^[0-9]*$"
-      let a = this.otpChecked.match(regex)
-      if (a != null) {
-        this.otpBtn = true
-
-      } else {
-        this.otpBtn = true
-        return
-
-      }
-
-
-
-
-      this.otpBtn = true
-    } else {
-      this.otpBtn = false
-      return
+  // Auto next input select  (focus change)
+  setFocus(name) {
+    const ele = this.aForm.nativeElement[name];
+    if (ele) {
+      ele.focus();
     }
-
-
-
   }
 
-
-
-  resendOTP() {
-    if(!this.optSend){
-      return
-    }
-    
-
-    this.pauseTimer()
-    this.timeLeft = 60;
-    this.chartShow = false;
-    // this.sendOtpCount++
-    
-
+  // Auto input create 
+  counterData(i: number) {
+    return new Array(i);
   }
-
-
-  timerStart(data) {
-
-    this.currTime = timer(1000, 1000).subscribe(() => (this.obsTimer = this.obsTimer - 1000))
-    this.sourceSubscribe = timer(data, 60000).subscribe((val) => {
-      this.obsTimer = this.counterReset;
-
-    });
-
-  }
-  StartBtn(data) {
-    this.timerStart(this.obsTimer)
-
-  }
-  pauseBtn() {
-
-    this.currTime ? this.currTime.unsubscribe() : '';
-  }
-
-
-
-
-
-  makeData() { }
-
-
-
-
 
 }

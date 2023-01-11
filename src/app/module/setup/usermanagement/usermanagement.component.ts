@@ -59,6 +59,37 @@ export class UsermanagementComponent implements OnInit {
     {role:"Viewer",id:3}
   ]
 
+  userFormData = [
+    // {
+    //   label: 'Country Name', formControl: 'countryId', type: 'dropdown', placeholder: 'Please select country name',
+    //   validation: true, dropDownListing:[], endPoint: 'CREATE_COUNTRY'
+    // },
+    {
+      label: 'First Name', formControl: 'first_name', type: 'input', placeholder: 'Please enter first name',
+      validation: true, min: 3, max: 50, regex: 'alphanumericDashUnderScore'
+    },
+    {
+      label: 'Last Name', formControl: 'last_name', type: 'input', placeholder: 'Please enter last name',
+      validation: false, min: 3, max: 50
+    },
+    {
+      label: 'Email', formControl: 'email', type: 'input', placeholder: 'Please enter email',
+      validation: true, min: 3, max: 100
+    },
+    {
+      label: 'Password', formControl: 'password', type: 'input', placeholder: 'Please enter password',
+      validation: true, min: 3, max: 30
+    },
+    {
+      label: 'Confirm Password', formControl: 'confirmPassword', type: 'input', placeholder: 'Please enter confirm password',
+      validation: true, min: 3, max: 30
+    },
+    {
+      label: 'Phone', formControl: 'phone', type: 'number', placeholder: 'Please enter phone number',
+      validation: false, min: 3, max: 15
+    },
+  ]
+
 
 
   
@@ -114,25 +145,6 @@ export class UsermanagementComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-
-
-
-    this.userDataTable = [{ checked: false,
-
-      firstName:'rt',
-      email:"rt@gmail.com",
-      role:1,
-      create_at:'26-08-2022',
-      is_active:true
-},{ checked: false,
-
-firstName:'rt',
-email:"rt@gmail.com",
-role:1,
-create_at:'26-08-2022',
-is_active:true
-}]
 
     this.errorMessages = this.ems.userManagementErrorMessages;
 
@@ -191,9 +203,9 @@ this.getUserList()
           this.ordering
         );
         console.log(this.endpoints.USER_LISTING);
-        return
+        // return
         this.userListSubscribtion$ = this.commonService
-          .getRequest(this.endpoints.USER_LISTING + '?' + params)
+          .getRequest(this.endpoints.GET_USER_PAGINATION + '?' + params)
           .pipe(debounceTime(500))
           .subscribe({
 
@@ -205,7 +217,7 @@ this.getUserList()
                   //.resultCode === '1'
 
 
-                  // this.userDataTable = resp.results.map((data) => {
+                  this.userDataTable = resp.results
                   //   return {
 
                       
@@ -302,18 +314,22 @@ this.getUserList()
 
 
     //create a new form data
-    let formData = {
-      firstName:data.first_name,
-      lastName:data.last_name,
+
+    // let formData = 
+
+    let formData =this.commonService.createFormData({
+      first_name:data.first_name,
+      last_name:data.last_name,
       email:data.email,
-      phoneNumber:data.phone_number,
-      countryCode:data.country_code,
-      role:data.role,
-      timeZone:data.timeZone,
-      userPassword:data.userPassword,
-      confirmPassword:data.confirmPassword
+      username:data.first_name,
+      phone_number:data.phone_number,
+      flag:data.country_code,
+      // role:data.role,
+      user_timezone:data.timeZone,
+      password:data.userPassword,
+      // confirmPassword:data.confirmPassword
       
-    };
+    });
 
     this.creataDataSubscrption$ = this.commonService
       .postRequest( this.endpoints.USER_CREATE, formData)

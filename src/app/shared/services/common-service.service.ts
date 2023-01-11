@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonServiceService {
 
-  constructor() { }
+  constructor(private router:Router) { }
 
 
 
@@ -29,4 +30,11 @@ export class CommonServiceService {
     });
     return formGroup;
   }
+
+  routerNavigate(routing:string){
+    return this.router.navigate([routing])
+
+  }
+
+
 }

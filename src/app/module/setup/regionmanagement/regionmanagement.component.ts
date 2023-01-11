@@ -32,6 +32,7 @@ export class RegionmanagementComponent implements OnInit {
 
   listSubscribtion$: Subscription;
   CreateSubscribtion$: Subscription;
+  dropListingSubscribe$: Subscription;
 
   pageRecordsTotal: number = 0;
   page: number = 1;
@@ -41,9 +42,10 @@ export class RegionmanagementComponent implements OnInit {
   URLSearchParams: any;
 
 
+  tabName: string = ''
 
   countryRow: any;
-  deletePopData: any = { name: 'city', url: this.endpoints, confirmParms: '' }
+  deletePopData: any = { name:'', url: this.endpoints, confirmParms: '' }
 
 
 
@@ -56,16 +58,10 @@ export class RegionmanagementComponent implements OnInit {
   formOpen: boolean = false;
   deletepopUp: boolean = false;
   spinnerWorking: boolean = false;
-  createFormEndPoints: string;
+  // createFormEndPoints: string;
   dropDownListing: any;
+  editFormPatchValue:any =null
 
-  cities: any = [
-    { id: 1, name: 'Vilnius' },
-    { id: 2, name: 'Kaunas' },
-    { id: 3, name: 'Pavilnys', disabled: true },
-    { id: 4, name: 'Pabradė' },
-    { id: 5, name: 'Klaipėda' }
-  ];
 
   countryListing: any = []
   stateListing: any = []
@@ -82,7 +78,7 @@ export class RegionmanagementComponent implements OnInit {
   stateForm: any = [
     {
       label: 'Country Name', formControl: 'countryId', type: 'dropdown', placeholder: 'Please select country name',
-      validation: true, dropDownListing: this.stateListing, endPoint: 'CREATE_COUNTRY'
+      validation: true, dropDownListing:[], endPoint: 'CREATE_COUNTRY'
     },
     {
       label: 'State Name', formControl: 'name', type: 'input', placeholder: 'Please enter state name',
@@ -92,11 +88,11 @@ export class RegionmanagementComponent implements OnInit {
   cityForm: any = [
     {
       label: 'Country Name', formControl: 'country', type: 'dropdown', placeholder: 'Please select country name',
-      validation: true, dropDownListing: this.countryListing, endPoint: 'CREATE_COUNTRY'
+      validation: true, dropDownListing: [], endPoint: 'CREATE_COUNTRY'
     },
     {
       label: 'State Name', formControl: 'state', type: 'dropdown', placeholder: 'Please select state name',
-      validation: true, dropDownListing: this.stateListing,endPoint: 'CREATE_STATE'
+      validation: true, dropDownListing: [],endPoint: 'CREATE_STATE'
     },
     {
       label: 'City Name', formControl: 'name', type: 'input', placeholder: 'Please enter city name',
@@ -146,37 +142,35 @@ export class RegionmanagementComponent implements OnInit {
 
 
 
-  tabName: string = ''
   changeTab(tabName: string = "Country", tabSelect: any = null) {
     this.tabName = tabName
     this.getTableData = false
     this.tabChangeValue = tabSelect
-
+    this.formDetails = []
 
     
     if (tabName == 'Country') {
-      this.formDetails = this.countryForm
+      this.formDetails =  JSON.parse(JSON.stringify(this.countryForm))
       this.endPointChange = this.endpoints.GET_REGION
       this.countryRow = [
       { orderable: true, data: 'name', headerName: 'Name' },
-      { orderable: true, data: 'description', headerName: 'Description' },
-      { orderable: true, data: 'created_by', headerName: 'Created By' },
-      { orderable: false, data: 'action', headerName: 'Action' },
+      { orderable: true, data: 'description', headerName: 'Description'},
+      { orderable: false, data: 'state_count', headerName: 'Count'},
+      { orderable: false, data: 'action',edit:false,delete:true, headerName: 'Action',validation:'state_count'  },
       ]
 
     } else if (tabName == 'State') {
-      this.formDetails = this.stateForm
+      this.formDetails =  JSON.parse(JSON.stringify(this.stateForm))
       this.endPointChange = this.endpoints.GET_REGION_STATE
-
       this.countryRow = [
         { orderable: true, data: 'country_name', headerName: 'Country Name' },
         { orderable: true, data: 'name', headerName: 'State Name' },
-        { orderable: true, data: 'createdBy', headerName: 'Created By' },
-        { orderable: false, data: 'action', headerName: 'Action' },
+        { orderable: true, data: 'city_count', headerName: 'Count' },
+        { orderable: false, data: 'action',edit:true,delete:true, headerName: 'Action' ,validation:'city_count'},
       ]
 
     } else {
-      this.formDetails = this.cityForm
+      this.formDetails =  JSON.parse(JSON.stringify(this.cityForm))
       this.endPointChange = this.endpoints.GET_REGION_CITY
 
       this.countryRow = [
@@ -185,7 +179,7 @@ export class RegionmanagementComponent implements OnInit {
         { orderable: true, data: 'name', headerName: 'City Name' },
         { orderable: true, data: 'latitude', headerName: 'Latitude' },
         { orderable: true, data: 'longitude', headerName: 'Longitude' },
-        { orderable: false, data: 'action', headerName: 'Action' },
+        { orderable: false, data: 'action',edit:true,delete:true, headerName: 'Action' },
       ]
 
     }
@@ -200,7 +194,12 @@ export class RegionmanagementComponent implements OnInit {
 
 
   openPopUp(content, tag) {
+    this.editFormPatchValue=null
     this.formControlAdd() ;
+
+
+    console.log(this.stateForm,this.formDetails);
+    
     this.formDetails.forEach(item => {
       if (item && item.type == "dropdown") {
           this.getDropDownListing(item)
@@ -208,28 +207,12 @@ export class RegionmanagementComponent implements OnInit {
     })
 
     if(tag){
-      this.dynamicForm.patchValue(tag)
+      this.editFormPatchValue = tag
+      this.dynamicForm.patchValue(this.editFormPatchValue)
     }
 
-    console.log(tag,this.dynamicForm.value);
+
     
-
-    //   this.getDropDownListing(this.stateListing)
-
-
-    // if (this.tabName == 'Country') {
-    //   this.createFormEndPoints = this.endpoints.CREATE_COUNTRY
-
-    // } else if (this.tabName == 'State') {
-    //   this.createFormEndPoints = this.endpoints.CREATE_STATE
-    //   this.getDropDownListing(this.stateListing)
-    // } else {
-    //   this.createFormEndPoints = this.endpoints.CREATE_STATE
-
-    // }
-
-
-
     this.modalReference$ = this.modalService.open(content, {
       size: 'lg',
       backdrop: 'static',
@@ -247,7 +230,6 @@ export class RegionmanagementComponent implements OnInit {
 
 
 
-  dropListingSubscribe$: Subscription;
   getDropDownListing(saveLisiting: any) {
     if(saveLisiting.dropDownListing.length >0){
       return
@@ -354,7 +336,12 @@ export class RegionmanagementComponent implements OnInit {
 
 
   resetForm() {
-    this.dynamicForm.reset()
+    this.dynamicForm.reset()    
+    if(this.editFormPatchValue){
+      this.dynamicForm.patchValue(this.editFormPatchValue)
+    }
+
+
   }
   createForm() {
     if (this.dynamicForm.invalid) {
@@ -363,36 +350,31 @@ export class RegionmanagementComponent implements OnInit {
 
     this.spinnerWorking = true
     let data = this.dynamicForm.value
-    // CREATE_COUNTRY country-create
-
     let formData = this.commonService.createFormData(data)
-
-
-    if (this.tabName == 'Country') {
-     
-      this.createFormEndPoints = this.endpoints.CREATE_COUNTRY
-
-    } else if (this.tabName == 'State') {
-    
-      this.createFormEndPoints = this.endpoints.CREATE_STATE
-    } else {
-      
-      this.createFormEndPoints = this.endpoints.CREATE_CITY
+    let urlEndPoint = this.getEndPoint()
+let method:string;
+    if(this.editFormPatchValue){
+      urlEndPoint =urlEndPoint+this.editFormPatchValue.id
+      method = 'Patch'
+    }else{
+      method = 'POST'
 
     }
 
-
+    console.log(this.editFormPatchValue,urlEndPoint);
+    
 
     this.CreateSubscribtion$ = this.commonService
-      .postRequest(this.createFormEndPoints, formData)
+      .commonRequest(method,urlEndPoint, formData)
       .pipe(debounceTime(500))
       .subscribe({
         next:
           (resp) => {
             this.spinnerWorking = false
-
             if (resp.resCode == "1") {
               this.getUserList()
+              this.modalReference$.close()
+              this.commonService.callAlert('', resp.message, 'success')
             } else {
               this.commonService.callAlert('', resp.message, 'error')
             }
@@ -400,7 +382,6 @@ export class RegionmanagementComponent implements OnInit {
           },
         error: (error) => {
           this.spinnerWorking = false
-
           this.commonService.callAlert()
 
         }
@@ -409,16 +390,49 @@ export class RegionmanagementComponent implements OnInit {
   }
 
   outPutDelete(data) {
-    if (data) {
-      this.deletepopUp = false
+    this.deletepopUp = false
+
+    if (data && data.popUp == 'close') {
       this.getUserList()
     }
 
   }
-  openPopupDelete(data) {
 
+
+  openPopupDelete(data:any,disable:any,tag:string) {
+
+    console.log(disable);
+    
+    if(tag == 'single' && data[disable.validation]){
+return
+    }
+    let urlEndPoint = this.getEndPoint()
+    this.deletePopData.name=this.tabName
+    if(data){
+      this.deletePopData.url=urlEndPoint+data.id
+
+    }else{
+      this.deletePopData.url=urlEndPoint
+
+    }
     this.deletepopUp = true
 
+  }
+
+
+  getEndPoint(){
+let urlEndPoint:string=''
+    if (this.tabName == 'Country') {
+      // this.createFormEndPoints = this.endpoints.CREATE_COUNTRY
+      urlEndPoint = this.endpoints.CREATE_COUNTRY
+    } else if (this.tabName == 'State') {
+      urlEndPoint = this.endpoints.CREATE_STATE
+    } else {
+      urlEndPoint = this.endpoints.CREATE_CITY
+
+    }
+
+    return urlEndPoint
   }
 
  

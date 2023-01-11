@@ -39,8 +39,14 @@
     <div class="col-md-12">
         <div class="custom-table custom-table-height custom-bg custom-table-hover">
           <div class="table-responsive Recentevents" >
-            <table class="table table-bordered table-striped datatables" datatable [dtOptions]="dtOptions" width="100%"
-              cellspacing="0" [ngClass]="{ datatable_noRecord: userDataTable?.length != 0 }">
+
+            <table  class="table table-bordered table-striped datatables" datatable
+              [dtOptions]="dtOptions" width="100%" cellspacing="0"
+              [ngClass]="{ datatable_noRecord: userDataTable?.length != 0 }">
+
+
+            <!-- <table class="table table-bordered table-striped datatables" datatable [dtOptions]="dtOptions" width="100%"
+              cellspacing="0" [ngClass]="{ datatable_noRecord: userDataTable?.length != 0 }"> -->
               <thead>
                 <tr>
                   <th class="first-check" width=30px>
@@ -60,13 +66,23 @@
               </thead>
               <tbody *ngIf="userDataTable.length > 0">
                 <tr *ngFor="let row of userDataTable">
+
+                  <!-- address: ""
+email: "nn1@gmail.com"
+first_name: "nnnnnnne"
+flag: "in"
+last_name:"n"
+phone_number: "2222"
+user_timezone: "Asia/Kolkata"
+username: "nnnnnnnen" -->
+
                   <th class="first-check px-2 py-1">
                     <input class="form-check-input m-0" id="i" name="checkbox" type="checkbox">
                     <!-- (change)="checkIfallselectedOrNot($event)" -->
                   </th>
-                  <td>{{row.firstName}}</td>
+                  <td>{{row.first_name}}</td>
                   <td>{{row.email}}</td>
-                  <td class="zoomin">{{row.role}}</td>
+                  <td class="zoomin">role</td>
                   <td>{{row.create_at}}</td>
 
                   <!-- <td>{{ showGroupdDetail(row.groups,1) }}</td>

@@ -71,6 +71,7 @@ export class AppComponent implements OnInit {
 
 
   downloadfile(imageHeader: any, callback = null) {
+    return
     let headerHeight = 0.9;
     var margint_top = headerHeight + 0.5;
     let data1 = [

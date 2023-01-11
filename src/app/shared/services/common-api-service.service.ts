@@ -20,6 +20,16 @@ export class CommonApiServiceService {
   public postRequest(API_URL: any, queryparam: any): Observable<any> {
     return this.http.post(API_URL, queryparam).pipe(catchError(err => throwError(err)));
   }
+  public deleteRequest(API_URL: any, queryparam: any=null): Observable<any> {
+    return this.http.delete(API_URL, queryparam).pipe(catchError(err => throwError(err)));
+  }
+
+  public commonRequest(method:string,API_URL: any, queryparam:any): Observable<any> {
+    
+    return this.http.request(method, API_URL,{ body: queryparam }).pipe(catchError(err => throwError(err)));
+  }
+    // return this.http.delete(API_URL, queryparam).pipe(catchError(err => throwError(err)));
+  // }
 
 
 

@@ -1,0 +1,60 @@
+<div *ngIf="formShow">
+
+    <form class="row g-3 form1" [formGroup]="dynamicForm" (ngSubmit)="createForm()">
+        <div *ngFor="let formType of formDetails" class="col-md-6">
+    
+          <div *ngIf="formType.type == 'input'" [class.has-danger]=" !dynamicForm.get(formType.formControl).valid &&
+          (dynamicForm.get(formType.formControl).dirty || dynamicForm.get(formType.formControl).touched)">
+            <label class="form-label">{{formType.label}}<span class="red">*</span>
+            </label>
+            <input type="text" class="form-control" formControlName="{{formType.formControl}}"  placeholder="{{formType.placeholder}}" />
+    <!-- appRegexWithvalidation
+              valueValidation="{{formType.regex}}" -->
+            <div *ngFor="let validation of errorMessages[formType.formControl]">
+              <div class="form-control-feedback" *ngIf="
+        dynamicForm.get(formType.formControl).hasError(validation.type) &&
+              (dynamicForm.get(formType.formControl).dirty ||
+              dynamicForm.get(formType.formControl).touched)
+            ">
+                {{ validation.message }}
+              </div>
+            </div>
+          </div>
+    
+          <div *ngIf="formType.type == 'dropdown'" [class.has-danger]=" !dynamicForm.get(formType.formControl).valid &&
+          (dynamicForm.get(formType.formControl).dirty || dynamicForm.get(formType.formControl).touched)">
+            <label class="form-label">{{formType.label}}<span class="red">*</span>
+            </label>
+    
+            <!-- {{formType |json}} -->
+            <!-- <ng-select [items]="formType.dropDownListing" [virtualScroll]="true" bindLabel="name" bindValue="id"
+            placeholder="{{formType.placeholder}}" formControlName="{{formType.formControl}}">
+            </ng-select> -->
+    
+    
+    
+            <div *ngFor="let validation of errorMessages[formType.formControl]">
+              <div class="form-control-feedback" *ngIf="
+        dynamicForm.get(formType.formControl).hasError(validation.type) &&
+              (dynamicForm.get(formType.formControl).dirty ||
+              dynamicForm.get(formType.formControl).touched)
+            ">
+                {{ validation.message }}
+              </div>
+            </div>
+          </div>
+    
+    
+    
+        </div>
+    
+        <div class="col-12 d-flex justify-content-end mt-4">
+          <button type="button" [disabled]="!dynamicForm.dirty" class="btn button-transparent me-2" (click)="resetForm()">
+            Reset
+          </button>
+          <button type="submit" [disabled]="!dynamicForm.valid" class="btn btn-primary me-2">
+            Submit
+          </button>
+        </div>
+      </form>
+</div>

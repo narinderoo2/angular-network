@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-
-  constructor() { }
+  changeflag1:boolean=true
+  changeflag2:boolean=false
+  constructor(public router: Router) { }
 
   ngOnInit(): void {
+    console.log(this.router.url);
+    
+  }
+  
+
+  redirectPage(routing:string){
+this.router.navigate([routing])
   }
 
 }
