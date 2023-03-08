@@ -1,14 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TestComponent } from './module/test/test.component';
 import { BlanktemplateComponent } from './template/blanktemplate/blanktemplate.component';
 import { HeaderComponent } from './template/header/header.component';
 
 
 const routes: Routes = [
 
+  // {
+  //   // path: '', component: TestComponent,
+   
+  // },
   {
     path: 'login', component: BlanktemplateComponent,
     loadChildren: () => import('./module/authentication/authentication.module').then(m => m.AuthenticationModule)
+  },
+  {
+    path: 'dashboard', component: HeaderComponent,
+    loadChildren: () => import('./module/dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
     path: 'setup', component: HeaderComponent,

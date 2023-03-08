@@ -1,11 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { debounceTime, Subscription, timer } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime, Subscription } from 'rxjs';
 import { ErrorsMessagesService } from 'src/app/shared/services/errors-messages.service';
 import { CommonApiServiceService } from 'src/app/shared/services/common-api-service.service';
 import { EndPointService } from 'src/app/shared/services/end-point.service';
 import { CommonServiceService } from 'src/app/shared/services/common-service.service';
 import { CustomValidaionService } from 'src/app/shared/services/custom-validaion.service';
+import { CommonConstants } from 'src/app/shared/constant/common.constant';
 
 import {
   ApexNonAxisChartSeries,
@@ -16,7 +17,6 @@ import {
   ApexStroke,
   ApexAxisChartSeries
 } from "ng-apexcharts";
-import { CommonConstants } from 'src/app/shared/constant/common.constant';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;

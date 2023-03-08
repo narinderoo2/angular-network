@@ -1,17 +1,17 @@
 <main class="content">
     <div class="container-fluid p-0">
-
         <div class="row mb-2 mb-xl-3">
             <div class="col-auto d-none d-sm-block">
-                <h3>Dashboard</h3>
+                <h5>Dashboard</h5>
             </div>
 
             <div class="col-auto ms-auto text-end mt-n1">
-
                 <div class="dropdown me-2 d-inline-block">
-                    <a class="btn btn-light bg-white shadow-sm dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-display="static">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle mt-n1"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Today
-</a>
+                    <a class="btn btn-light bg-white shadow-sm dropdown-toggle date-celander filter-padding" href="#"
+                        data-bs-toggle="dropdown" data-bs-display="static">
+                        <i class="fa-regular fa-calendar"></i>
+                        Today
+                    </a>
 
                     <div class="dropdown-menu dropdown-menu-end">
                         <h6 class="dropdown-header">Settings</h6>
@@ -23,98 +23,130 @@
                     </div>
                 </div>
 
-                <button class="btn btn-primary shadow-sm">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter align-middle"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-</button>
-                <button class="btn btn-primary shadow-sm">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw align-middle"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
-</button>
+                <button class="btn btn-primary shadow-sm filter-padding mx-1">
+                    <i class="fas fa-filter"></i>
+                </button>
+                <button class="btn btn-primary shadow-sm filter-padding">
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
             </div>
         </div>
+
         <div class="row">
             <div class="col-12 col-sm-6 col-xxl-3 d-flex">
                 <div class="card illustration flex-fill">
                     <div class="card-body p-0 d-flex flex-fill">
                         <div class="row g-0 w-100">
-                            <div class="col-6">
-                                <div class="illustration-text p-3 m-1">
-                                    <h4 class="illustration-text">Welcome Back, Chris!</h4>
-                                    <p class="mb-0">AppStack Dashboard</p>
-                                </div>
+                            <div class="text-center">
+                                RAM Details
                             </div>
-                            <div class="col-6 align-self-end text-end">
-                                <img src="img/illustrations/customer-support.png" alt="Customer Support" class="img-fluid illustration-img">
-                            </div>
+                            <apx-chart #chart1 [series]="chartOptions1.series" [chart]="chartOptions1.chart"
+                                [colors]="chartOptions1.colors" [yaxis]="chartOptions1.yaxis"
+                                [dataLabels]="chartOptions1.dataLabels" [markers]="chartOptions1.markers"
+                                [stroke]="chartOptions1.stroke" [xaxis]="chartOptions1.xaxis"
+                                [tooltip]="chartOptions1.tooltip"></apx-chart>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-xxl-3 d-flex">
                 <div class="card flex-fill">
-                    <div class="card-body py-4">
-                        <div class="d-flex align-items-start">
-                            <div class="flex-grow-1">
-                                <h3 class="mb-2">$ 24.300</h3>
-                                <p class="mb-2">Total Earnings</p>
-                                <div class="mb-0">
-                                    <span class="badge badge-soft-success me-2"> +5.35% </span>
-                                    <span class="text-muted">Since last week</span>
-                                </div>
+                    <div class="card-body p-0">
+                        <div class="row g-0 w-100">
+                            <div class="text-center">
+                                Device Details
                             </div>
-                            <div class="d-inline-block ms-3">
-                                <div class="stat">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign align-middle text-success"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            <div class="d-flex align-items-start pt-4 px-2 colum-center">
+                                <div class="d-flex flex-row mb-3">
+                                    <div class="text-center">
+                                        <div class="first-div"
+                                            [ngStyle]="{'background-color':percantageColor(batteryCal)}">
+                                            <div class="column-background" [ngStyle]="{'height.px':200-(batteryCal*2)}">
+                                                <span class="column-series">{{batteryCal}}%</span>
+                                            </div>
+                                        </div>
+                                        Battery
+                                    </div>
+
+                                    <div class="text-center">
+                                        <div class="first-div mx-2" style="background-color:#00db20">
+                                            <div class="column-background" [ngStyle]="{'height.px':0}">
+                                                <span class="column-series">{{totalRamCal}}GB </span>
+                                            </div>
+
+                                        </div>
+                                        RAM
+                                    </div>
+
+
+                                    <div class="text-center">
+                                        <div class="first-div mx-2"
+                                            [ngStyle]="{'background-color':percantageColor(useRamCal,'ram')}">
+                                            <div class="column-background" [ngStyle]="{'height.px':200-(useRamCal*2)}">
+                                                <span class="column-series">{{useRamShow}}GB</span>
+                                            </div>
+
+                                        </div>
+                                        Use RAM
+                                    </div>
+
+
+                                    <div class="text-center">
+                                        <div class="first-div mx-2"
+                                            [ngStyle]="{'background-color':percantageColor(cpuCal,'cpu')}">
+                                            <div class="column-background" [ngStyle]="{'height.px':200-(cpuCal*2)}">
+                                                <span class="column-series">{{cpuCal}}%</span>
+                                            </div>
+
+                                        </div>
+                                        CPU
+
+                                    </div>
+
+
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-xxl-3 d-flex">
+
+
+
+            <div class="col-12 col-sm-12 col-xxl-12 d-flex my-4">
                 <div class="card flex-fill">
-                    <div class="card-body py-4">
+                    <div class="card-body py-1">
+                        <div class="row g-0 w-100">
+                            <div class="text-center">
+                               CPU Details
+                            </div>
+
                         <div class="d-flex align-items-start">
                             <div class="flex-grow-1">
-                                <h3 class="mb-2">43</h3>
-                                <p class="mb-2">Pending Orders</p>
-                                <div class="mb-0">
-                                    <span class="badge badge-soft-danger me-2"> -4.25% </span>
-                                    <span class="text-muted">Since last week</span>
+
+                                <div id="chart">
+                                    <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"
+                                        [xaxis]="chartOptions2.xaxis" [stroke]="chartOptions2.stroke"
+                                        [tooltip]="chartOptions2.tooltip"
+                                        [dataLabels]="chartOptions2.dataLabels"></apx-chart>
                                 </div>
                             </div>
-                            <div class="d-inline-block ms-3">
-                                <div class="stat">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag align-middle text-danger"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                                </div>
-                            </div>
+
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-xxl-3 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-body py-4">
-                        <div class="d-flex align-items-start">
-                            <div class="flex-grow-1">
-                                <h3 class="mb-2">$ 18.700</h3>
-                                <p class="mb-2">Total Revenue</p>
-                                <div class="mb-0">
-                                    <span class="badge badge-soft-success me-2"> +8.65% </span>
-                                    <span class="text-muted">Since last week</span>
-                                </div>
-                            </div>
-                            <div class="d-inline-block ms-3">
-                                <div class="stat">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign align-middle text-info"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
+
+
+
+
+
+
+        <!-- <div class="row">
             <div class="col-12 col-lg-8 d-flex">
                 <div class="card flex-fill w-100">
                     <div class="card-header">
@@ -189,9 +221,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-12 col-lg-6 col-xl-4 d-flex">
                 <div class="card flex-fill">
                     <div class="card-header">
@@ -325,8 +357,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-       
+
     </div>
 </main>

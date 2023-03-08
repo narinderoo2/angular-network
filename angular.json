@@ -45,6 +45,7 @@
             "node_modules/datatables.net/js/jquery.dataTables.js",
             "node_modules/bootstrap/dist/js/bootstrap.js",
               "node_modules/apexcharts/dist/apexcharts.min.js",
+              "node_modules/d3/dist/d3.min.js",
               "src/js/common.js"
 
             ]
@@ -84,6 +85,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "port": 4300   
+        },
+        
           "configurations": {
             "production": {
               "browserTarget": "network:build:production"
