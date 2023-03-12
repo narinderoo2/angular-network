@@ -6,6 +6,10 @@ import {
   ApexTitleSubtitle, ApexDataLabels, ApexYAxis, ApexXAxis,
   ApexTooltip, ApexMarkers, ApexAnnotations, ApexStroke
 } from "ng-apexcharts";
+import { Subscription } from "rxjs";
+import { CommonApiServiceService } from "src/app/shared/services/common-api-service.service";
+import { EndPointService } from "src/app/shared/services/end-point.service";
+import { WebsocketService } from "src/app/shared/websocket.service";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries | ApexNonAxisChartSeries | any;
@@ -27,8 +31,6 @@ export type ChartOptions = {
   toolbar: any;
 };
 
-import { data } from "../series-data";
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -38,7 +40,6 @@ export class DashboardComponent implements OnInit {
 
 
   @ViewChild("chart") chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
   public chartOptions1: Partial<ChartOptions>;
   public chartOptions2: Partial<ChartOptions>;
   @ViewChild("chart1", { static: false }) chart1: ChartComponent;
@@ -51,28 +52,48 @@ export class DashboardComponent implements OnInit {
   useRamShow: number = 0
   cpuCal: number = 0
 
-  constructor() { }
+  listingSubscribe$: Subscription;
+  webScoketSubscribe$: Subscription;
+
+  getChartlisting: any = []
+  showChartListing: any = []
+  ramChartSeries: any = []
+  cpuChartSeries: any = []
+
+  divSpinner: boolean = false
+  ramChartCheck: boolean = false
+  cpuChartCheck: boolean = false
+  liveMode: boolean = false
+
+
+
+  constructor(
+    private commonService: CommonApiServiceService,
+    private endpoints: EndPointService,
+    private websocketService: WebsocketService
+  ) { }
 
   ngOnInit(): void {
-    this.batteryCal = this.percantageCal('battery')
-    this.useRamCal = this.percantageCal('useRam')
-    this.cpuCal = this.percantageCal('cpu')
 
-    console.log(this.useRamCal, this.cpuCal);
-
-    this.initChart1()
-    this.initChart2()
+    this.getChartDevice()
   }
 
+  public updateSeries(item) {
+    this.chartOptions1.series = [{
+      data: item
+    }];
+  }
+  public updateSeries2(item) {
+    this.chartOptions2.series = [{
+      data: item
+    }];
+  }
 
-
-  initChart1(): void {
-    // console.log(data);
-
+  ramChart(): void {
     this.chartOptions1 = {
       series: [{
-        name: "XYZ MOTORS",
-        data: data
+        name: "Ram Utilization",
+        data: this.ramChartSeries
       }],
       chart: {
         type: "area",
@@ -118,9 +139,6 @@ export class DashboardComponent implements OnInit {
       },
       xaxis: {
         type: "datetime",
-        min: new Date("01 Mar 2012").getTime(),
-        tickAmount: 6
-
       },
       tooltip: {
         x: {
@@ -131,33 +149,31 @@ export class DashboardComponent implements OnInit {
         type: "gradient",
         gradient: {
           shadeIntensity: 1,
-        inverseColors: false,
-        opacityFrom: 0.5,
-        opacityTo: 0,
-        stops: [0, 90, 100]
+          inverseColors: false,
+          opacityFrom: 0.5,
+          opacityTo: 0,
+          stops: [0, 90, 100]
         }
       },
-      title :{
+      title: {
         text: "Stock Price Movement",
         align: "left"
       },
-     
+
     };
+    this.ramChartCheck = true
+
   }
 
 
-  initChart2(): void {
+  cpuChart(): void {
 
     this.chartOptions2 = {
       series: [
         {
-          name: "series1",
-          data: [31, 40, 28, 51, 42, 109, 100]
+          name: "CPU Utilization",
+          data: this.cpuChartSeries
         },
-        {
-          name: "series2",
-          data: [11, 32, 45, 32, 34, 52, 41]
-        }
       ],
       chart: {
         height: 220,
@@ -174,15 +190,6 @@ export class DashboardComponent implements OnInit {
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z"
-        ]
       },
       tooltip: {
         x: {
@@ -190,6 +197,7 @@ export class DashboardComponent implements OnInit {
         }
       }
     };
+    this.cpuChartCheck = true
 
   }
 
@@ -197,24 +205,24 @@ export class DashboardComponent implements OnInit {
     let data: number;
     let total: number;
     if (tag == 'battery') {
-      data = 40
+      data = this.showChartListing['battery']
       total = 100
     } else if (tag == 'useRam') {
-      data = 6
-      this.useRamShow = 6
-      total = 8.4
-      this.totalRamCal = 8.4
+      data = this.showChartListing['useRam']
+      this.useRamShow = this.showChartListing['useRam']
+      total = this.showChartListing.deivce_ram.match(/[\d\.]+|\D+/g)[0]
+      this.totalRamCal = this.showChartListing.deivce_ram
     } else if (tag == 'cpu') {
-      data = 18
+      data = this.showChartListing['cpu']
       total = 100
     }
     return Math.trunc((data / total) * 100)
   }
 
-  percantageColor(value,tag:string = null) {
+  percantageColor(value, tag: string = null) {
     let expr: number = value;
-    if(tag){
-      expr = 100 -value;
+    if (tag) {
+      expr = 100 - value;
     }
     let day: any;
     switch (expr > 0) {
@@ -242,7 +250,7 @@ export class DashboardComponent implements OnInit {
     // if(tag){
     //   console.log(day,value
     //     );
-      
+
     // }
 
     return day
@@ -250,8 +258,116 @@ export class DashboardComponent implements OnInit {
   }
 
 
+  getChartDevice() {
+    this.divSpinner = false
+    this.listingSubscribe$ = this.commonService.getRequest(this.endpoints.DASHBOARD_CHART_LISTING).subscribe({
+      next: (res) => {
+        this.getChartlisting = []
+        this.showChartListing = []
+        this.ramChartSeries = []
+        this.cpuChartSeries = []
+        this.divSpinner = true
+        if (res.resCode == '1') {
+          this.getChartlisting = res.result
+          this.showChartListing = Object.assign({}, res.result[0])
 
 
 
+          if (this.getChartlisting[0].data.length > 0) {
+            this.chartDataModification(this.getChartlisting[0].data)
+          }
+
+          this.batteryCal = this.percantageCal('battery')
+          this.useRamCal = this.percantageCal('useRam')
+          this.cpuCal = this.percantageCal('cpu')
+
+
+
+        } else {
+          this.commonService.callAlert('', res.message, 'error')
+        }
+      },
+      error: (error) => {
+        this.divSpinner = true
+        this.getChartlisting = []
+        this.showChartListing = []
+        this.commonService.callAlert()
+
+      }
+    })
+  }
+
+
+
+  chartDataModification(data: any) {
+
+    data.forEach((item, index) => {
+      this.ramChartSeries.push([item.time, item.ram.match(/[\d\.]+|\D+/g)[0]])
+      this.cpuChartSeries.push([item.time, item.cpu.match(/[\d\.]+|\D+/g)[0]])
+      if (data.length == index + 1) {
+        this.showChartListing['battery'] = item.battery
+        this.showChartListing['useRam'] = item.ram.match(/[\d\.]+|\D+/g)[0]
+        this.showChartListing['cpu'] = item.cpu.match(/[\d\.]+|\D+/g)[0]
+      }
+
+    })
+    this.ramChartCheck ? this.updateSeries(this.ramChartSeries) : this.ramChart()
+    this.cpuChartCheck ? this.updateSeries2(this.cpuChartSeries) : this.cpuChart()
+
+  }
+
+
+  liveModeActive(event) {
+    let data = event.target.checked
+
+    if (data) {
+      this.webSocket()
+    } else {
+      this.websocketService.closeUserSocket();
+      this.webScoketSubscribe$ ? this.webScoketSubscribe$.unsubscribe() : '';
+      this.getChartDevice()
+
+    }
+    this.liveMode = data
+
+
+
+  }
+  cHAT_URL = "ws://localhost:8000/ws/device-details/";
+  webSocket() {
+    this.websocketService.connect(this.cHAT_URL)
+    setTimeout(() => {
+      this.websocketService.send("Windows:DESKTOP-1S0Q7HM ")
+      this.webScoketSubscribe$ = this.websocketService.messages$.subscribe((res: any) => {
+        res = JSON.parse(res.value)
+        if (res) {
+          console.log(res)
+          this.ramChartSeries.splice(0, this.ramChartSeries.length - 9)
+          this.cpuChartSeries.splice(0, this.cpuChartSeries.length - 9)
+          this.ramChartSeries.push([res.time, res.ram.match(/[\d\.]+|\D+/g)[0]])
+          this.cpuChartSeries.push([res.time, res.cpu.match(/[\d\.]+|\D+/g)[0]])
+          this.updateSeries(this.ramChartSeries)
+          this.updateSeries2(this.cpuChartSeries)
+          this.showChartListing['battery'] = res.battery
+          this.showChartListing['useRam'] = res.ram.match(/[\d\.]+|\D+/g)[0]
+          this.showChartListing['cpu'] = res.cpu.match(/[\d\.]+|\D+/g)[0]
+          this.batteryCal = this.percantageCal('battery')
+          this.useRamCal = this.percantageCal('useRam')
+          this.cpuCal = this.percantageCal('cpu')
+
+
+        }
+
+
+      })
+    }, 2000);
+
+
+  }
+
+  ngOnDestroy(): void {
+    this.websocketService.closeUserSocket();
+    this.webScoketSubscribe$ ? this.webScoketSubscribe$.unsubscribe() : '';
+  }
 
 }

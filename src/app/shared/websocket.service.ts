@@ -76,5 +76,9 @@ export class WebsocketService {
     }
     
   }
+
+  closeUserSocket() {
+    this.socket$.complete();
+}
   }
 

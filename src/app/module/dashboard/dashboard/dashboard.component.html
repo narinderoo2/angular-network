@@ -2,10 +2,18 @@
     <div class="container-fluid p-0">
         <div class="row mb-2 mb-xl-3">
             <div class="col-auto d-none d-sm-block">
-                <h5>Dashboard</h5>
+                <h5>Dashboard</h5> 
             </div>
 
             <div class="col-auto ms-auto text-end mt-n1">
+                <!-- <div class="form-check"> -->
+                    <input class="form-check-input mx-1" type="checkbox" value="" id="flexCheckDefault"
+                    (change)="liveModeActive($event)">
+                    <label class="form-check-label" style="color: #29c30d;" for="flexCheckDefault">
+                      Live Mode
+                    </label>
+                  <!-- </div> -->
+                {{this.showChartListing.deivce_name}}
                 <div class="dropdown me-2 d-inline-block">
                     <a class="btn btn-light bg-white shadow-sm dropdown-toggle date-celander filter-padding" href="#"
                         data-bs-toggle="dropdown" data-bs-display="static">
@@ -40,7 +48,8 @@
                             <div class="text-center">
                                 RAM Details
                             </div>
-                            <apx-chart #chart1 [series]="chartOptions1.series" [chart]="chartOptions1.chart"
+                            <app-div-spinner class="positon-center" *ngIf="!divSpinner"></app-div-spinner>
+                            <apx-chart *ngIf="divSpinner" #chart1 [series]="chartOptions1.series" [chart]="chartOptions1.chart"
                                 [colors]="chartOptions1.colors" [yaxis]="chartOptions1.yaxis"
                                 [dataLabels]="chartOptions1.dataLabels" [markers]="chartOptions1.markers"
                                 [stroke]="chartOptions1.stroke" [xaxis]="chartOptions1.xaxis"
@@ -71,7 +80,7 @@
                                     <div class="text-center">
                                         <div class="first-div mx-2" style="background-color:#00db20">
                                             <div class="column-background" [ngStyle]="{'height.px':0}">
-                                                <span class="column-series">{{totalRamCal}}GB </span>
+                                                <span class="column-series">{{totalRamCal}}</span>
                                             </div>
 
                                         </div>
@@ -123,9 +132,10 @@
                             </div>
 
                         <div class="d-flex align-items-start">
+                            <app-div-spinner class="positon-center" *ngIf="!divSpinner"></app-div-spinner>
                             <div class="flex-grow-1">
-
-                                <div id="chart">
+                                
+                                <div id="chart" *ngIf="divSpinner" >
                                     <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"
                                         [xaxis]="chartOptions2.xaxis" [stroke]="chartOptions2.stroke"
                                         [tooltip]="chartOptions2.tooltip"

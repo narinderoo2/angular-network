@@ -7,6 +7,7 @@
    position: relative;
    animation-name: example;
   animation-duration: 4s;
+//   overflow: hidden;
 }
 
 
@@ -18,7 +19,7 @@
 }
 
 @keyframes example {
-   0%   {background-color:#464642ed; left:0px; top:0;height: 20px;}
+   0%   {background-color:#464642ed; left:0px; top:0;height: 200px;}
  }
 
 .text-center{
@@ -42,4 +43,10 @@
 }
 .colum-center{
    justify-content: center;
+}
+
+.positon-center{
+   text-align: center;
+   padding-left: 50%;
+   padding-right: 50%;
 }

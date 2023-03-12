@@ -12,7 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { DpDatePickerModule } from 'ng2-date-picker';
 import { ThemService } from './shared/services/them.service';
 import { DataTablesModule } from 'angular-datatables';
-import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 @NgModule({
