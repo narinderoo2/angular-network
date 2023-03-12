@@ -27,10 +27,10 @@
         </li>
         <li  class="{{router.url.includes('/setup/') ? '' : null}}">
             <a href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
-             (click)="this.changeflag2 = !this.changeflag2">Pages</a>
-            <ul class="collapse list-unstyled" id="pageSubmenu "  [ngClass]="changeflag2 ?'show':''" >
+             (click)="this.changeflag2 = !this.changeflag2">Network</a>
+            <ul class="collapse list-unstyled" id="pageSubmenu"  [ngClass]="changeflag2 ?'show':''" >
                 <li>
-                    <a href="javascript:void(0);">Page 1</a>
+                    <a routerLink="/monitor/network-teplogy">Network Teplogy</a>
                 </li>
                 <li>
                     <a href="javascript:void(0);">Page 2</a>
@@ -48,12 +48,5 @@
         </li>
     </ul>
 
-    <ul class="list-unstyled CTAs">
-        <li>
-            <a href="javascript:void(0);" class="download">Download source</a>
-        </li>
-        <li>
-            <a href="javascript:void(0);" class="article">Back to article</a>
-        </li>
-    </ul>
+    
 </nav>

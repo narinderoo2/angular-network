@@ -1,0 +1,52 @@
+
+.column-background{
+   background-color: #464642;
+   // height: 100px;
+   width: 70px;
+   border-radius: 5px 5px 2px 2px;
+   position: relative;
+   animation-name: example;
+  animation-duration: 4s;
+//   overflow: hidden;
+}
+
+
+.first-div{
+   height: 200px;
+   width: 70px;
+   border-radius: 4px;
+   
+}
+
+@keyframes example {
+   0%   {background-color:#464642ed; left:0px; top:0;height: 200px;}
+ }
+
+.text-center{
+   font-size: 0.8rem;
+   font-weight: 400;
+   justify-content: center;
+}
+
+.column-series{
+   font-size: 0.7rem;
+    color: white;
+    font-weight: bold;
+}
+
+.date-celander{
+   width: 103px;
+}
+
+.filter-padding{
+   padding: 0px 4px;
+}
+.colum-center{
+   justify-content: center;
+}
+
+.positon-center{
+   text-align: center;
+   padding-left: 50%;
+   padding-right: 50%;
+}

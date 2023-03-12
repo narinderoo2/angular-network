@@ -34,6 +34,9 @@ import { DataTablesModule } from 'angular-datatables';
     FormsModule,
     HttpClientModule,
     DpDatePickerModule,
+
+    // NgApexchartsModule,
+    
     // NgApexchartsModule,
     
   ],

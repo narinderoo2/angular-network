@@ -20,6 +20,7 @@ export class EndPointService {
   public GET_USER_PAGINATION: string='';
   public LOGIN_EMAIL_CHECK: string='';
   public LOGIN_OTP_VERIFY: string='';
+  public DASHBOARD_CHART_LISTING: string='';
   constructor() { 
 
     this.getDomain()
@@ -42,6 +43,8 @@ export class EndPointService {
     this.CREATE_CITY= this.IP_PORT + 'region/city/';
     this.LOGIN_EMAIL_CHECK= this.IP_PORT + 'account/email-check/';
     this.LOGIN_OTP_VERIFY= this.IP_PORT + 'account/forget-password/';
+
+    this.DASHBOARD_CHART_LISTING= this.IP_PORT + 'chart/device-details/';
   }
 
 }
