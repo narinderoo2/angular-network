@@ -13,6 +13,8 @@
 @import 'include/_header';
 @import 'include/_ng_Select';
 @import 'include/_icon';
+@import 'include/_card';
+@import 'include/swal_alert';
 
 .ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items div .ng-option{
   background-color: white !important ;

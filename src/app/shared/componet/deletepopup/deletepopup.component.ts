@@ -27,9 +27,10 @@ export class DeletepopupComponent implements OnInit, AfterViewInit {
   spinnerWorking: boolean = false
 
 
-  constructor(private modalService: NgbModal,
-    private commonService: CommonApiServiceService,
-    private http:HttpClient
+  constructor(
+    private _modalService: NgbModal,
+    private _commonService: CommonApiServiceService,
+    private _http:HttpClient
   ) { }
 
 
@@ -41,7 +42,7 @@ export class DeletepopupComponent implements OnInit, AfterViewInit {
   }
 
   openpopUp() {
-    this.modalReference$ = this.modalService.open(this.openPopup, {
+    this.modalReference$ = this._modalService.open(this.openPopup, {
       size: 'lg',
       backdrop: 'static',
       keyboard: false,
@@ -56,30 +57,47 @@ export class DeletepopupComponent implements OnInit, AfterViewInit {
 
   }
   deleteUrl(data) {
+    console.log(this.deleteData);
+let deleltIds:any;
+
+
     if (this.deleteDescription && (this.deleteDescription.length < 3 || this.deleteDescription.length > 200)) {
       return
     }
     this.spinnerWorking = true
+    console.log(this.deleteData.confirmParms,'this.deleteData.confirmParms');
+    
 
-    this.deleteSubscribtion$ = this.commonService
-      .deleteRequest(this.deleteData.url, this.deleteDescription)
+    if(this.deleteData.confirmParms){
+      deleltIds = this._commonService.createFormData({
+        reason:this.deleteDescription,
+        ids:JSON.stringify([this.deleteData.confirmParms])
+      })
+    }else{
+      deleltIds = this.deleteDescription
+    }
+    
+console.log(deleltIds,'deleltIdsdeleltIdsdeleltIds');
+
+    this.deleteSubscribtion$ = this._commonService
+      .commonRequest('DELETE',this.deleteData.url, deleltIds)
       .pipe(debounceTime(500))
       .subscribe({
         next:
           (resp) => {
             this.spinnerWorking = false
-            if (resp.rspCode == '1') {
-              this.commonService.callAlert('', resp.message, 'success')
+            if (resp.resCode == '1') {
+              this._commonService.callAlert('', resp.message, 'success')
               this.deleteOutput.emit({ popUp: 'close' })
               this.modalReference$.close()
             } else {
-              this.commonService.callAlert('', resp.message, 'error')
+              this._commonService.callAlert('', resp.message, 'error')
             }
 
           },
         error: (error) => {
           this.spinnerWorking = false
-          this.commonService.callAlert()
+          this._commonService.callAlert()
 
         }
       })

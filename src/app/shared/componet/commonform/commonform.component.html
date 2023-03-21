@@ -1,60 +1,80 @@
-<div *ngIf="formShow">
+<ng-template #openFormPopUp let-c="close" let-d="dismiss">
+  <div class="main-form" >
+    <div class="modal-header ">
+      <h5 class="modal-title">{{editFormPatchValue ? 'Update':'Create'}} {{tabName}}</h5>
 
-    <form class="row g-3 form1" [formGroup]="dynamicForm" (ngSubmit)="createForm()">
-        <div *ngFor="let formType of formDetails" class="col-md-6">
-    
-          <div *ngIf="formType.type == 'input'" [class.has-danger]=" !dynamicForm.get(formType.formControl).valid &&
-          (dynamicForm.get(formType.formControl).dirty || dynamicForm.get(formType.formControl).touched)">
-            <label class="form-label">{{formType.label}}<span class="red">*</span>
-            </label>
-            <input type="text" class="form-control" formControlName="{{formType.formControl}}"  placeholder="{{formType.placeholder}}" />
-    <!-- appRegexWithvalidation
-              valueValidation="{{formType.regex}}" -->
-            <div *ngFor="let validation of errorMessages[formType.formControl]">
-              <div class="form-control-feedback" *ngIf="
-        dynamicForm.get(formType.formControl).hasError(validation.type) &&
-              (dynamicForm.get(formType.formControl).dirty ||
-              dynamicForm.get(formType.formControl).touched)
-            ">
-                {{ validation.message }}
+      <button type="button" style="border:none;background-color:white;" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-lg">
+      <div class="modal-body p-3">
+        <form class="row g-3 form1" [formGroup]="dynamicForm" (ngSubmit)="createForm()">
+          <div *ngFor="let formType of formDetails" [ngClass]="formDetails.length >1?'col-md-6':'col-md-12'">
+            
+
+            <div *ngIf="formType.type == 'input'" [class.has-danger]=" !dynamicForm.get(formType.formControl).valid &&
+            (dynamicForm.get(formType.formControl).dirty || dynamicForm.get(formType.formControl).touched)">
+              <label class="form-label">{{formType.label}}<span class="red">*</span>
+              </label>
+              <input type="text" class="form-control" formControlName="{{formType.formControl}}" appRegexWithvalidation
+                valueValidation="{{formType.regex}}" placeholder="{{formType.placeholder}}" />
+
+              <div *ngFor="let validation of errorMessages[formType.formControl]">
+                <div class="form-control-feedback" *ngIf="
+          dynamicForm.get(formType.formControl).hasError(validation.type) &&
+                (dynamicForm.get(formType.formControl).dirty ||
+                dynamicForm.get(formType.formControl).touched)
+              ">
+                  {{ validation.message }}
+                </div>
               </div>
             </div>
-          </div>
-    
-          <div *ngIf="formType.type == 'dropdown'" [class.has-danger]=" !dynamicForm.get(formType.formControl).valid &&
-          (dynamicForm.get(formType.formControl).dirty || dynamicForm.get(formType.formControl).touched)">
-            <label class="form-label">{{formType.label}}<span class="red">*</span>
-            </label>
-    
-            <!-- {{formType |json}} -->
-            <!-- <ng-select [items]="formType.dropDownListing" [virtualScroll]="true" bindLabel="name" bindValue="id"
-            placeholder="{{formType.placeholder}}" formControlName="{{formType.formControl}}">
-            </ng-select> -->
-    
-    
-    
-            <div *ngFor="let validation of errorMessages[formType.formControl]">
-              <div class="form-control-feedback" *ngIf="
-        dynamicForm.get(formType.formControl).hasError(validation.type) &&
-              (dynamicForm.get(formType.formControl).dirty ||
-              dynamicForm.get(formType.formControl).touched)
-            ">
-                {{ validation.message }}
-              </div>
+
+            <div *ngIf="formType.type == 'dropdown'" [class.has-danger]=" !dynamicForm.get(formType.formControl).valid &&
+            (dynamicForm.get(formType.formControl).dirty || dynamicForm.get(formType.formControl).touched)">
+              <label class="form-label">{{formType.label}}<span class="red">*</span>
+              </label>
+              <!-- <ng-select [items]="formType.dropDownListing" [virtualScroll]="true" bindLabel="name" bindValue="id"
+              placeholder="{{formType.placeholder}}" formControlName="{{formType.formControl}}">
+              </ng-select> -->
+
+              <ng-select [items]="formType.dropDownListing" bindLabel="name" [closeOnSelect]="true" [clearable]="true"
+              [multiple]="true"  bindValue="id" placeholder="{{formType.placeholder}}" [clearOnBackspace]="false"
+                    [clearSearchOnAdd]="true" [selectOnTab]="true" formControlName="{{formType.formControl}}">
+                    <ng-template ng-multi-label-tmp let-items="items" let-index="index" let-clear="clear">
+                        <div class="setColor ng-value " *ngFor="let item of items | slice: 0:2">
+                            {{ item['name']}}
+                            <span class="ng-value-icon right" (click)="clear(item)"
+                                aria-hidden="true">x</span>
+                        </div>
+                        <div class="setColor ng-value" *ngIf="items.length > 2">
+                            <span class="ng-value-label">{{ items.length - 2 }} more...</span>
+                        </div>
+                    </ng-template>
+                </ng-select>
+
+
             </div>
+
           </div>
-    
-    
-    
-        </div>
-    
-        <div class="col-12 d-flex justify-content-end mt-4">
-          <button type="button" [disabled]="!dynamicForm.dirty" class="btn button-transparent me-2" (click)="resetForm()">
-            Reset
-          </button>
-          <button type="submit" [disabled]="!dynamicForm.valid" class="btn btn-primary me-2">
-            Submit
-          </button>
-        </div>
-      </form>
-</div>
+
+          <div class="col-12 d-flex justify-content-end mt-4">
+            <button type="button" [disabled]="!dynamicForm.dirty" class="btn button-transparent me-2" (click)="resetForm()">
+              Reset
+            </button>
+            <button type="submit" [disabled]="!dynamicForm.valid" class="btn btn-primary me-2">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<app-globelspinner *ngIf="spinnerWorking" ></app-globelspinner>
+
+
+

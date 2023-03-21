@@ -33,11 +33,24 @@
                     <a routerLink="/monitor/network-teplogy">Network Teplogy</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0);">Page 2</a>
+                    <a routerLink="/monitor/region-treemap">Resion Tree Map</a>
+                </li>
+            </ul>
+        </li>
+        <li  class="{{router.url.includes('/user-management/') ? '' : null}}">
+            <a href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
+             (click)="this.changeflag3 = !this.changeflag3">User Management</a>
+            <ul class="collapse list-unstyled" id="pageSubmenu"  [ngClass]="changeflag3 ?'show':''" >
+                <li>
+                    <a routerLink="/user-management/user">User</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0);">Page 3</a>
+                    <a routerLink="/user-management/role">Role</a>
                 </li>
+                <li>
+                    <a routerLink="/user-management/permission">Permission</a>
+                </li>
+               
             </ul>
         </li>
         <li>

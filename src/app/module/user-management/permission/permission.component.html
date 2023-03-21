@@ -1,0 +1,84 @@
+<!-- 
+Creator :- That all funtion created by Narinder singh 
+Impliment :- Code impliment in angular and django 
+ -->
+
+<section class="card px-4">
+    <div>
+        <div class="mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item-table  m-2" title="Create User">
+                            <img src="../../../../assets/images/icon/plus.svg" alt="" class="plus-icon"
+                                (click)="openForm('create')">
+                        </li>
+                        <li class="nav-item-table m-2" title="Delete User">
+                            <img src="../../../../assets/images/icon/delete.svg" alt="" class="delete-icon">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="col-md-12">
+            <div class="custom-table custom-table-height custom-bg custom-table-hover">
+                <div class="table-responsive Recentevents">
+
+                    <table class="table table-bordered table-striped datatables" datatable [dtOptions]="dtOptions"
+                        width="100%" cellspacing="0" [ngClass]="{ datatable_noRecord: userDataTable?.length != 0 }">
+
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Role </th>
+                                <th>Create At</th>
+                                <th class="text-center noExport">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="userDataTable.length > 0">
+                            <tr *ngFor="let row of userDataTable">
+                                <td>{{row.name}}</td>
+                                <td >
+                                    <span *ngFor="let role of row.role_id"
+                                    class="role-name"
+                                    [ngStyle]="{'background-color':colorSet(role.name)}">
+                                        {{role.name}}
+                                    </span>
+                                    
+                                </td>
+                                <td class="rounded-0">{{row.createDate}}</td>
+                                <th class="rounded-0">
+                                    <button class="btn btn-icon btn-active-light-primary w-30px h-30px">
+                                        <span class="svg-icon svg-icon-3">
+                                            <img src="../../../../assets/images/icon/delete.svg" alt=""
+                                            (click)="openPopupDelete(row,'single')">
+                                        </span>
+                                    </button>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+
+
+
+
+</section>
+
+
+<app-commonform *ngIf="openDynamicForm" 
+[inputForm]="{'allFrom':permissionForm,'componetName':'permission','submitForm':submitFormEndpoint}" 
+(outPutData)="outPutEvent($event)"></app-commonform>
+
+
+<app-deletepopup *ngIf="deletepopUp" [deleteData]="deletePopData" (deleteOutput)="outPutDelete($event)"></app-deletepopup>
+
+
+<app-globelspinner *ngIf="spinnerWorking"></app-globelspinner>

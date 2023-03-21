@@ -8,7 +8,7 @@ import { HeaderComponent } from './template/header/header.component';
 const routes: Routes = [
 
   // {
-  //   // path: '', component: TestComponent,
+  //   path: '', component: TestComponent,
    
   // },
   {
@@ -26,6 +26,10 @@ const routes: Routes = [
   {
     path: 'monitor', component: HeaderComponent,
     loadChildren: () => import('./module/monitor/monitor.module').then(m => m.MonitorModule)
+  },
+  {
+    path: 'user-management', component: HeaderComponent,
+    loadChildren: () => import('./module/user-management/user-management.module').then(m => m.UserManagementModule)
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'dashboard' },

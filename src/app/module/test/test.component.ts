@@ -43,7 +43,7 @@ export class TestComponent implements OnInit {
   public chartOptions: Partial<ChartOptions>;
 
   constructor() {
- 
+   
   }
 
   ngOnInit(): void {

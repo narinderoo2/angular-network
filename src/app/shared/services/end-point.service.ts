@@ -21,6 +21,10 @@ export class EndPointService {
   public LOGIN_EMAIL_CHECK: string='';
   public LOGIN_OTP_VERIFY: string='';
   public DASHBOARD_CHART_LISTING: string='';
+  public GET_ROLE: string='';
+  public GET_PERMISSION: string='';
+  public GET_DROP_DOWN_LISTING: string='';
+  public test: string='';
   constructor() { 
 
     this.getDomain()
@@ -45,6 +49,13 @@ export class EndPointService {
     this.LOGIN_OTP_VERIFY= this.IP_PORT + 'account/forget-password/';
 
     this.DASHBOARD_CHART_LISTING= this.IP_PORT + 'chart/device-details/';
+    this.GET_ROLE= this.IP_PORT + 'account/role/';
+    this.GET_PERMISSION= this.IP_PORT + 'account/permission/';
+    this.GET_DROP_DOWN_LISTING= this.IP_PORT + 'drop-down/listing/';
+
+
+
+    this.test= this.IP_PORT + 'chart/test/';
   }
 
 }

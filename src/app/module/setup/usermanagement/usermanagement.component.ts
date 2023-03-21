@@ -97,7 +97,8 @@ export class UsermanagementComponent implements OnInit {
 
 
 
-  constructor(private commonHelperservice: CommonhelperService,
+  constructor(
+    private commonHelperservice: CommonhelperService,
     private commonService: CommonApiServiceService,
     private commonserviceService: CommonServiceService,
     private endpoints: EndPointService,

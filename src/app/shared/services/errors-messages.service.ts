@@ -78,10 +78,17 @@ export class ErrorsMessagesService {
       { type: 'pattern', message: 'Please enter valid city' }],
     latitude: [{ type: 'pattern', message: 'Please enter valid latitude 90 to -90' }],
     longitude : [ { type: 'pattern', message: 'Please enter valid longitude 180 to -180' }],
-      
-      
-
   };
+
+  public permission:any = {
+    name:[{type:'required',message:'Please enter permission name'},
+          {type:'pattern',message:'Please enter valid name'}]
+  }
+
+  public role:any={
+    name:[{type:'required',message:'Please enter role name'},
+          {type:'pattern',message:'Please enter valid name'}]
+  }
 
 
 

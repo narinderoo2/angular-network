@@ -74,6 +74,14 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.commonService.getRequest(this.endpoints.test).subscribe({
+      next: (res) => {
+
+
+      }
+    })
+
+    return 
 
     this.getChartDevice()
   }

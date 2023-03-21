@@ -1,0 +1,20 @@
+
+.align-items-center{
+   font-size: 13px !important
+}
+
+
+.bullet {
+    display: inline-block;
+    // background-color: var(--kt-bullet-bg-color);
+    border-radius: 6px;
+    width: 8px;
+    height: 4px;
+    flex-shrink: 0;
+}
+
+.btn.btn-light {
+    color: #8e887a;
+    // border-color: var(--kt-light);
+    background-color: #f5f2ed;
+}

@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable,map, catchError} from 'rxjs';
+import { Observable,map, catchError, async} from 'rxjs';
 import Swal from 'sweetalert2';
 import { throwError } from 'rxjs';
 
@@ -32,22 +32,37 @@ export class CommonApiServiceService {
   // }
 
 
-
-  createFormData(item) {
-    console.log(item);
+  getDropDownData(endPoints:string){
+    return new Promise((resl,rej)=>{
+      this.getRequest(endPoints).subscribe( {
+        next: ( res) => {
+          if (res.resCode == '1') {
+            resl(res.result)
+          } else {
+            resl(false)
+          }
+        },
+        error: (error) => {
+          this.callAlert()
+          resl(false)
+        }
+      })
+    })
     
+  }
+
+  createFormData(item,fieldType=null) {   
+
     let form_data = new FormData();
     for (var key in item) {
-      let value = '';
-
-      // console.log(key,item,'key');
-      
+      let value = '';        
       if (item[key] || item[key] == 0) {
-        value = item[key];
-      }
-
-      console.log(key,value,'----');
-      
+        if(fieldType && fieldType.formControlType && fieldType.formControlType[key] == 'json'){          
+          value =JSON.stringify(item[key]);
+        }else{
+          value = item[key];
+        }
+      }      
       form_data.append(key, value);
     }
     return form_data;
@@ -58,6 +73,7 @@ export class CommonApiServiceService {
     msg = 'Unable to fetch the data, Please contact system administrator or try again later!',
     icon: 'success' | 'error' | 'warning' | 'info' | 'question' = 'error',
     timer: number = 10000
+    
   ) {
     Swal.fire({
       title: title,
@@ -73,5 +89,7 @@ export class CommonApiServiceService {
       cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
     });
   }
+
+
 
 }

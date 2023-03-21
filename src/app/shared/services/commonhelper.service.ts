@@ -36,12 +36,6 @@ export class CommonhelperService {
         searchDelay: 2000,
         //paging:false,
         fixedColumns: fixedColumns,
-
-
-
-
-
-
         language: {
           searchPlaceholder: 'Search',    /*' Search*/
           lengthMenu: '_MENU_',
@@ -65,6 +59,69 @@ export class CommonhelperService {
     }
 
 
+     /* Client side configuration for data static table */
+  public settingDataTableNew(
+    columnDefs: any = [],
+    orders: any = [],
+    paging = false,
+    info = false,
+    scrollX: any = false,
+    scrollY: any = false,
+    fixedColumns: any = false,
+    scrollCollapse: any = false
+  ) {
+let paginate={
+  first: 'First',
+  next: 'Next',
+  previous: 'Previous',
+  last: 'Last',
+}
+
+// alert(scrollX)
+    return {
+      paging: paging,
+      pagingType: 'simple_numbers',
+      pageLength: 10,
+      processing: true,  //processing show on table if processing is true
+      scrollY: scrollY,
+      scrollCollapse: scrollCollapse,
+      scrollX: scrollX,
+      fixedColumns: fixedColumns,
+      "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
+        if (aiDisplay.length > 0) {
+            this.closest('.dataTables_wrapper').removeClass('noRecordInTable');
+        }
+        else {
+          this.closest('.dataTables_wrapper').addClass('noRecordInTable');
+        }
+    },
+
+      // empty: '<span> No record Available <span>',
+      searching: true,
+      info: info,
+      columnDefs: columnDefs,
+      order: orders,
+      language: {
+        processing: '<span class="spinner-border text-primary" style="width: 32px; height: 32px" role="status"><span class="sr-only"></span></span>',
+        searchPlaceholder: 'Search',
+        searchPanes: {
+          emptyPanes: 'There are no panes to display. :/',
+        },
+        lengthMenu: '_MENU_',
+        zeroRecords: '<span>No Data Available</span>',
+        // zeroRecords: '<img src="../../assets/images/No-data-found.svg"/>',
+
+        info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+        infoEmpty: 'No Record Available',
+        infoFiltered: '(filtered from _MAX_ total entries)',
+        search: '<i class="fas fa-search"></i>',
+        paginate: paginate,
+      },
+    };
+  }
+
+
+
       /* Method to add the parameters in the URL for DataTable */
   public dataTableParams(
     params: any,
@@ -77,12 +134,8 @@ export class CommonhelperService {
     otherParams: {} = null,
   ) {
 
-//     start_date=2022-03-25 06:28:52.84155-04
-// end_date
     pageLimit = dataTablesParameters.length;
     pageRecordsTotal = this.totalRecords;
-
-
     if (dataTablesParameters.start <= 1) {
       pageOffset = dataTablesParameters.start + 1;
     } else {
@@ -100,7 +153,6 @@ export class CommonhelperService {
             ? '-' + columns[column.column].data
             : '' + columns[column.column].data
         );
-        // params.append('sort', column.dir);
       }
     } else {
       if(ordering){
@@ -108,7 +160,6 @@ export class CommonhelperService {
 
 
       }else{
-      //  params.append('ordering', '-id');
       }
     }
 
@@ -117,25 +168,16 @@ export class CommonhelperService {
     }
 
     if (otherParams) {
-
         for (const [key, value] of Object.entries(otherParams)) {
           if(value){
             params.append(key,value);
           }
-
       }
 
-      //params.append('search', dataTablesParameters.search.value);
     }
-
-
-
     if(pageLimit!='-1'){
       params.append('page', pageOffset);
       params.append('size', pageLimit);
     }
-
   }
-
-  
 }
