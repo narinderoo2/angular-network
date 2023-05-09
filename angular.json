@@ -8,15 +8,10 @@
     "network": {
       "projectType": "application",
       "schematics": {
-
-
         "@schematics/angular:component": {
           "style": "scss",
           "skipTests": true
-        }
-
-
-        
+        }  
       },
       "root": "",
       "sourceRoot": "src",
@@ -36,17 +31,28 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/quill/dist/quill.snow.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/scss/styles.scss"
+              "src/scss/styles.scss"    
+             
+              
+              
                 ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
             "node_modules/datatables.net/js/jquery.dataTables.js",
+
             "node_modules/bootstrap/dist/js/bootstrap.js",
               "node_modules/apexcharts/dist/apexcharts.min.js",
               "node_modules/d3/dist/d3.min.js",
               "src/js/common.js"
+
+         
+             
 
             ]
           },
@@ -55,13 +61,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "26kb",
+                  "maximumError": "30kb"
                 }
               ],
               "fileReplacements": [

@@ -36,7 +36,7 @@ export class EndPointService {
   getDomain(){
     this.IP_PORT = this.DOMAIN + this.PORT
     this.USER_LISTING= this.IP_PORT + 'account/user-listing/';
-    this.USER_CREATE= this.IP_PORT + 'account/user-create/';
+    this.USER_CREATE= this.IP_PORT + 'account/user/';
     this.GET_USER_PAGINATION= this.IP_PORT + 'account/user-pagination/';
 
     this.GET_REGION= this.IP_PORT + 'region/country-pagination/';

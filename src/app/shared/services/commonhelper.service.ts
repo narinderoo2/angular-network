@@ -7,8 +7,17 @@ export class CommonhelperService {
 
 
   totalRecords: number = 50;
+  ngprimeMenuOptions:any= {
+    rowPage:10,
+    rowsPerPageOptions:[10,50,100,100]
+  }
+
 
   constructor() { }
+
+
+
+
 
 
     /* Server side configuration for data table */
@@ -29,11 +38,35 @@ export class CommonhelperService {
          lengthMenu,
          lengthMenu,
         ],
+        
         searching: true,
         scrollY: '52vh',
         scrollX: true,
         scrollCollapse: true,
         searchDelay: 2000,
+        responsive: true,
+        fixedHeader: true,
+        colReorder: true,
+
+
+        dom: 'Bfrtip',
+
+        buttons: [ {
+          extend: 'colvis',
+          columnText: function ( dt, idx, title ) {
+            // '<input type="checkbox">'
+              return  (idx+1)+': '+title;
+          }
+      } ],
+        // buttons: [
+        //     {
+        //         extend: 'colvis',
+        //         collectionLayout: 'fixed columns',
+        //         collectionTitle: 'Column visibility control'
+        //     }
+        // ],
+        // colReorder: true,
+
         //paging:false,
         fixedColumns: fixedColumns,
         language: {
@@ -180,4 +213,24 @@ let paginate={
       params.append('size', pageLimit);
     }
   }
+
+
+  /* Server side configuration for data table */
+  public primeNgServerTable(event,order:string) {
+    console.log(event);
+    
+        let fitler: any = {
+          page: event.first / event.rows + 1,
+          size: event.rows,
+          search: event.globalFilter?.value,
+          ordering:event.sortField?event.sortOrder > 0 ? event.sortField:'-'+event.sortField:order
+        }
+        for (let row in fitler) {
+          if (!fitler[row]) {
+            delete fitler[row]
+          }
+        }    
+        let filterNewData =  new URLSearchParams(fitler);
+        return filterNewData?.toString()
+      }
 }

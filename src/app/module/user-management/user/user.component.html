@@ -1,1 +1,526 @@
-<p>user works!</p>
+<!--  -->
+
+<section class="card px-4">
+
+
+
+
+
+    <div>
+        <div class="mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item-table  m-2" title="Create User">
+                            <img src="../../../../assets/images/icon/plus.svg" alt="" class="plus-icon"
+                            (click)="openPopUp(userListPopup,'create')">
+                        </li>
+                        <!-- <li class="nav-item-table m-2" title="Delete User">
+                            <img src="../../../../assets/images/icon/delete.svg" alt="" class="delete-icon">
+                        </li> -->
+                        <li class="nav-item-table m-2" >
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+ 
+
+
+<div class="" *ngIf="columnAdjust"> 
+        <!-- <div class="custom-table custom-table-height custom-bg custom-table-hover">
+            <div class="table-responsive Recentevents"> -->
+
+
+
+              <p-table #dt styleClass="p-datatable-sm prime-table p-datatable-striped" [value]="userListingData" [lazy]="true" (onLazyLoad)="hostListing($event)" responsiveLayout="scroll"
+              dataKey="id"  [paginator]="true" [rows]="ngprimeMenuOptions.rowPage" [totalRecords]="totalRecords"
+              [loading]="loading" [columns]="selectedColumns" [reorderableColumns]="true" [showCurrentPageReport]="true"
+              [rowsPerPageOptions]="ngprimeMenuOptions.rowsPerPageOptions" 
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [globalFilterFields]="['name','country.name','representative.name','status']"
+              
+              
+              scrollDirection="both"  scrollHeight="400px" 
+              >
+          
+              <ng-template pTemplate="caption">
+                <div class="table-header row">
+          <div class="col-4">
+            </div>
+          <div class="col-4">
+            <span >
+              <p-multiSelect  [options]="columns" [maxSelectedLabels]="0" [(ngModel)]="selectedColumns" optionLabel="header" selectedItemsLabel="{0} columns selected"
+              defaultLabel="Choose Columns"></p-multiSelect>
+            </span>
+          </div>
+          <div class="col-4" style="text-align: end">
+            <span class="p-input-icon-left" > 
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')"
+                placeholder="Search" />
+                
+            </span>
+          </div>
+                </div>
+              </ng-template>
+          
+            
+          
+          
+              <ng-template pTemplate="header" let-columns>
+                <tr >
+                  <th *ngFor="let colu of columns" pReorderableColumn>{{colu.header}}</th>
+                </tr>
+              </ng-template>
+          
+              <ng-template pTemplate="body" let-customer let-row let-columns="columns" let-index="rowIndex">
+                <tr >
+                  <td *ngFor="let colu of columns">
+                  <span *ngIf="colu.header != 'Status' || colu.header != 'Action'">{{row[colu.field]}}</span>  
+                  <span *ngIf="colu.header == 'Status'">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                        [checked]="row.is_active==1 ? true:false" />
+                    </div>
+                  </span>  
+                  <span *ngIf="colu.header == 'Action'">
+                    <!-- <td> -->
+                      <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 p-button-sm" (click)="editUser(row)"></button>
+                      <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning pl-2 p-button-sm" (click)="deleteUser(row)"></button>
+                  <!-- </td> -->
+                  </span>  
+                  </td>
+     
+              </tr>
+              </ng-template>
+          
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No customers found.</td>
+                </tr>
+            </ng-template>
+          
+          
+          
+            </p-table>
+
+
+
+
+
+ <!-- </div>
+        </div> -->
+</div>
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- Create User  -->
+<ng-template #userListPopup let-c="close" let-d="dismiss">
+    <div class="main-form">
+      <div class="modal-header ">
+        <h5 class="modal-title">Create User</h5>
+  
+        <button type="button" style="border:none;background-color:white;" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-lg">
+        <div class="modal-body p-3">
+  
+          <form class="row g-3 form1" [formGroup]="userForm" (ngSubmit)="createNewUser()">
+            <div class="col-md-6" [class.has-danger]="
+                  !userForm.get('first_name').valid &&
+                  (userForm.get('first_name').dirty ||
+                    userForm.get('first_name').touched)
+                ">
+              <label class="form-label">First Name<span class="red">*</span>
+              </label>
+              <input type="text" class="form-control" formControlName="first_name"
+                oninput="this.value = this.value.replace(/[^A-Za-z ]|^ /g,'')" maxlength="15" />
+              <div *ngFor="let validation of errorMessages.first_name">
+                <div class="form-control-feedback" *ngIf="
+                      userForm.get('first_name').hasError(validation.type) &&
+                      (userForm.get('first_name').dirty ||
+                        userForm.get('first_name').touched)
+                    ">
+                  {{ validation.message }}
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-6" [class.has-danger]="
+                  !userForm.get('last_name').valid &&
+                  (userForm.get('last_name').dirty ||
+                    userForm.get('last_name').touched)
+                ">
+              <label class="form-label">Last Name </label>
+              <input type="text" class="form-control" formControlName="last_name"
+                oninput="this.value = this.value.replace(/[^A-Za-z ]|^ /g,'')" maxlength="150" />
+              <div *ngFor="let validation of errorMessages.last_name">
+                <div class="form-control-feedback" *ngIf="
+                      userForm.get('last_name').hasError(validation.type) &&
+                      (userForm.get('last_name').dirty ||
+                        userForm.get('last_name').touched)
+                    ">
+                  {{ validation.message }}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6" [class.has-danger]="
+                  !userForm.get('email').valid &&
+                  (userForm.get('email').dirty || userForm.get('email').touched)
+                ">
+              <label class="form-label">
+                Username/Email<span class="red">*</span></label>
+              <input type="text" class="form-control" formControlName="email" />
+              <div *ngFor="let validation of errorMessages.email">
+                <div class="form-control-feedback" *ngIf="
+                      userForm.get('email').hasError(validation.type) &&
+                      (userForm.get('email').dirty || userForm.get('email').touched)
+                    ">
+                  {{ validation.message }}
+                </div>
+              </div>
+            </div>
+  
+  
+            <div class="col-md-6" [class.has-danger]="
+                  !userForm.get('phone_number').valid &&
+                  (userForm.get('phone_number').dirty ||
+                    userForm.get('phone_number').touched)">
+  
+  
+              <label for="phone" class="form-label"> Contact Number </label>
+              <div class="row">
+                <div class="d-flex">
+                  <ng-select *ngIf="userForm.get('phone_number').value" formControlName="country_code"
+                    appearance="outline" [clearable]="false" class="dropDown d-inline-block m-0 profileDrop"
+                    [searchable]="true" placeholder="" (change)="countryCode($event)" id="dialCodeData">
+                    <ng-option *ngFor="let row of countryList" class="" [value]="row[1]" [attr.dailCode]="row[2]">
+                      <div class="iti__flag-box getAtr " [attr.dailCode]="row[2]">
+                        <div class="iti__flag iti__{{row[1]}} ]"></div> <span class="country-name-drop ">{{row[0]}}
+                          (+{{row[2]}})</span>
+                      </div>
+                    </ng-option>
+                  </ng-select>
+                  <div class="input-group">
+                    <div *ngIf="userForm.get('phone_number').value"
+                      class="input-group-text  country-code d-inline-block text-black " style="background-color: var(--select-Bg-Color);
+                    border: none;"> +{{countryCodeData}} </div>
+                    <input type="number" appDigitOnly class="form-control d-inline-block"
+                      style="width: 207px;  border-radius: 0 5px 5px 0" formControlName="phone_number"
+                      autocomplete="new-password">
+  
+                  </div>
+                </div>
+              </div>
+  
+              <div *ngFor="let validation of errorMessages.phone_number">
+                <div class="form-control-feedback" *ngIf="
+                      userForm.get('phone_number').hasError(validation.type) &&
+                      (userForm.get('phone_number').dirty ||
+                        userForm.get('phone_number').touched)
+                    ">
+                  {{ validation.message }}
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-6" [class.has-danger]="
+                  !userForm.get('role').valid &&
+                  (userForm.get('role').dirty || userForm.get('role').touched)
+                ">
+              <label for="role" class="form-label">
+                Role<span class="red">*</span></label>
+              <select class="form-control" formControlName="role">
+                <option disabled selected value="null">Select</option>
+                <option *ngFor="let roles of roleDropDown" value="{{ roles.id }}">
+                  {{ roles.name }}
+                </option>
+              </select>
+              <div *ngFor="let validation of errorMessages.role">
+                <div class="form-control-feedback" *ngIf="
+                      userForm.get('role').hasError(validation.type) &&
+                      (userForm.get('role').dirty || userForm.get('role').touched)
+                    ">
+                  {{ validation.message }}
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-6" [class.has-danger]="
+                  !userForm.get('userPassword').valid &&
+                  (userForm.get('userPassword').dirty ||
+                    userForm.get('userPassword').touched)
+                ">
+              <label class="form-label">
+                Password <span class="red">*</span></label>
+  
+              <div class="input-group">
+                <input [type]=" passwordShow ? 'text':'password'" class="form-control" formControlName="userPassword"
+                  maxlength="15" autocomplete="new-password" />
+                <span class="input-group-text passwordShowHide">
+                  <i class="fa fa-eye-slash" *ngIf="!passwordShow" (click)="passwordShow=true"></i>
+                  <i class="fa fa-eye" *ngIf="passwordShow" (click)="passwordShow=false"></i></span>
+              </div>
+  
+              <ng-container *ngFor="let validation of errorMessages.userPassword">
+                <div class="form-control-feedback"
+                  *ngIf="userForm.get('userPassword').hasError(validation.type) &&                    (userForm.get('userPassword').dirty || userForm.get('userPassword').touched)">
+                  - {{ validation.message }}
+                </div>
+                <div class="form-control-feedback feedback-success"
+                  *ngIf="!userForm.get('userPassword').hasError(validation.type) && !userForm.get('userPassword').valid ">
+                  <i class="fa fa-check"></i> {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+  
+            <div class="col-md-6" [class.has-danger]="
+                  !userForm.get('confirmPassword').valid &&
+                  (userForm.get('confirmPassword').dirty ||
+                    userForm.get('confirmPassword').touched)
+                " >
+              <label class="form-label">
+                Confirm Password<span class="red">*</span>
+              </label>
+  
+              <div class="input-group">
+                <input [type]=" passwordShowTwo ? 'text':'password'" class="form-control"
+                  formControlName="confirmPassword" maxlength="15" />
+                <span class="input-group-text passwordShowHide">
+                  <i class="fa fa-eye-slash" *ngIf="!passwordShowTwo" (click)="passwordShowTwo=true"></i>
+                  <i class="fa fa-eye" *ngIf="passwordShowTwo" (click)="passwordShowTwo=false"></i>
+  
+                </span>
+              </div>
+  
+              <div *ngFor="let validation of errorMessages.confirmPassword">
+                <div class="form-control-feedback"
+                  *ngIf="userForm.get('confirmPassword').hasError(validation.type) && (userForm.get('confirmPassword').dirty || userForm.get('confirmPassword').touched)">
+                  {{validation.message}}
+                </div>
+              </div>
+  
+  
+  
+  
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">
+                Time Zone
+              </label>
+  
+              <div class="input-group">
+                <ng-select formControlName="timeZoneDropDown" appearance="outline" [clearable]="false" style="width:100%">
+                  <ng-option *ngFor="let zon of timeZone; let i = index" [value]="i">{{
+                    zon.text }}</ng-option>
+                </ng-select>
+  
+              </div>
+            </div>
+  
+            <div class="col-12 d-flex justify-content-end mt-4">
+              <button type="button" [disabled]="!userForm.dirty" class="btn button-transparent me-2">
+                Reset
+              </button>
+              <button type="submit" [disabled]="!userForm.valid" class="btn btn-primary me-2">
+                Submit
+              </button>
+            </div>
+          </form>
+  
+  
+  
+  
+  
+  
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  
+
+
+
+
+
+
+
+
+<!-- 
+
+    <div class="flex-lg-row-fluid ms-lg-10">
+        <div class="card card-flush mb-6 mb-xl-9">
+            <div class="card-header pt-5">
+                <div class="card-title">
+                    <h2 class="d-flex align-items-center"> Users Assigned<span
+                            class="text-gray-600 fs-6 ms-1">(14)</span></h2>
+                </div>
+
+                <div class="card-toolbar">
+                    <div class="d-flex align-items-center position-relative my-1"
+                        data-kt-view-roles-table-toolbar="base">
+                        <span class="svg-icon svg-icon-1 position-absolute ms-6"><svg width="24"
+                                height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2"
+                                    rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor">
+                                </rect>
+                                <path
+                                    d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+                                    fill="currentColor"></path>
+                            </svg>
+                        </span>
+                         <input type="text" data-kt-roles-table-filter="search"
+                            class="form-control form-control-solid w-250px ps-15"
+                            placeholder="Search Users">
+                    </div>
+
+                    <div class="d-flex justify-content-end align-items-center d-none"
+                        data-kt-view-roles-table-toolbar="selected">
+                        <div class="fw-bold me-5">
+                            <span class="me-2" data-kt-view-roles-table-select="selected_count"></span>
+                            Selected
+                        </div>
+
+                        <button type="button" class="btn btn-danger"
+                            data-kt-view-roles-table-select="delete_selected">
+                            Delete Selected
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body pt-0">
+                <div id="kt_roles_view_table_wrapper"
+                    class="dataTables_wrapper dt-bootstrap4 no-footer">
+                    <div class="table-responsive">
+                        <table
+                            class="table align-middle table-row-dashed fs-6 gy-5 mb-0 dataTable no-footer"
+                            id="kt_roles_view_table">
+                            <thead>
+                                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                    <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1"
+                                        aria-label="
+            
+                
+            
+        " style="width: 27.5992px;">
+                                        <div
+                                            class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                            <input class="form-check-input" type="checkbox"
+                                                data-kt-check="true"
+                                                data-kt-check-target="#kt_roles_view_table .form-check-input"
+                                                value="1">
+                                        </div>
+                                    </th>
+                                    <th class="min-w-50px sorting" tabindex="0"
+                                        aria-controls="kt_roles_view_table" rowspan="1" colspan="1"
+                                        aria-label="ID: activate to sort column ascending"
+                                        style="width: 87.8606px;">ID</th>
+                                    <th class="min-w-150px sorting" tabindex="0"
+                                        aria-controls="kt_roles_view_table" rowspan="1" colspan="1"
+                                        aria-label="User: activate to sort column ascending"
+                                        style="width: 311.478px;">User</th>
+                                    <th class="min-w-125px sorting" tabindex="0"
+                                        aria-controls="kt_roles_view_table" rowspan="1" colspan="1"
+                                        aria-label="Joined Date: activate to sort column ascending"
+                                        style="width: 231.716px;">Joined Date</th>
+                                    <th class="text-end min-w-100px sorting_disabled" rowspan="1"
+                                        colspan="1" aria-label="Actions" style="width: 156.325px;">
+                                        Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="fw-semibold text-gray-600">
+
+                                <tr class="odd">
+                                    <td>
+                                        <div
+                                            class="form-check form-check-sm form-check-custom form-check-solid">
+                                            <input class="form-check-input" type="checkbox" value="1">
+                                        </div>
+                                    </td>
+
+                                    <td>ID1958</td>
+
+                                    <td class="d-flex align-items-center">
+                                        <div
+                                            class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                            <a href="/good/apps/user-management/users/view.html">
+                                                <div class="symbol-label">
+                                                    <img src="/good/assets/media/avatars/300-6.jpg"
+                                                        alt="Emma Smith" class="w-100">
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div class="d-flex flex-column">
+                                            <a href="/good/apps/user-management/users/view.html"
+                                                class="text-gray-800 text-hover-primary mb-1">Emma
+                                                Smith</a>
+                                            <span>smith@kpmg.com</span>
+                                        </div>
+
+                                    </td>
+
+                                    <td data-order="2023-04-15T17:30:00+05:30">
+                                        15 Apr 2023, 5:30 pm </td>
+
+                                    <td class="text-end">
+                                        <a href="#"
+                                            class="btn btn-sm btn-light btn-active-light-primary"
+                                            data-kt-menu-trigger="click"
+                                            data-kt-menu-placement="bottom-end">
+                                            Actions
+                                            <span class="svg-icon svg-icon-5 m-0"><svg width="24"
+                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
+                                                        fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                          </a>
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
+                                            data-kt-menu="true">
+                                            <div class="menu-item px-3">
+                                                <a href="/good/apps/user-management/users/view.html"
+                                                    class="menu-link px-3">
+                                                    View
+                                                </a>
+                                            </div>
+
+                                            <div class="menu-item px-3">
+                                                <a href="#" class="menu-link px-3"
+                                                    data-kt-roles-table-filter="delete_row">
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+    </div> -->

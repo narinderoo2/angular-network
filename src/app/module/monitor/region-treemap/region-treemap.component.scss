@@ -48,4 +48,28 @@ text {
   .ctext{
 	display: none !important;
   }
-  
+
+
+  #parentDiv #treemapDrillDown {
+    height: calc(100vh - 25vh); /** output container is small for display */ 
+    width: 100%;
+    display: block;
+    // border: 1px solid red;
+  }
+  svg text{
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+.tooltip{
+      position: 'absolute';
+      z-index: '10';
+      visibility: 'hidden';
+      background-color: 'white';
+      border: 'solid';
+      border-width: '2px';
+      border-radius: '5px';
+      padding: '5px'
+}
+
+

@@ -1,5 +1,84 @@
 <section>
 
+
+  <p-table #dt [value]="customers" [lazy]="true" (onLazyLoad)="loadCustomers($event)" responsiveLayout="scroll"
+    dataKey="id" [selection]="selectedCustomers" [paginator]="true" [rows]="ngprimeMenuOptions.rowPage" [totalRecords]="totalRecords"
+    [loading]="loading" [columns]="selectedColumns" [reorderableColumns]="true" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="ngprimeMenuOptions.rowsPerPageOptions" 
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['name','country.name','representative.name','status']"
+    
+    
+    scrollDirection="both" [scrollable]="true" scrollHeight="400px" styleClass="p-mt-3"
+    >
+
+    <ng-template pTemplate="caption">
+      <div class="table-header row">
+<div class="col-4">
+  </div>
+<div class="col-4">
+  <span >
+    <p-multiSelect  [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header" selectedItemsLabel="{0} columns selected"
+    defaultLabel="Choose Columns"></p-multiSelect>
+  </span>
+</div>
+<div class="col-4" style="text-align: end">
+  <span class="p-input-icon-left" > 
+    <i class="pi pi-search"></i>
+    <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')"
+      placeholder="Global Search" />
+      
+  </span>
+</div>
+      </div>
+    </ng-template>
+
+  
+
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th  > 
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+     </th>
+        <th *ngFor="let col of columns"   > 
+          {{col.header}}<p-sortIcon field="{{col.field}}"></p-sortIcon>
+      </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-customer let-rowData let-columns="columns" let-index="rowIndex">
+      <tr> 
+        <td >
+
+          <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+        </td>
+        <td *ngFor="let col of columns" >
+          {{rowData[col.field]}}
+      </td>
+ 
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+          <td colspan="8">No customers found.</td>
+      </tr>
+  </ng-template>
+
+
+
+  </p-table>
+
+
+
+
+
+
+
+
+
+
   <div class="row">
     <div class="col-md-12">
       <ul class="nav nav-pills">
@@ -37,86 +116,12 @@
 
   <div class="row">
     <div class="col-md-12">
-        <div class="custom-table custom-table-height custom-bg custom-table-hover">
-          <div class="table-responsive Recentevents" >
-
-            <table  class="table table-bordered table-striped datatables" datatable
-              [dtOptions]="dtOptions" width="100%" cellspacing="0"
-              [ngClass]="{ datatable_noRecord: userDataTable?.length != 0 }">
+      <div class="custom-table custom-table-height custom-bg custom-table-hover">
+        <div class="table-responsive Recentevents">
 
 
-            <!-- <table class="table table-bordered table-striped datatables" datatable [dtOptions]="dtOptions" width="100%"
-              cellspacing="0" [ngClass]="{ datatable_noRecord: userDataTable?.length != 0 }"> -->
-              <thead>
-                <tr>
-                  <th class="first-check" width=30px>
-                    <input class="form-check-input" id="selectAll" type="checkbox"
-                     >
-                    <!--  (click)="selectAllCheckbox()" -->
-                  </th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>Create At</th>
-                  <!-- <th >Status</th>
-                  <th >Action</th> -->
-                  <th class="noExport text-center">Status</th>
-                  <th class="text-center noExport">Action</th>
-                </tr>
-              </thead>
-              <tbody *ngIf="userDataTable.length > 0">
-                <tr *ngFor="let row of userDataTable">
-
-                  <!-- address: ""
-email: "nn1@gmail.com"
-first_name: "nnnnnnne"
-flag: "in"
-last_name:"n"
-phone_number: "2222"
-user_timezone: "Asia/Kolkata"
-username: "nnnnnnnen" -->
-
-                  <th class="first-check px-2 py-1">
-                    <input class="form-check-input m-0" id="i" name="checkbox" type="checkbox">
-                    <!-- (change)="checkIfallselectedOrNot($event)" -->
-                  </th>
-                  <td>{{row.first_name}}</td>
-                  <td>{{row.email}}</td>
-                  <td class="zoomin">role</td>
-                  <td>{{row.create_at}}</td>
-
-                  <!-- <td>{{ showGroupdDetail(row.groups,1) }}</td>
-                  <td class=" rounded-0">{{row.last_login | DateTimeZone : "UTC" }} </td> -->
-                  <th class="rounded-0">
-                    <!-- <td class="d-none d-md-table-cell">{{row.status}}</td> -->
-
-                    <div class="form-check form-switch  d-flex justify-content-center">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
-                        [checked]="row.is_active==1 ? true:false" />
-                    </div>
-                  
-                  </th>
-                  <th>hhhhhhh</th>
-                  <!-- <th class="p-0 text-center rounded-0">
-                    <a href="javascript:void(0);" ngbPopover="Edit" placement="auto" popoverClass="tooltipHover"
-                      triggers="mouseenter:mouseleave" container="body"
-                      (click)="permission.edit && editUser(userListPopup, row)" class="btn-sm me-2"
-                      [ngClass]="(row.email == loginUserId || !permission.edit) ? 'editDisable' : 'edit'"><i
-                        class="fas fa-edit"></i>
-
-                    </a>
-                    <a href="javascript:void(0);" ngbPopover="Delete" placement="auto" popoverClass="tooltipHover"
-                      triggers="mouseenter:mouseleave" container="body"
-                      (click)="row.email !== loginUserId && openPopupDelete(deleteUserModal,row)" class="btn-sm"
-                      [ngClass]="(row.email == loginUserId || !permission.delete) ? 'deleteDisable' : 'delete'"><i
-                        class="fa fa-trash"></i>
-                    </a>
-                  </th> -->
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
+      </div>
     </div>
     <div class="col-md-6"></div>
   </div>

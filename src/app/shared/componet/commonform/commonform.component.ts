@@ -22,7 +22,7 @@ export class CommonformComponent implements OnInit {
   @ViewChild('openFormPopUp', { static: false }) openFormPopUp: ElementRef;
 
   modalReference$: any
-  editFormPatchValue: any = null
+  // editFormPatchValue: any = null
   tabName: string;
   formDetails: any;
   submitFormDetails: any;
@@ -53,7 +53,8 @@ export class CommonformComponent implements OnInit {
     this.tabName = this.inputForm.componetName
     this.formDetails = this.inputForm.allFrom
     this.submitFormDetails = this.inputForm.submitForm
-    console.log(this.inputForm);
+    // this.editFormPatchValue = this.inputForm.submitForm
+    // console.log(this.editFormPatchValue);
     this.errorMessages = this._ems[this.tabName];
   }
 
@@ -69,6 +70,11 @@ export class CommonformComponent implements OnInit {
         this.getDropDownListing(item)
       }
     })
+console.log(this.submitFormDetails,'--');
+
+    if(this.submitFormDetails.type == "update"){
+this.patchValueForm()
+    }
 
     console.log(this.formDetails);
     
@@ -115,10 +121,19 @@ export class CommonformComponent implements OnInit {
   formControlAdd() {
     let group = {}
     this.formDetails.forEach(item => {
-      console.log(item);
       group[item.formControl] = new FormControl(null, item.validation ? [Validators.required, Validators.minLength(item.min), Validators.maxLength(item.max)] : [])
     })
     this.dynamicForm = new FormGroup(group)
+  }
+
+  patchValueForm(){
+    let data = {'name':'rt','role_id':[3,4]}
+    console.log(this.dynamicForm.value);
+
+    this.dynamicForm.patchValue(this.submitFormDetails.patchValue)
+    console.log(this.dynamicForm.value);
+    
+    
   }
 
   createForm() {
@@ -131,6 +146,7 @@ export class CommonformComponent implements OnInit {
     let urlEndPoint = ''
     let formData = this._commonService.createFormData(data, this.submitFormDetails)
     if (this.submitFormDetails.type == 'update') {
+      urlEndPoint = this._endpoints[this.submitFormDetails.endPoint]+this.submitFormDetails.id+'/'
       method = 'Patch'
     } else {
       method = 'POST'
@@ -138,7 +154,7 @@ export class CommonformComponent implements OnInit {
 
     }
 
-    console.log(this.editFormPatchValue, urlEndPoint);
+    // console.log(this.editFormPatchValue, urlEndPoint);
 
 
     this.createSubscribtion$ = this._commonService

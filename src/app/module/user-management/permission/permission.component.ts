@@ -59,7 +59,9 @@ export class PermissionComponent implements OnInit {
   submitFormEndpoint: any = {
     type: 'create',
     endPoint: 'GET_PERMISSION',
-    formControlType: { role_id: 'json', name: 'string' }
+    formControlType: { role_id: 'json', name: 'string' },
+    patchValue:{},
+    id:''
   }
 
   deletepopUp: boolean = false;
@@ -123,19 +125,26 @@ getPermissionList() {
     }
   }
 
-// Open dyanamic reactive form
-  openForm(tag: string) {
+// Open dynamic reactive form
+  openForm(row:any=null,tag: string) {
+    if (row){
+    this.submitFormEndpoint['patchValue'] = {'name':row.name, 'role_id':row.role_id.map(item=>item.id)}
+    this.submitFormEndpoint['type']='update'
+    this.submitFormEndpoint['id']=row.id
+    }else{      
+      this.submitFormEndpoint['type']='create'
+    }
     this.openDynamicForm = true
   }
 
-  // Open dyanamic delete pop up
+  // Open dynamic delete pop up
   openPopupDelete(data: any, tag: string) {
     this.deletePopData.confirmParms = data.id
     this.deletepopUp = true
   }
 
 
-// Dyanamic form pop up output
+// dynamic form pop up output
   outPutEvent(event) {
     if (event) {
       if (event.call == "listing") {
@@ -145,7 +154,7 @@ getPermissionList() {
     }
   }
 
-  // Dyanamic delete pop up output
+  // dynamic delete pop up output
   outPutDelete(data) {
     this.deletepopUp = false
     if (data && data.popUp == 'close') {

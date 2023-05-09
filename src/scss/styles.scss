@@ -11,11 +11,20 @@
 @import 'include/_table';
 @import 'include/_form';
 @import 'include/_header';
+@import 'include/common_table';
 @import 'include/_ng_Select';
 @import 'include/_icon';
 @import 'include/_card';
 @import 'include/swal_alert';
 
+
+table.fixedHeader-floating{background-color:white}
+table.fixedHeader-floating.no-footer{border-bottom-width:0}
+table.fixedHeader-locked{position:absolute !important;background-color:white}
+@media print{table.fixedHeader-floating{display:none}}
+.DTCR_pointer{
+  // display: none !important;
+}
 .ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items div .ng-option{
   background-color: white !important ;
  }

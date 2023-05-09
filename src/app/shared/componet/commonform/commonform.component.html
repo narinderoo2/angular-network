@@ -1,7 +1,7 @@
 <ng-template #openFormPopUp let-c="close" let-d="dismiss">
   <div class="main-form" >
     <div class="modal-header ">
-      <h5 class="modal-title">{{editFormPatchValue ? 'Update':'Create'}} {{tabName}}</h5>
+      <h5 class="modal-title">{{submitFormDetails.type == "create" ? 'Create':'Update'}} {{tabName}}</h5>
 
       <button type="button" style="border:none;background-color:white;" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>

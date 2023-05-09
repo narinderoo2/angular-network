@@ -1,2 +1,14 @@
-<p id="chart"></p>
-<div id="domainDrillDown"></div>
+<!-- *ngIf="chartShow" -->
+<div id="parentDiv" >
+    <div id="treemapDrillDown"></div>
+</div>
+<div id="div_template"></div>
+
+
+<!-- This is used for output -->
+<div id="demo"><pre id="code">
+    [base64]
+    </pre></div>
+
+
+    <button class="btn" type="button" (click)="downloadReport()">download</button>

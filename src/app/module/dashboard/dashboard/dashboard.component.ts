@@ -81,7 +81,6 @@ export class DashboardComponent implements OnInit {
       }
     })
 
-    return 
 
     this.getChartDevice()
   }

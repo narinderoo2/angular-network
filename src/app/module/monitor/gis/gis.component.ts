@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild ,ElementRef} from '@angular/core';
-import { MarkerClusterer } from "@googlemaps/markerclusterer";
-import { MarkerWithLabel } from '@googlemaps/markerwithlabel';
+// import { MarkerClusterer } from "@googlemaps/markerclusterer";
+// import { MarkerWithLabel } from '@googlemaps/markerwithlabel';
 
 import { Subscription } from 'rxjs';
 @Component({
@@ -22,13 +22,13 @@ export class GisComponent implements OnInit {
   @ViewChild('map_canvas',{static: false}) mapElement: ElementRef;
 
    mapProp= {
-    center:new google.maps.LatLng(51.508742,-0.120850),
+    // center:new google.maps.LatLng(51.508742,-0.120850),
     zoom:5,
   };
   constructor() { }
 
   ngOnInit(): void {
-    var map = new google.maps.Map(document.getElementById("googleMap"),this.mapProp);
+    // var map = new google.maps.Map(document.getElementById("googleMap"),this.mapProp);
   }
 
 }

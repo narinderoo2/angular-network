@@ -14,7 +14,9 @@ export class RoleComponent implements OnInit {
 
 
   roleLisiting:any = []
+  viewRoleDetails:any = []
   spinnerWorking:boolean = true
+  userListing:boolean = true
 
   permissionForm: any = [
     {
@@ -26,7 +28,7 @@ export class RoleComponent implements OnInit {
   ]
   submitFormEndpoint: any = {
     type: 'create',
-    endPoint: 'GET_PERMISSION',
+    endPoint: 'GET_ROLE',
   }
   openDynamicForm: boolean = false
 
@@ -52,11 +54,20 @@ export class RoleComponent implements OnInit {
   }
 
 
-  roleCreate(){
-    this.openDynamicForm = true
 
-    return 
+  openForm(row:any=null,tag: string) {
+    console.log(row);
+    
+    if (row){
+    this.submitFormEndpoint['patchValue'] = {'name':row.name}
+    this.submitFormEndpoint['type']='update'
+    this.submitFormEndpoint['id']=row.id
+    }else{      
+      this.submitFormEndpoint['type']='create'
+    }
+    this.openDynamicForm = true
   }
+
 
   // Dyanamic form pop up output
   outPutEvent(event) {
@@ -67,6 +78,12 @@ export class RoleComponent implements OnInit {
       this.openDynamicForm = false
     }
   }
+
+  getViewRoleDetails(row:any){
+    this.viewRoleDetails = row
+    console.log(row);
+    
+      }
 
 }
 
