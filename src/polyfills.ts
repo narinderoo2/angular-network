@@ -42,6 +42,9 @@
  *
  */
 
+
+
+
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
@@ -51,3 +54,7 @@ import 'zone.js';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+
+/* to handle the ng2-dragula library we need window as global variable */
+(window as any).global = window;

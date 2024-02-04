@@ -1,0 +1,44 @@
+
+
+<p-toast></p-toast>
+
+<div *ngFor="let row of name_of_questions">
+    <button type="button"  (click)="openPopUp(userListPopup,row)" pButton icon="pi pi-info-circle" label="{{row.name}}"></button>
+</div>
+
+
+<ng-template #userListPopup let-c="close" let-d="dismiss">
+    <div class="main-form">
+      <div class="modal-header row">
+        <h5 class="modal-title">Logical Questions Answer </h5>
+  <div class="col-md-2">
+    <button type="button" style="border:none;background-color:white;" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+          
+      </div>
+      <div class="modal-lg">
+        <div class="modal-body p-3">
+  
+            <div class="card">
+                <p-splitter [style]="{'height': '300px'}" styleClass="p-mb-5">
+                    <ng-template pTemplate>
+                        <div class="p-col p-d-flex p-ai-center p-jc-center">
+                            <p>	{{answer_show.name}}</p>
+                           <p>{{answer_show.questions}}</p> 
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate>
+                        <div class="p-col p-d-flex p-ai-center p-jc-center">
+                           <pre>{{answer_show.answer}}</pre> 
+                        </div>
+                    </ng-template>
+                </p-splitter>
+            </div>
+  
+  
+        </div>
+      </div>
+    </div>
+  </ng-template>

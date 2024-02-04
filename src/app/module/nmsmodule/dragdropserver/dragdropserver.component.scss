@@ -1,0 +1,97 @@
+/*
+ * this helps the mirrored elements be the right size
+ * and it's generally a good practice
+ */
+ * {
+  box-sizing: border-box;
+}
+
+
+.peddingCreate{
+  padding-left: 20px;
+}
+.poisitonSet{
+  position: absolute;}
+
+
+.counter-section {
+  
+  max-width: 800px;
+  counter-reset: section;
+}
+
+.counter-section .section-title::before {
+  counter-increment: section ;
+  content: counter(section);
+}
+.counter-section .section-title12::before {
+  counter-increment: section+1 ;
+  content: counter(section);
+}
+
+
+.section-title{
+  max-height: 5px;
+}
+
+
+#left{
+  float:right;
+  }
+
+
+h3, h3 code {
+  font-size: 20px;
+}
+
+.flex {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid;
+  display: flex;
+  justify-content: space-between;
+  // position:absolute
+}
+
+.container {
+  flex: 1;
+}
+.container:not(:last-child) {
+  margin-right: 8px;
+}
+
+.vamp {
+  background: rgba(255, 255, 255, 0.4);
+  list-style: none;
+  padding: 8px;
+  color: #222;
+}
+
+.vamp:not(:last-child) {
+  border-bottom: 1px solid #777;
+}
+
+a:link, a:visited, a:hover, a:active { color: lightblue; }
+
+
+.services__details--content__step>ul>li:before {
+  content: counter(counter);
+  counter-increment: counter;
+  color: #0052ff;
+  background-color: #e8effe;
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  border-radius: 50%;
+}
+
+body {
+  /* Set "counter" to 0 */
+  counter-reset: counter;
+}
+
+ul {
+  list-style: none;
+}

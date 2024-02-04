@@ -10,6 +10,8 @@ export class SidebarComponent implements OnInit {
   changeflag1:boolean=true
   changeflag2:boolean=false
   changeflag3:boolean=false
+  changeflag4:boolean=false
+  changeflag5:boolean=false
   constructor(public router: Router) { }
 
   ngOnInit(): void {

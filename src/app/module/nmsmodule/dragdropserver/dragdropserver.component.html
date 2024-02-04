@@ -1,0 +1,83 @@
+<h3><code>ng2-dragula</code></h3>
+
+<button class="btn btn-danger" type="button" (click)="windowRefreesh()">Window</button>
+<p>{{errorMesage}}</p>
+
+
+<!-- these are some basics to get you started -- modify as you see fit. -->
+
+<div class="flex1">
+ 
+
+  <!-- <div class="container" dragula="VAMPIRES" [(dragulaModel)]="vamps2">
+    <div class="vamp" *ngFor="let vamp of vamps2"> > </div>
+  </div> -->
+</div>
+
+<div class="row">
+  <div class="col-2">
+    <div class="container" dragula="VAMPIRES" [(dragulaModel)]="vamps" id="left">
+      <div class="vamp" *ngFor="let vamp of vamps"> {{ vamp.name }}</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+  
+
+
+    <div  class="counter-section " style="margin-top: 50px;" dragula="VAMPIRES" [(dragulaModel)]="vamps2" *ngIf="dragDropData" id="right">
+      <ng-container   *ngFor="let vamp of vamps2; let i=index">
+        <div class="flex"   [attr.vamp]="vamp.image" [attr.checkHeight]="vamp['height']"  >
+          <div class="section-title" ></div>
+          <img src="{{vamp.image}}" alt="" style="position: absolute;width: 216px ">
+          <div class="section-title12" id="left"></div>
+          <div class="peddingCreate"  (click)="dropDown(vamp)" *ngIf="vamp.name" >{{vamp.name}}
+
+            <ng-container *ngIf="vamp.name && vamp['activate']" >
+              <ul class="  dropdown-menu-dark poisitonSet" >
+                <li *ngFor="let row of sizeOfDevice"  (click)="selectImage(vamp,row)"><a class="dropdown-item"  >{{row.name}}</a></li>           
+            </ul>
+            </ng-container>
+          </div>
+        </div>
+     
+      </ng-container>
+    </div>
+    <div  class="counter-section "  *ngIf="dragDropData && vamps3.length > 0" id="right">
+      <ng-container   *ngFor="let vamp of vamps3; let i=index">
+        <div class="flex"   [attr.vamp]="vamp.image" [attr.checkHeight]="vamp['height']"  >
+          <div class=" " > {{vamp.id}}</div>
+          <img src="{{vamp.image}}" alt="" style="position: absolute;width: 216px ">
+          <div class="" id="left"> {{vamp.id}}</div>
+          <div class="peddingCreate"  (click)="dropDown(vamp)" *ngIf="vamp.name" >{{vamp.name}}
+
+          </div>
+        </div>
+     
+      </ng-container>
+    </div>
+
+  </div>
+  <div class="col-md-1"></div>
+  <div class="col-md-4">
+  
+
+
+    <div  class="counter-section " style="margin-top: 50px;"   *ngIf="dragDropData" id="right" style="display: none;">
+      <ng-container   *ngFor="let vamp of backSide; let i=index">
+        <div class="flex"     >
+          <div class="section-title" ></div>
+          <img src="{{vamp.backSide_image}}" alt="" style="position: absolute;width: 216px ">
+          <div class="section-title12" id="left"></div>
+        </div>
+     
+      </ng-container>
+    </div>
+   
+  </div>
+</div>
+
+
+<div>
+ 
+</div>
+

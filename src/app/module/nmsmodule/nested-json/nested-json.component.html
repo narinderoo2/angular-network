@@ -1,0 +1,66 @@
+
+
+<div class="section">
+  <!-- <div class="card-body card-body-plus">
+    <div class="grid-container" id="gridViewer" style="font-size: 13px;">
+      <div class="tblcontainer"> -->
+        <table class="table table-bordered table-striped collapse-table dataTable no-footer table-fixed">
+
+
+          <tbody class="levelone">
+            <ng-container>
+              <ng-template #nestedList let-permissionArrData>
+                <ng-container *ngFor="  let row of permissionArrData['data'] | keyvalue ;  index as i  ">
+
+                  <table class="table table-bordered table-striped collapse-table dataTable no-footer table-fixed">
+                    <tbody class="levelone">
+
+                  <tr>
+                    <td class="obj key name" type="cell" gid="2"><span>{{row.key}}</span></td>
+                    <td class="obj value" type="cell" gid="3" *ngIf="isArray(row.value)"><span  class="string">{{row.value}} </span></td>
+                    <td class="obj value" type="cell" gid="3" *ngIf="!isArray(row.value)"><span class="string"> [+]  {{row.key}} {{typeOfDataFormate(row.value)}} </span></td>
+                    <td colspan="5" class="hiddenRow">
+
+                      <div class=" ">
+                        <ng-container *ngIf="objectCheck(row , 'object')">
+                          <ng-container *ngTemplateOutlet="
+                                                      nestedList;
+                                                      context: {
+                                                        $implicit: {
+                                                          data: row.value ,
+                                                          dataIndex: i,
+                                                          status: checkStatusChild( permissionArrData['status'] )
+                                                        }
+                                                      }
+                                                    ">
+                          </ng-container>
+                        </ng-container>
+                       
+                      </div>
+                    </td>
+                  </tr>
+
+                  </tbody>
+                  </table>
+
+                </ng-container>
+              </ng-template>
+
+              <ng-container *ngTemplateOutlet="
+                                    nestedList;
+                                    context: {
+                                      $implicit: {
+                                        data: permissionArrData,
+                                        dataIndex: permissionArrData['dataIndex'],
+                                        status: 'first'
+                                      }
+                                    }
+                                  "></ng-container>
+            </ng-container>
+
+          </tbody>
+        </table>
+      <!-- </div>
+    </div>
+  </div> -->
+</div>

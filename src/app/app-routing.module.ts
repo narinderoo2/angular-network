@@ -5,6 +5,9 @@ import { BlanktemplateComponent } from './template/blanktemplate/blanktemplate.c
 import { HeaderComponent } from './template/header/header.component';
 
 
+
+//  ng g m  module/nmsmodule/nms --routing
+
 const routes: Routes = [
 
   // {
@@ -30,6 +33,15 @@ const routes: Routes = [
   {
     path: 'user-management', component: HeaderComponent,
     loadChildren: () => import('./module/user-management/user-management.module').then(m => m.UserManagementModule)
+  },
+  {
+    path: 'logical-questions', component: HeaderComponent,
+    loadChildren: () => import('./module/logicalQuestion/logical.module').then(m => m.LogicalModule)
+  },
+  {
+    path: 'nms-management', component: HeaderComponent,
+    // loadChildren: () => import('./module/nmsmodule/nms.module').then(m => m.NmsModule)
+    loadChildren: () => import ('./module/nmsmodule/nms.module').then(m=>m.NmsModule)
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'dashboard' },

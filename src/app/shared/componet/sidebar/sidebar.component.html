@@ -53,12 +53,33 @@
                
             </ul>
         </li>
-        <li>
-            <a href="javascript:void(0);">Portfolio</a>
+        <li  class="{{router.url.includes('/logical-questions/') ? '' : null}}">
+            <a href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
+             (click)="this.changeflag4 = !this.changeflag4">Logical Questions</a>
+            <ul class="collapse list-unstyled" id="pageSubmenu"  [ngClass]="changeflag4 ?'show':''" >
+                <li>
+                    <a routerLink="/logical-questions/"> JS Questions</a>
+                </li>
+               
+               
+            </ul>
         </li>
-        <li>
-            <a href="javascript:void(0);">Contact</a>
+        <li  class="{{router.url.includes('/nms-management/') ? '' : null}}">
+            <a href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
+             (click)="this.changeflag5 = !this.changeflag5">NMS</a>
+            <ul class="collapse list-unstyled" id="pageSubmenu"  [ngClass]="changeflag5 ?'show':''" >
+                <li>
+                    <a routerLink="/nms-management/"> Nested JSON</a>
+                </li>
+               
+                <li>
+                    <a routerLink="/nms-management/drag-drop"> Server Drag Drop</a>
+                </li>
+               
+               
+            </ul>
         </li>
+        
     </ul>
 
     
