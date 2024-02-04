@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { debounceTime, Subscription } from 'rxjs';
@@ -28,7 +28,7 @@ export class UserComponent implements OnInit {
   creataDataSubscrption$: Subscription;
 
   spinnerWorking: boolean = false
-  userForm: FormGroup;
+  userForm: UntypedFormGroup;
   modalReference: any;
   errorMessages: any;
   countryCodeData: string = '91';
@@ -55,7 +55,7 @@ export class UserComponent implements OnInit {
     private _commonService: CommonApiServiceService,
     private _endpoints: EndPointService,
     private _modalService: NgbModal,
-    private _form: FormBuilder,
+    private _form: UntypedFormBuilder,
     private _ems: ErrorsMessagesService,
 
   ) { 
@@ -80,7 +80,7 @@ export class UserComponent implements OnInit {
   }
 
   static confirmedValidator(controlName: string, matchingControlName: string){
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
         const control = formGroup.controls[controlName];
         const matchingControl = formGroup.controls[matchingControlName];
         if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {

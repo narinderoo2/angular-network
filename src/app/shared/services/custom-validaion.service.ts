@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class CustomValidaionService {
   constructor() { }
 
 
-  static passwordCheck(control: FormControl) {
+  static passwordCheck(control: UntypedFormControl) {
     let validationMap: any = {};
     if (control.value) {
       const isWhitespace = control.value.length === 0;
@@ -60,7 +60,7 @@ export class CustomValidaionService {
 
   // match new passowrd and confirm passwrod
   static confirmedValidator(controlName: string, matchingControlName: string){
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
         const control = formGroup.controls[controlName];
         const matchingControl = formGroup.controls[matchingControlName];
         if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {

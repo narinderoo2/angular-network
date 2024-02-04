@@ -5,7 +5,7 @@ import { CommonApiServiceService } from 'src/app/shared/services/common-api-serv
 import { CommonhelperService } from 'src/app/shared/services/commonhelper.service';
 import { EndPointService } from 'src/app/shared/services/end-point.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ErrorsMessagesService } from 'src/app/shared/services/errors-messages.service';
 import { CustomValidaionService } from 'src/app/shared/services/custom-validaion.service';
 import { CommonServiceService } from 'src/app/shared/services/common-service.service';
@@ -49,7 +49,7 @@ export class UsermanagementComponent implements OnInit {
   size: number = 5;
   search: string = '';
 
-  userForm: FormGroup;
+  userForm: UntypedFormGroup;
 
   errorMessages: any;
   timeZone: any;
@@ -129,7 +129,7 @@ export class UsermanagementComponent implements OnInit {
     private commonserviceService: CommonServiceService,
     private endpoints: EndPointService,
     private modalService: NgbModal,
-    private _form: FormBuilder,
+    private _form: UntypedFormBuilder,
     private ems: ErrorsMessagesService,
     private primengConfig: PrimeNGConfig,
     private http: HttpClient,
@@ -158,7 +158,7 @@ export class UsermanagementComponent implements OnInit {
 
 
   static confirmedValidator(controlName: string, matchingControlName: string){
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
         const control = formGroup.controls[controlName];
         const matchingControl = formGroup.controls[matchingControlName];
         if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {

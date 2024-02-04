@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -11,12 +11,12 @@ export class CommonServiceService {
 
 
 
-  validateAllFields(formGroup: FormGroup) {
+  validateAllFields(formGroup: UntypedFormGroup) {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field)
-      if (control instanceof FormControl) {
+      if (control instanceof UntypedFormControl) {
         control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {
+      } else if (control instanceof UntypedFormGroup) {
         this.validateAllFields(control);
       }
     });
@@ -24,7 +24,7 @@ export class CommonServiceService {
   }
 
 
-  resetForm(formGroup: FormGroup){
+  resetForm(formGroup: UntypedFormGroup){
     Object.keys(formGroup.controls).forEach((field) => {
       formGroup.value[field]=''
     });

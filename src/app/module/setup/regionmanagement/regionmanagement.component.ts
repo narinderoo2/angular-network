@@ -5,7 +5,7 @@ import { CommonApiServiceService } from 'src/app/shared/services/common-api-serv
 import { CommonhelperService } from 'src/app/shared/services/commonhelper.service';
 import { EndPointService } from 'src/app/shared/services/end-point.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ErrorsMessagesService } from 'src/app/shared/services/errors-messages.service';
 
 export interface tableListing {
@@ -53,7 +53,7 @@ export class RegionmanagementComponent implements OnInit {
   rowDataTable: tableListing[] = [] // table listing data with interface 
   endPointChange: string = ''    // api end point 
   getTableData: boolean = false  // table show and hide 
-  dynamicForm: FormGroup;
+  dynamicForm: UntypedFormGroup;
   modalReference$: any;
   formOpen: boolean = false;
   deletepopUp: boolean = false;
@@ -133,10 +133,10 @@ export class RegionmanagementComponent implements OnInit {
   formControlAdd() {
     let group = {}
     this.formDetails.forEach(item => {
-      group[item.formControl] = new FormControl(null, item.validation ? [Validators.required, Validators.minLength(item.min), Validators.maxLength(item.max)] : [])
+      group[item.formControl] = new UntypedFormControl(null, item.validation ? [Validators.required, Validators.minLength(item.min), Validators.maxLength(item.max)] : [])
 
     })
-    this.dynamicForm = new FormGroup(group)
+    this.dynamicForm = new UntypedFormGroup(group)
   }
 
 

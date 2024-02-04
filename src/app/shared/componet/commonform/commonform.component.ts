@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, Subscription } from 'rxjs';
 import { CommonApiServiceService } from '../../services/common-api-service.service';
@@ -27,7 +27,7 @@ export class CommonformComponent implements OnInit {
   formDetails: any;
   submitFormDetails: any;
   errorMessages: any;
-  dynamicForm: FormGroup;
+  dynamicForm: UntypedFormGroup;
 
   dropListingSubscribe$: Subscription
   createSubscribtion$: Subscription
@@ -121,9 +121,9 @@ this.patchValueForm()
   formControlAdd() {
     let group = {}
     this.formDetails.forEach(item => {
-      group[item.formControl] = new FormControl(null, item.validation ? [Validators.required, Validators.minLength(item.min), Validators.maxLength(item.max)] : [])
+      group[item.formControl] = new UntypedFormControl(null, item.validation ? [Validators.required, Validators.minLength(item.min), Validators.maxLength(item.max)] : [])
     })
-    this.dynamicForm = new FormGroup(group)
+    this.dynamicForm = new UntypedFormGroup(group)
   }
 
   patchValueForm(){

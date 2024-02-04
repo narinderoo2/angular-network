@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { debounceTime, Subscription } from 'rxjs';
 import { ErrorsMessagesService } from 'src/app/shared/services/errors-messages.service';
 import { CommonApiServiceService } from 'src/app/shared/services/common-api-service.service';
@@ -45,9 +45,9 @@ export class ResetpasswordComponent implements OnInit {
   createSubscribtion$: Subscription;
   formChangeSubscribtion$: Subscription;
 
-  resetPassword: FormGroup
-  optForm: FormGroup
-  forgetPassword: FormGroup
+  resetPassword: UntypedFormGroup
+  optForm: UntypedFormGroup
+  forgetPassword: UntypedFormGroup
 
   errorMessages: any;
   interval: any;
@@ -68,7 +68,7 @@ export class ResetpasswordComponent implements OnInit {
 
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private _ems: ErrorsMessagesService,
     private commonService: CommonApiServiceService,
     private endpoint: EndPointService,
