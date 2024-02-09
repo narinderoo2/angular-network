@@ -41,6 +41,7 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/dragula/dist/dragula.css",
+              "node_modules/angular2-draggable/css/resizable.min.css",
               "src/scss/styles.scss"    
              
               
@@ -53,6 +54,7 @@
             "node_modules/bootstrap/dist/js/bootstrap.js",
               "node_modules/apexcharts/dist/apexcharts.min.js",
               "node_modules/d3/dist/d3.min.js",
+             
               "src/js/common.js"
 
          

@@ -6,6 +6,7 @@ import { DragdropserverComponent } from './dragdropserver/dragdropserver.compone
 import {DragulaModule} from 'ng2-dragula';
 import { NestedJsonComponent } from './nested-json/nested-json.component';
 
+import { AngularDraggableModule } from 'angular2-draggable';
 
 @NgModule({
   declarations: [NestedJsonComponent, DragdropserverComponent ],
@@ -13,6 +14,7 @@ import { NestedJsonComponent } from './nested-json/nested-json.component';
     CommonModule,
     NmsRoutingModule,
     DragulaModule.forRoot(),
+    AngularDraggableModule
   ]
 })
 export class NmsModule { }
